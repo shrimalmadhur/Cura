@@ -36,7 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cura'
+    'cura',
+    # custom apps
+    'sleep',
 )
 
 MIDDLEWARE_CLASSES = (
