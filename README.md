@@ -39,30 +39,50 @@ You will need to have [node.js] and npm installed. Use the node package manager 
 ```sh
 $ npm install -g cordova ionic
 ```
+If you're developing server (Django), you'll need [virtualenv] to create virtual enviornment for python packages managed with [pip]. make sure you activate environment when developing.
+
+```sh
+$ virtualenv curaEnv
+$ cd curaEnv
+$ source bin/activate
+(curaEnv)$ git clone git@github.com:shrimalmadhur/Cura.git
+(curaEnv)$ pip install -r Cura/server/requirement.txt
+```
+
 Ensure you set up your keys with Github and have access to the repository. Browse to your working directory and clone the repo.
+
 ```sh
 $ git clone git@github.com:shrimalmadhur/Cura.git
 $ cd Cura/cura
 $ ls
 cura  server  .  ..
 ```
+
 The /cura directory contains the ionic project for the application. To test the front end on your web browser run
+
 ```sh
 $ ionic serve
 ```
+
 You can also emulate the app on a device emulator or run it on your device itself.
+
 ```sh
 $ ionic emulate ios
 $ ionic emulate android
 ```
+
 Will open the iOS emulator and android emulatos and run the application.
+
 ```sh
 $ ionic run <platform>
 ```
+
 Will run the application on your selected platform. To see a list of everything you an do with ionic, just type
+
 ```sh
 $ ionic
 ```
+
 ### Server
 
 The API server uses [Django]. It will commuincate with the platform infrastructure to fetch data to populate the frontend. This data will be accessible through an REST API.
@@ -75,3 +95,5 @@ The API server uses [Django]. It will commuincate with the platform infrastructu
 [Android SDK]:http://developer.android.com/sdk/index.html
 [angular.js]:http://angularjs.org
 [cordova]:http://cordova.apache.org
+[virtualenv]:https://virtualenv.pypa.io/en/latest/
+[pip]: http://pip.readthedocs.org/en/stable/
