@@ -40,3 +40,6 @@ pip-delete-this-directory.txt
 
 # Local Settings form Django Server
 **/local_settings.py
+
+# Don't sync SECRET over github
+fieldkeys/
