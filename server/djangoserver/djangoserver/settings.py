@@ -36,7 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cura'
+    'cura',
+    # custom apps
+    'sleep',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,6 +85,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+ENCRYPTED_FIELDS_KEYDIR = os.path.join(BASE_DIR, 'fieldkeys')
 try:
   from local_settings import *
 except ImportError:
