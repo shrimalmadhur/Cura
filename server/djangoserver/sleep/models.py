@@ -11,10 +11,12 @@ class UserCredential(models.Model):
 class SleepSession(models.Model):
   user = models.ForeignKey(User)
   date = models.DateField()
+  session_start = models.DateTimeField(null=True, blank=True)
+  session_end = models.DateTimeField(null=True, blank=True)
   
   sleep_time_target = models.PositiveIntegerField(null=True, blank=True)
   rest_heart_rate = models.PositiveIntegerField(null=True, blank=True)
-  avg_respiration_rate =models.PositiveSmallIntegerField(null=True, blank=True)
+  avg_respiration_rate =models.FloatField(null=True, blank=True)
   sleep_latency = models.PositiveIntegerField(null=True, blank=True)
   total_snore_duration = models.PositiveIntegerField(null=True, blank=True)
   away_count = models.PositiveSmallIntegerField(null=True, blank=True)
