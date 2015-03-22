@@ -18,6 +18,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+
+
   });
 })
 
@@ -30,7 +34,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
@@ -86,15 +90,49 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.home', {
+    url: '/home',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
+        controller: 'HomeCtrl'
       }
     }
-  });
+  })
+
+  .state('tab.medication', {
+    url: '/medication',
+    views: {
+      'tab-medication': {
+        templateUrl: 'templates/tab-medication.html',
+        controller: 'MedicationsCtrl'
+      }
+    }
+  })
+
+  .state('tab.medication-detail', {
+    url: '/medication/:medicationId',
+    views: {
+      'tab-medication': {
+        templateUrl: 'templates/medication-detail.html',
+        controller: 'MedicationDetailCtrl'
+      }
+    }
+  })
+
+
+  .state('tab.coach', {
+    url: '/coach',
+    views: {
+      'tab-coach': {
+        templateUrl: 'templates/tab-coach.html',
+        // controller: 'CoachCtrl'
+      }
+    }
+  })
+
+
+  ;
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');

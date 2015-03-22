@@ -1,0 +1,13 @@
+<ion-view view-title="Medication">
+  <ion-content>
+
+    <button class="button button-full button-assertive" ng-click="openModal()"> Add Medication </button>
+
+    <ion-list>
+      <ion-item class="item-avatar" ng-repeat="medication in medications" type="item-text-wrap" href="#/tab/medication/{{medication.id}}">
+        <img ng-src="http://placehold.it/50x50">
+        <h2>{{medication.name}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

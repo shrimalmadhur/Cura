@@ -1,0 +1,45 @@
+  <div class="modal" >
+    <ion-header-bar>
+      <h1 class="title">Add Medications</h1>
+    </ion-header-bar>
+    <ion-content>
+
+
+
+
+		<form novalidate class="simple-form">
+
+			<div class="list">
+
+			  <label class="item item-input">
+			    <input type="text" placeholder="Name" ng-model="newMedication.name" >
+			  </label>
+
+			  <label class="item item-input">
+			    <input type="text" placeholder="Drug" ng-model="newMedication.drug">
+			  </label>
+
+			  <label class="item item-input">
+			    <textarea placeholder="Description" ng-model="newMedication.description"></textarea>
+			  </label>
+
+			</div>
+
+
+	    </form>
+
+
+
+    </ion-content>
+
+	<ion-footer-bar align-title="left" class="bar-balanced">
+	  <div class="buttons">
+	    <button class="button button-clear" ng-click="closeModal()">Cancel</button>
+	  </div>
+	  <h1 class="title"></h1>
+	  <div class="buttons">
+	    <button class="button button-clear" ng-click="update(newMedication)" >Add</button>
+	  </div>
+	</ion-footer-bar>
+
+  </div>
