@@ -47,6 +47,7 @@ $ cd curaEnv
 $ source bin/activate
 (curaEnv)$ git clone git@github.com:shrimalmadhur/Cura.git
 (curaEnv)$ pip install -r Cura/server/requirement.txt
+(curaEnv)$ export CURA_SECRET_KEY='[local dev key]'
 ```
 
 Ensure you set up your keys with Github and have access to the repository. Browse to your working directory and clone the repo.
@@ -87,6 +88,47 @@ $ ionic
 
 The API server uses [Django]. It will commuincate with the platform infrastructure to fetch data to populate the frontend. This data will be accessible through an REST API.
 
+#### Server Directory Structure
+
+
+##### Some Important Files
+Files **synced** over github
+
+- **requirement.txt** - python libraries used in this project, maintained by pip. please **update** this file if you install new librararies. ``` pip freeze > requirement.txt```
+- **settings.py** - django project setting. don't put sensitive information into this file (e.g. SECRET_KEY, DB passwords).
+
+Files **not synced** over github
+
+- **local_settings.py** - django project setting on local machine. Put **sensitive** information in this setting file.
+- **fieldkeys/** - keys for encrypted fields, **must** do so the project can work correctly [(detail)](https://github.com/shrimalmadhur/Cura/pull/7)
+
+The working directory should look like this:
+
+```
+Under ../curaEnv/
+curaEnv/
+├── Cura/
+├── bin/
+│   └── activate (to activate working environment)
+├── include/
+└── lib/ 
+
+
+Under ../curaEnv/Cura/server/
+server/
+├── djangoserver/
+│   ├── cura/
+│   ├── djangoserver/ (project setting dir)
+│   │   ├── settings.py
+│   │   └── local_settings.py
+│   ├── manage.py (django-admin wrapper)
+│   ├── sleep/ (Sleep Quality module)
+│   ├── fieldkeys/ (Secret for Encrypted Fields)
+│   └── [...]/ (additional modules)
+└── requirement.txt 
+```
+
+
 
 [ionic]:http://ionicframework.com/docs/guide/installation.html
 [node.js]:http://nodejs.org
@@ -97,3 +139,4 @@ The API server uses [Django]. It will commuincate with the platform infrastructu
 [cordova]:http://cordova.apache.org
 [virtualenv]:https://virtualenv.pypa.io/en/latest/
 [pip]: http://pip.readthedocs.org/en/stable/
+
