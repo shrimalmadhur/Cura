@@ -104,10 +104,57 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
+
+  .state('tab.home', {
+    url: '/home',
+    views: {
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
+        // controller: 'HomeCtrl'
+      }
+    }
+  })
+
+  .state('tab.medication', {
+    url: '/medication',
+    views: {
+      'tab-medication': {
+        templateUrl: 'templates/tab-medication.html',
+        controller: 'MedicationsCtrl'
+      }
+    }
+  })
+
+  .state('tab.medication-detail', {
+    url: '/medication/:medicationId',
+    views: {
+      'tab-medication': {
+        templateUrl: 'templates/medication-detail.html',
+        controller: 'MedicationDetailCtrl'
+      }
+    }
+  })
+
+
+  .state('tab.coach', {
+    url: '/coach',
+    views: {
+      'tab-coach': {
+        templateUrl: 'templates/tab-coach.html',
+         controller: 'CoachCtrl'
       }
     }
   });
 
+  .state('tab.settings', {
+    url: '/settings',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        //controller: 'SettingsCtrl'
+      }
+    }
+  })
 
 
   // if none of the above states are matched, use this as the fallback
