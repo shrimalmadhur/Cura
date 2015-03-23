@@ -95,7 +95,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'HomeCtrl'
+        // controller: 'HomeCtrl'
       }
     }
   })
@@ -126,11 +126,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-coach': {
         templateUrl: 'templates/tab-coach.html',
-        // controller: 'CoachCtrl'
+         controller: 'CoachCtrl'
       }
     }
   })
 
+  .state('tab.settings', {
+    url: '/settings',
+    views: {
+      'tab-settings': {
+        templateUrl: 'templates/tab-settings.html',
+        //controller: 'SettingsCtrl'
+      }
+    }
+  })
 
   ;
 
