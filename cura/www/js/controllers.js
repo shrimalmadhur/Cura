@@ -21,6 +21,10 @@ angular.module('starter.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
+.controller('VisualCtrl', function($scope, $stateParams) {
+  //$scope.visual = VisualData.get($stateParams);
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
