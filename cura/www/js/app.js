@@ -126,11 +126,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-coach': {
         templateUrl: 'templates/tab-coach.html',
-        // controller: 'CoachCtrl'
+        controller: 'CoachCtrl'
       }
     }
   })
 
+  .state('tab.coach-detail', {
+    url: '/coach/:resourceId',
+    views: {
+      'tab-coach': {
+        templateUrl: 'templates/coach-detail.html',
+        controller: 'CoachDetailCtrl'
+      }
+    }
+  })
 
   ;
 

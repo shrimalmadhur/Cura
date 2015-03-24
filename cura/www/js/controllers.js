@@ -37,6 +37,33 @@ angular.module('starter.controllers', ['ngCordova'])
   }
 })
 
+.controller('CoachCtrl', function($scope, Resources) {
+  $scope.resources = Resources.all();
+  $scope.speech = { currentText: ""};
+
+  $scope.recognition = new webkitSpeechRecognition();
+  $scope.recognition.onresult = function(event) {
+    console.log(event.results[0][0].transcript);
+    $scope.updateSpeech({ currentText: event.results[0][0].transcript })
+  }
+
+  $scope.updateSpeech = function(speechObj){
+    console.log("Updating speech", speechObj)
+    $scope.speech = angular.copy(speechObj);
+    $scope.$apply();
+    console.log($scope.speech);
+  }
+
+  $scope.recognition.start();
+
+
+})
+
+.controller('CoachDetailCtrl', function($scope, $stateParams, Resources) {
+  $scope.resource = Resources.get($stateParams.resourceId);
+})
+
+
 .controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
@@ -97,25 +124,10 @@ angular.module('starter.controllers', ['ngCordova'])
 
     console.log($scope.medications)
 
-
     var alarmTime = new Date();
-    alarmTime.setSeconds(alarmTime.getSeconds() + 15);
+    alarmTime.setSeconds(alarmTime.getSeconds() + 10);
     Medications.sync($scope.medications);
     console.log(Medications.all())
-    // $cordovaLocalNotification.add({
-    //     id: "1234",
-    //     date: alarmTime,
-    //     message: "This is a message",
-    //     title: "This is a title",
-    //     autoCancel: true,
-    //     sound: null
-    // }).then(function () {
-    //     alert("The notification has been set");
-    // });
-
-
-
-
   };
 
   $scope.reset = function() {

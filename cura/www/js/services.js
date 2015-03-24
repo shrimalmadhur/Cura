@@ -57,7 +57,7 @@ angular.module('starter.services', [])
     }, {
       id: 1,
       name: "Alarm 11",
-      description: "High Venous Blood pressure"
+      description: "Empty saline bag"
     }]
 
     return {
