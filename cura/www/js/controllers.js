@@ -75,6 +75,10 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+.controller('SettingsCtrl', function($scope, $stateParams) {
+  //$scope.chat = Chats.get($stateParams.chatId);
+})
+
 .controller('FriendsCtrl', function($scope, $cordovaContacts, Friends) {
   $scope.friends = Friends.all();
   $scope.addContact = function(){
@@ -151,4 +155,6 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.settings = {
     enableFriends: true
   };
+
 });
+
