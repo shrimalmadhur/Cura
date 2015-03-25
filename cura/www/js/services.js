@@ -98,4 +98,20 @@ angular.module('starter.services', [])
       return friends[friendId];
     }
   }
+})
+
+.factory('Visuals', function() {
+  var data = [];
+  for (var i = 0; i < 100; i++) {
+                data.push({x: i, y: Math.sin(i/10)});   
+            }
+  return {
+    all: function() {
+      return data;
+    },
+    get: function(friendId) {
+      // Simple index lookup
+      return null;
+    }
+  }
 });
