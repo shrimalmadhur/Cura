@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cura',
+    'rest_framework',
     # custom apps
     'sleep',
 )

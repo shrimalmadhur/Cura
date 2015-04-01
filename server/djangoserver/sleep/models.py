@@ -47,11 +47,11 @@ class TSData(models.Model):
       (TYPE_STAGE, 'Sleep Stage'),
       (TYPE_SNORE, 'Snoring Episode'),
       (TYPE_CYCLE, 'Sleep Cycle'),
-      (TYPE_CYCLE, 'Heart Rate'),
+      (TYPE_HEART, 'Heart Rate'),
       (TYPE_PRESE, 'Presence'),
   )
 
-  sleep_session = models.ForeignKey(SleepSession)
+  sleep_session = models.ForeignKey(SleepSession, related_name='time_series_data')
   data_type = models.IntegerField(choices=TYPE_CHOICES)
   timestamp = models.DateTimeField()
   value = models.FloatField()
