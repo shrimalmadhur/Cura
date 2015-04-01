@@ -1,32 +1,32 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
+
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
+      <div class="item item-divider">Schedule</div>
       <div class="item item-body">
         <div>
-          There is a fire in <b>sector 3</b>
-        </div>
+          You have a dialysis session with Susan at 4 PM 
+        </div> </br>
+
+        <button ng-click="openModal()"class="button button-large button-block button-balanced icon ion-compose"> Fill Out Pre Treatment Form </button>
       </div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
+
+<!--     <div class="list card">
+      <div class="item item-divider"> <i class="ion-heart"> </i> Health</div>
       <div class="item item-body">
         <div>
           You have <b>29</b> meetings on your calendar tomorrow.
         </div>
+
+        </br>
+
+        <button class="button button-full button-assertive" ng-click="doAlarm()">Alarm</button>
+
       </div>
-    </div>
+    </div> -->
 
     <!-- Alarm Button -->
-    <button class="button button-full button-assertive" ng-click="doAlarm()">Alarm</button>
 
 
   </ion-content>

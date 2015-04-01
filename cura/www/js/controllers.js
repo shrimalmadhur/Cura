@@ -1,14 +1,29 @@
 angular.module('starter.controllers', ['ngCordova'])
 
-.controller('DashCtrl', function($scope, $ionicPlatform, $ionicModal, $cordovaVibration) {
+.controller('DashCtrl', function($scope, $ionicPlatform, $ionicModal, $cordovaVibration, $location, Forms) {
   $scope.alarmInterval = undefined;
 
-  $ionicModal.fromTemplateUrl('contact-modal.html', {
+
+  $scope.forms = Forms.all();
+  $scope.currentForm = $scope.forms[0];
+
+  console.log($scope.currentForm);
+
+
+  // $ionicModal.fromTemplateUrl('contact-modal.html', {
+  //   scope: $scope,
+  //   animation: 'slide-in-up'
+  // }).then(function(modal) {
+  //   $scope.modal = modal
+  // })  
+
+  
+  $ionicModal.fromTemplateUrl('templates/form-fill-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal
-  })  
+  }) 
 
 
   $scope.openModal = function() {
@@ -38,29 +53,72 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('CoachCtrl', function($scope, Resources) {
-  $scope.resources = Resources.all();
-  $scope.speech = { currentText: ""};
 
+
+  $scope.resources = Resources.all();
+
+  $scope.speech = { currentText: "", listening: false };
   $scope.recognition = new webkitSpeechRecognition();
+  $scope.recognition.continuous = true;
+  $scope.recognition.interimResults = true;
+
+
   $scope.recognition.onresult = function(event) {
     console.log(event.results[0][0].transcript);
     $scope.updateSpeech({ currentText: event.results[0][0].transcript })
+
+    if ($scope.speech.currentText === "set up treatment"){
+       console.log("UPDATING PATH");
+       window.location = "#/tab/coach/1" ;
+       $scope.recognition.stop();
+       $scope.speech.currentText = "";
+    }
+  }
+
+
+
+
+
+  $scope.speechButtonClicked = function(){
+      if ($scope.speech.listening === true){
+          $scope.recognition.stop();
+          $scope.speech.listening = false;
+
+      } else {
+          $scope.speech.listening = true;
+          $scope.recognition.start();
+      }
+
   }
 
   $scope.updateSpeech = function(speechObj){
-    console.log("Updating speech", speechObj)
-    $scope.speech = angular.copy(speechObj);
-    $scope.$apply();
-    console.log($scope.speech);
+
+      console.log("Updating speech", speechObj)
+      $scope.speech = angular.copy(speechObj);
+      $scope.$apply();
+      console.log($scope.speech);
+
+
   }
 
-  $scope.recognition.start();
+
+
+
 
 
 })
 
-.controller('CoachDetailCtrl', function($scope, $stateParams, Resources) {
+.controller('CoachDetailCtrl', function($scope, $stateParams, $ionicSlideBoxDelegate, Resources) {
+
+
+
+  // Load and play videos on the resource detail controller 
+
   $scope.resource = Resources.get($stateParams.resourceId);
+  console.log("LOGGING RESOURCE", $scope.resource);
+
+  // Navigate through the stack of instructions
+
 })
 
 

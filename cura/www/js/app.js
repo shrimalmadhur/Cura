@@ -99,15 +99,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  })
+
 
   .state('tab.home', {
     url: '/home',
@@ -145,7 +137,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-coach': {
         templateUrl: 'templates/tab-coach.html',
-
         controller: 'CoachCtrl'
       }
     }
