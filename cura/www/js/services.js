@@ -1,5 +1,16 @@
 angular.module('starter.services', [])
 
+.factory('Config', function(){
+  var serverHostPort = "127.0.0.1:8000";
+  return {
+    serverHostPort: serverHostPort
+  }
+
+
+
+})
+
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

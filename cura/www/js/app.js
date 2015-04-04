@@ -29,20 +29,29 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-    .state('signin', {
-      url: '/sign-in',
-      templateUrl: 'templates/sign-in.html',
-      controller: 'SignInCtrl'
+  .state('account', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'AppCtrl'
   })
   
-    .state('forgotpassword', {
-      url: '/forgot-password',
-      templateUrl: 'templates/forgot-password.html'
+
+  .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'AppCtrl'
+  })
+  
+
+  .state('retrive', {
+    url: '/retrive-account',
+    templateUrl: 'templates/retrive-account.html',
+    controller: 'AppCtrl'
   })
 
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
@@ -151,10 +160,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
-
-
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/sign-in');
+  $urlRouterProvider.otherwise('/login');
 
 })
 

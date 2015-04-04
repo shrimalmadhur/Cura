@@ -1,0 +1,43 @@
+<ion-view view-title="Login">
+  <ion-content>
+
+
+    <div class="row">
+      <div class="col col-33 col-offset-33">
+       <img  class="full-image" src="http://placehold.it/500x500">
+      </div>
+    </div>
+    <div class="list">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-person placeholder-icon"></i>
+          <input type="text" placeholder="Email" ng-model="loginForm.email">
+        </label>
+      </div>
+
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-locked placeholder-icon"></i>
+          <input type="password" placeholder="Password" ng-model="loginForm.password">
+        </label>
+      </div>
+    </div>
+
+    <div class="padding">
+        <button class="button col col-33 col-offset-33 button-positive icon-right ion-log-in" ng-click="login()">
+          Log In
+        </button>
+
+
+        <a class="button col col-33 col-offset-33 button-clear button-positive" href="#/retrive">
+          Help
+        </a> </br></br>
+
+        <a class="button col col-33 col-offset-33 button-outline icon-right ion-person-add button-balanced" href="#/register">
+          Register
+        </a>
+
+      </p>
+    </div>
+  </ion-content>
+</ion-view>
