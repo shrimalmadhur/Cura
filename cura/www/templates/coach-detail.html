@@ -1,0 +1,44 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{resource.title}}">
+
+  <ion-content>
+    <video  ng-if="resource.url!=='' " controls width="100%" >
+      <source src="{{resource.url}}"  type="video/mp4">
+    Your browser does not support the video tag.
+    </video>
+
+<div class="card">
+  <div class="item item-divider">
+      <h2> <b> {{ resource.title }} <b> </h2>
+  </div>
+  <div class="item item-text-wrap">
+      <p> {{ resource.description }} </p>
+  </div>
+
+  <ul class="list">
+
+    <div class="item item-divider">
+      Checklist
+    </div>
+    <li class="item item-checkbox" ng-repeat="step in resource.steps">
+       <label class="checkbox">
+         <input type="checkbox">
+       </label>
+       {{ step.title}} 
+    </li>
+  </ul>
+
+
+
+</div>
+
+
+
+
+  </ion-content>
+</ion-view>

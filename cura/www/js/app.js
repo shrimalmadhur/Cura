@@ -18,10 +18,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
-
-
-
   });
 })
 
@@ -32,6 +28,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+
+  .state('account', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'AppCtrl'
+  })
+  
+
+  .state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'AppCtrl'
+  })
+  
+
+  .state('retrive', {
+    url: '/retrive-account',
+    templateUrl: 'templates/retrive-account.html',
+    controller: 'AppCtrl'
+  })
+
 
   // setup an abstract state for the tabs directive
   .state('tab', {
@@ -61,6 +78,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
@@ -90,12 +108,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
+
+
   .state('tab.home', {
     url: '/home',
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        controller: 'HomeCtrl'
+        // controller: 'HomeCtrl'
       }
     }
   })
@@ -126,15 +146,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-coach': {
         templateUrl: 'templates/tab-coach.html',
-        // controller: 'CoachCtrl'
+        controller: 'CoachCtrl'
       }
     }
   })
 
-
-  ;
-
+  .state('tab.coach-detail', {
+    url: '/coach/:resourceId',
+    views: {
+      'tab-coach': {
+        templateUrl: 'templates/coach-detail.html',
+        controller: 'CoachDetailCtrl'
+      }
+    }
+  })
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/login');
 
+})
+
+.controller('SignInCtrl', function($scope, $state) {
+  
+  $scope.signIn = function(user) {
+    console.log('Sign-In', user);
+    $state.go('tab.dash');
+  };
+  
 });
