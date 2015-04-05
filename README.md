@@ -1,4 +1,4 @@
-# Cura
+### Cura
 
 Cura is a web and mobile platform to improve patient care for both patients, caregivers and their families.
 
