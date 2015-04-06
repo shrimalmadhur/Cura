@@ -219,6 +219,22 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.settings = {
     enableFriends: true
   };
-
+})
+.controller('DemoCtrl', function($scope, $stateParams) {
+  //$scope.chat = Chats.get($stateParams.chatId);
+  $scope.options = [
+    { label: 'one', value: 1 },
+    { label: 'two', value: 2 },
+    { label: 'three', value: 3 },
+    { label: 'four', value: 4 },
+    { label: 'five', value: 5 }
+  ];
+    
+  // Although this object has the same properties as the one in $scope.options,
+  // Angular considers them different because it compares based on reference
+  $scope.incorrectlySelected = { label: 'two', value: 2 };
+    
+  // Here we are referencing the same object, so Angular inits the select box correctly
+  $scope.correctlySelected = $scope.options[1];
 });
 
