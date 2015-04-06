@@ -161,58 +161,60 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('MedicationsCtrl', function($scope, $stateParams, $ionicModal, $cordovaLocalNotification, Medications){
+.controller('MedicationsCtrl', function($scope, $stateParams, $ionicModal, $cordovaLocalNotification, Medication){
   
-  $scope.medications = Medications.all();
+  $scope.medications = Medication.query(function(){ });
+
   $ionicModal.fromTemplateUrl('templates/medication-add-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal
   })  
-  $scope.newMedication = {};
 
+  $scope.newMedication = undefined;
 
   $scope.openModal = function() {
-    $scope.modal.show()
+    $scope.newMedication = new Medication();
+    $scope.modal.show();
   }
 
   $scope.closeModal = function() {
     $scope.modal.hide();
   };
 
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
 
-  $scope.update = function(newMedication) {
-    var newId = $scope.medications.length;
-    var newMed = angular.copy(newMedication);
-    newMed.id = newId;
-    $scope.medications.push(newMed);
-    $scope.closeModal()
-
-    var alarmTime = new Date();
-    alarmTime.setSeconds(alarmTime.getSeconds() + 10);
-    Medications.sync($scope.medications);
-    console.log(Medications.all())
+  $scope.saveNewMed = function() {
+    console.log("SAVING")
+    $scope.newMedication.$save();
+    $scope.closeModal();
+    $scope.updateMedications();
   };
 
   $scope.reset = function() {
     $scope.user = angular.copy({});
   };
 
+  $scope.updateMedications = function(){
+    console.log("UPDATING MEDICATIONS");
+    $scope.medications = Medication.query(function(){
+      console.log($scope.medications);
+      $scope.$apply();
+    });
+    
+  }
 
-
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
 
 })
 
-.controller('MedicationDetailCtrl', function($scope, $stateParams, Medications) {
+.controller('MedicationDetailCtrl', function($scope, $stateParams, Medication) {
 
   $scope.medication = {};
-  console.log("DETAIL CTRL");
-  $scope.medication = Medications.get($stateParams.medicationId);
-  console.log(Medications.all())
+  $scope.medication = Medication.get({id: $stateParams.medicationId});
+
 })
 
 .controller('HomeCtrl', function($scope) {
