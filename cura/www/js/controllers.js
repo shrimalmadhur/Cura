@@ -164,7 +164,25 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('MedicationsCtrl', function($scope, $stateParams, $ionicModal, $cordovaLocalNotification, Medication){
   
   $scope.medications = Medication.query(function(){ });
+  var date = new Date();
+  var offset = date.getTimezoneOffset();
+  var newdate = new Date(date.getTime() - offset * 60 *1000);
 
+  $scope.date = Math.floor(newdate.getTime() / 1000);
+  // $scope.displayDate = date.getTime();
+
+  $scope.slots = {epochTime: $scope.date, format: 12, step: 1};
+  $scope.formattedDate = function (epochTime)
+  {
+      // console.log(epochTime);
+      var date = new Date();
+      var hours = Math.floor(epochTime/3600);
+      var mins  = (epochTime%3600)/60;
+      date.setHours(hours);
+      date.setMinutes(mins);
+      $scope.date = date;
+      return $scope.date;
+  };
   $ionicModal.fromTemplateUrl('templates/medication-add-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -174,8 +192,27 @@ angular.module('starter.controllers', ['ngCordova'])
 
   $scope.newMedication = undefined;
 
+  $scope.addNotification = function() {
+
+    // var alarmTime = new Date();
+    var alarmTime = $scope.newMedication.time;
+    var message = $scope.newMedication.drugName + " " + $scope.newMedication.instructions;
+    alarmTime.setMinutes(alarmTime.getMinutes() + 1);
+     $cordovaLocalNotification.add({
+           id: "1",
+           date: alarmTime,
+           message: message,
+           title: "Medication Reminder",
+           autoCancel: true,
+           sound: null
+      }).then(function () {
+            console.log("The notification has been set");
+    });
+  };
+
   $scope.openModal = function() {
     $scope.newMedication = new Medication();
+    $scope.newMedication.frequency = "Daily";
     $scope.modal.show();
   }
 
@@ -186,7 +223,9 @@ angular.module('starter.controllers', ['ngCordova'])
 
   $scope.saveNewMed = function() {
     console.log("SAVING")
+    $scope.newMedication.time = $scope.date;
     $scope.newMedication.$save();
+    $scope.addNotification();
     $scope.closeModal();
     $scope.updateMedications();
   };
@@ -197,6 +236,8 @@ angular.module('starter.controllers', ['ngCordova'])
 
   $scope.updateMedications = function(){
     console.log("UPDATING MEDICATIONS");
+    $scope.newMedication.time = $scope.date;
+    $scope.addNotification();
     $scope.medications = Medication.query(function(){
       console.log($scope.medications);
       $scope.$apply();
