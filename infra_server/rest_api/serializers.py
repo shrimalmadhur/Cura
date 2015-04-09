@@ -5,7 +5,6 @@ class UserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length = 100)
     password = serializers.CharField(style = {'input_type' : 'password' })
     
-
 class BiometricsListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
         biometrics = [Biometerics(**item) for item in validated_data]
