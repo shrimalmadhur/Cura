@@ -1,20 +1,22 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from models import Biometrics
+from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
-from rest_framework import generics
-from django.views.decorators.csrf import csrf_exempt
-from serializers import BiometricsSerializer
 from rest_framework.response import Response
-from models import Biometrics
+from serializers import BiometricsSerializer
 import json
 
+
+# Users #
+
+
+
+# Biometrics #
 @csrf_exempt
 @api_view(['GET'])
 def resource_get(request):
-
     if request.method == 'GET':
         print ("In the first get")
         biometrics = Biometrics.objects.all()
@@ -26,8 +28,9 @@ class GetCuraUser(generics.ListAPIView):
     serializer_class = BiometricsSerializer
 
     def get_queryset(self):
-        cura_user = self.kwargs['cura_user']
-        return Biometrics.objects.filter(cura_user = cura_user)
+        user_id = self.kwargs['user_id']
+        return Biometrics.objects.filter(user_id = user_id)
+
 
 class GetAllUser(generics.ListAPIView):
     serializer_class = BiometricsSerializer
@@ -55,10 +58,10 @@ class GetTimeUser(generics.ListAPIView):
 
     # Fix this #
     def get_queryset(self):
-        cura_user = self.kwargs['cura_user']
+        user_id = self.kwargs['user_id']
         start_time = self.kwargs['start']
         end_time = self.kwargs['end']
-        filtered_objects = Biometrics.objects.filter(cura_user = cura_user)
+        filtered_objects = Biometrics.objects.filter(user_id = user_id)
         filtered_objects = filtered_objects.filter(time_recorded__gte = start_time, time_recorded__lte = end_time)
         return filtered_objects
 
@@ -81,7 +84,7 @@ def populate_table(request):
         
         # Biometrics #
         
-        biometric = Biometrics(cura_user = request.POST['cura_user'],
+        biometric = Biometrics(user_id = request.POST['user_id'],
                                heart_rate = request.POST['heart_rate'],
                                time_recorded = request.POST['time_recorded'],
                                breathing_rate = request.POST['breathing_rate'],

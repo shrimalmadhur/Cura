@@ -1,14 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
-    
+
 class CuraUser(models.Model):
-    user = models.OneToOneField(User) # First Name, Last Name, Password, Email
-    role = models.CharField(max_length = 255)
+    user_id = models.OneToOneField(User) # First Name, Last Name, Password, Email
+    role = models.CharField(blank = True, null = True, max_length = 255)
+    phone = models.CharField(blank = True, null = True,  max_length = 255)
+    settings = models.CharField(max_length = 255, blank = True, null = True)
+    #contacts = models.ManyToManyField('self')
+
+    def __str__(self):
+        return str(self.user_id)
+        
+    def __unicode__(self):
+        return self.user_id
     
 class Biometrics(models.Model):
-    #cura_user = models.ForeignKey(CuraUser)
-    cura_user = models.CharField(max_length = 255)
-    #time_recorded = models.DateTimeField(null = True, blank = True)
+    user_id = models.CharField(max_length = 255)
     time_recorded = models.CharField(max_length = 255, null = True, blank = True)
     time_received = models.DateTimeField(auto_now = True)
     breathing_rate = models.CharField(max_length = 255, null = True, blank = True) 
@@ -18,8 +25,7 @@ class Biometrics(models.Model):
     posture = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
-        return str(self.cura_user)
+        return str(self.user_id)
         
     def __unicode__(self):
-        return self.cura_user
-
+        return self.user_id

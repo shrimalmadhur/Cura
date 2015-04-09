@@ -18,5 +18,5 @@ class BiometricsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Biometrics
         list_serializer_class = BiometricsListSerializer
-        fields= ('cura_user','heart_rate', 'time_recorded', 'time_received', 'breathing_rate', 'ecg', 'estimated_core_temperature', 'posture')
+        fields= ('user_id','heart_rate', 'time_recorded', 'time_received', 'breathing_rate', 'ecg', 'estimated_core_temperature', 'posture')
    
