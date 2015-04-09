@@ -1,17 +1,23 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from models import Biometrics
+from rest_api.models import Biometrics, CuraUser
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from serializers import BiometricsSerializer
+from rest_api.serializers import BiometricsSerializer, CuraUserSerializer
 import json
 
+# Cura Users #
 
-# Users #
+# api/v1/users -- GET POST  
+# api/v1/users/(userId) - GET PUT DELETE
+# Gets and Posts
+class GetUser(generics.ListCreateAPIView):
+    serializer_class = CuraUserSerializer 
 
-
+    def get_queryset(self):
+        return CuraUser.objects.all()
 
 # Biometrics #
 @csrf_exempt
