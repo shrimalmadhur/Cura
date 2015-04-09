@@ -1,0 +1,9 @@
+Django==1.7.6
+django-encrypted-fields==1.1.1
+pyasn1==0.1.7
+pycrypto==2.6.1
+python-keyczar==0.715
+pytz==2014.10
+wsgiref==0.1.2
+djangorestframework==3.1.1
+django-rest-swagger==0.2.9
