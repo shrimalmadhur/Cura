@@ -1,8 +1,8 @@
 <ion-view view-title="Home">
   <ion-content>
     <ion-list>
-      <ion-item class="item-toggle">
-        Enable Friends
+      <div class="item item-divider">Switches</div>
+      <ion-item class="item-toggle"> TV
         <label class="toggle">
           <input type="checkbox" ng-model="settings.enableFriends">
           <div class="track">
@@ -10,6 +10,83 @@
           </div>
         </label>
       </ion-item>
+
+      <ion-item class="item-toggle"> XBox
+        <label class="toggle">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+
+      <ion-item class="item-toggle"> N64
+        <label class="toggle">
+          <input type="checkbox">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+
+      <!-- Lights -->
+      <div class="item item-divider">Hallway Light</div>
+      <div class="item range range-positive">
+        <i class="icon ion-ios7-sunny-outline"></i>
+        <input type="range" name="volume" min="0" max="100" value="43">
+        <i class="icon ion-ios7-sunny"></i>
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Color
+        </div>
+        <select>
+          <option>Blue</option>
+          <option selected>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+
+      <div class="item item-divider">Side Light</div>
+      <div class="item range range-positive">
+        <i class="icon ion-ios7-sunny-outline"></i>
+        <input type="range" name="volume" min="0" max="100" value="33">
+        <i class="icon ion-ios7-sunny"></i>
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Color
+        </div>
+        <select>
+          <option>Blue</option>
+          <option>Green</option>
+          <option selected>Red</option>
+        </select>
+      </label>
+
+      <div class="item item-divider">Bathroom Light</div>
+      <div class="item range range-positive">
+        <i class="icon ion-ios7-sunny-outline"></i>
+        <input type="range" name="volume" min="0" max="100" value="63">
+        <i class="icon ion-ios7-sunny"></i>
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Color
+        </div>
+        <select>
+          <option selected>Blue</option>
+          <option>Green</option>
+          <option>Red</option>
+        </select>
+      </label>
+
+      <div class="item item-divider">Temperature</div>
+      <div class="item range range-positive">
+        <i class="icon ion-ios-flower"></i>
+        <input type="range" name="volume" min="0" max="100" value="33">
+        <i class="icon ion-ios7-sunny"></i>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>
