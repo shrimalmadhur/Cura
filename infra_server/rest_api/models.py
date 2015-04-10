@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 
 class CuraUser(models.Model):
     #user_id = models.OneToOneField(User) # First Name, Last Name, Password, Email
-    user_id = models.CharField(max_length = 300) # First Name, Last Name, Password, Email
+    user_name = models.CharField(max_length = 300) # First Name, Last Name, Password, Email
+    mail = models.CharField(max_length = 255)  
     role = models.CharField(blank = True, null = True, max_length = 255)
     phone = models.CharField(blank = True, null = True,  max_length = 255)
     settings = models.CharField(max_length = 255, blank = True, null = True)

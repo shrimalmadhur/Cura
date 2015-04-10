@@ -1,18 +1,16 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_api.models import Biometrics, CuraUser
+from rest_api.serializers import BiometricsSerializer, CuraUserSerializer
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_api.serializers import BiometricsSerializer, CuraUserSerializer
 import json
 
 # Cura Users #
 
-# api/v1/users -- GET POST  
 # api/v1/users/(userId) - GET PUT DELETE
-# Gets and Posts
 class GetUser(generics.ListCreateAPIView):
     serializer_class = CuraUserSerializer 
 
@@ -24,7 +22,6 @@ class GetUser(generics.ListCreateAPIView):
 @api_view(['GET'])
 def resource_get(request):
     if request.method == 'GET':
-        print ("In the first get")
         biometrics = Biometrics.objects.all()
         json_dump = json.dumps([str(obj) for obj in Biometrics.objects.values()])
         #biometrics = BiometricsSerializer(biometrics, many = True)
@@ -37,27 +34,11 @@ class GetCuraUser(generics.ListAPIView):
         user_id = self.kwargs['user_id']
         return Biometrics.objects.filter(user_id = user_id)
 
-
-class GetAllUser(generics.ListAPIView):
+class GetBiometricsData(generics.ListAPIView):
     serializer_class = BiometricsSerializer
 
     def get_queryset(self):
         return Biometrics.objects.all()
-
-'''
-@csrf_exempt
-@api_view(['GET'])
-def resource_get_curauser(request, cura_user):
-    print (cura_user)
-    print (request.method)
-
-    if request.method == 'GET':
-        biometrics = Biometrics.objects.filter(cura_user = cura_user)
-        #json_dump = json.dumps([str(obj) for obj in biometrics])
-        json_dump = BiometricsSerializer(biometrics, many = True)
-        print (json_dump.data)
-        return Response(json.dumps(json_dump))
-'''
 
 class GetTimeUser(generics.ListAPIView):
     serializer_class = BiometricsSerializer
@@ -70,7 +51,6 @@ class GetTimeUser(generics.ListAPIView):
         filtered_objects = Biometrics.objects.filter(user_id = user_id)
         filtered_objects = filtered_objects.filter(time_recorded__gte = start_time, time_recorded__lte = end_time)
         return filtered_objects
-
 
 @csrf_exempt
 @api_view(['POST'])
