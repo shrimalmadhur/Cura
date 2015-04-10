@@ -2,9 +2,14 @@ from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from rest_api import views
 
+washroompatterns = patterns('',
+    url(r'^api/v1/washroom/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
+    url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
+
 weightpatterns = patterns('',
-    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetDestroyWeight.as_view()),
-    url(r'^api/v1/weight/$', views.PostWeight.as_view()),)
+    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
+    url(r'^api/v1/weight/$', views.WashroomPost.as_view()),)
+
 
 biometricsprecisepatterns = patterns('',
     url(r'^api/v1/biometricsprecise/(?P<user_name>\w+)/$', views.GetBiometricsPrecise.as_view()),
@@ -37,4 +42,5 @@ restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
 restapiurlpatterns += biometricsprecisepatterns 
+restapiurlpatterns += washroompatterns 
 restapiurlpatterns += weightpatterns 

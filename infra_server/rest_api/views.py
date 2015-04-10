@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_api.models import Biometrics, CuraUser, BiometricsPrecise, Weight
-from rest_api.serializers import BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer
+from rest_api.serializers import BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -9,17 +9,27 @@ from rest_framework.response import Response
 import json
 import httplib
 
-#  Weight #
-class PostWeight(generics.CreateAPIView):
+#  Washroom #
+class WeightPost(generics.CreateAPIView):
     serializer_class = WeightSerializer 
 
-class GetDestroyWeight(generics.RetrieveDestroyAPIView):
+class WeightGetDestroy(generics.RetrieveDestroyAPIView):
     serializer_class = WeightSerializer
 
     def get_queryset(self):
         user_name = self.kwargs['user_name']
         return Weight.objects.filter(user_name = user_name)
 
+#  Washroom #
+class WashroomPost(generics.CreateAPIView):
+    serializer_class = WashroomSerializer 
+
+class WashroomGetDestroy(generics.RetrieveDestroyAPIView):
+    serializer_class = WashroomSerializer
+
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        return Washroom.objects.filter(user_name = user_name)
 
 # Biometrics Precise #
 class GetBiometricsPrecise(generics.ListAPIView):
