@@ -17,8 +17,8 @@ class CuraUser(models.Model):
         return self.user_id
     
 class Biometrics(models.Model):
-    user_id = models.CharField(max_length = 255)
-    time_recorded = models.CharField(max_length = 255, null = True, blank = True)
+    user_name = models.CharField(max_length = 255)
+    time_recorded = models.DateTimeField(max_length = 255, null = True, blank = True)
     time_received = models.DateTimeField(auto_now = True)
     breathing_rate = models.CharField(max_length = 255, null = True, blank = True) 
     heart_rate = models.CharField(max_length = 255, null = True, blank = True)
