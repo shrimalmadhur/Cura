@@ -1,4 +1,4 @@
-from models import Biometrics, CuraUser, BiometricsPrecise
+from models import Biometrics, CuraUser, BiometricsPrecise, Washroom
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -25,9 +25,6 @@ class BiometricsListSerializer(serializers.ListSerializer):
         return Biometrics.objects.bulk_create(biometrics) 
     
 class BiometricsSerializer(serializers.ModelSerializer):
-    #cura_user = serializers.CharField(max_length = 200)
-    #heart_rate = serializers.CharField(max_length = 200)
-    
     class Meta:
         model = Biometrics
         list_serializer_class = BiometricsListSerializer
@@ -46,3 +43,13 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BiometricsPrecise
+
+class WeightSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)  
+    time_recorded = serializers.DateTimeField(required = False)  
+    time_received = serializers.DateTimeField()
+    start = serializers.DateTimeField()
+    end = serializers.DateTimeField()
+
+    class Meta:
+        model = Washroom 

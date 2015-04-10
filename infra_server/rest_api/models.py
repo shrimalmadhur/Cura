@@ -46,3 +46,16 @@ class BiometricsPrecise(models.Model):
     timestamp_msofday = models.IntegerField(null = True)
     samples_per_packet = models.IntegerField(null = True)
     samples = models.CharField(max_length = 100, blank = True, null = True)
+
+class Washroom(models.Model):
+    user_name = models.CharField(max_length = 255)
+    time_recorded = models.DateTimeField()
+    time_received = models.DateTimeField(auto_now = True)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+
+class Weight(models.Model):
+    user_name = models.CharField(max_length = 255)
+    time_recorded = models.DateTimeField()
+    time_received = models.DateTimeField(auto_now = True)
+    weight = models.IntegerField()
