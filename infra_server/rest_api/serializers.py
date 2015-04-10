@@ -46,8 +46,8 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
 
 class WashroomSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(max_length = 255)  
-    time_recorded = serializers.DateTimeField(required = False)  
-    time_received = serializers.DateTimeField()
+    time_recorded = serializers.DateTimeField(required = True)  
+    time_received = serializers.DateTimeField(required = False)
     start = serializers.DateTimeField()
     end = serializers.DateTimeField()
 
@@ -56,8 +56,8 @@ class WashroomSerializer(serializers.ModelSerializer):
 
 class WeightSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(max_length = 255)  
-    time_recorded = serializers.DateTimeField(required = False)  
-    time_received = serializers.DateTimeField()
+    time_recorded = serializers.DateTimeField(required = True)  
+    time_received = serializers.DateTimeField(required = False)
     weight = serializers.IntegerField()
 
     class Meta:

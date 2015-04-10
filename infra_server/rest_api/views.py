@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_api.models import Biometrics, CuraUser, BiometricsPrecise, Weight
+from rest_api.models import Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom
 from rest_api.serializers import BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer
 from rest_framework import generics
 from rest_framework import viewsets
@@ -59,7 +59,9 @@ def get_biometrics_precise(request):
 @csrf_exempt
 def notify(request):
     user_name = request.POST['user_name']
-    data = request.POST['data']
+    signal_type = request.POST['signal_type']
+    tag_id = request.POST['tag_id'] 
+    required_value = int(request.POST['required_value'])
 
     connection = httplib.HTTPSConnection('api.parse.com', 443)
     connection.connect()
@@ -68,7 +70,10 @@ def notify(request):
                'curaUser' : user_name
            },
            "data": {
-               "xyz" : "data"
+               "user_name" : user_name,
+               "signal_type" : signal_type,
+               "tag_id" : tag_id,
+               "required_value" : required_value
            }
          }), {
            "X-Parse-Application-Id": "UBBIKb8y8RqzSsoXXJS6iCO7D2Idb1HNk2XUcmA0",

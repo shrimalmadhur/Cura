@@ -17,7 +17,7 @@ biometricsprecisepatterns = patterns('',
 )
 
 notificationpatterns = patterns('',
-    url(r'^api/v1/notification/$', views.notify),
+    url(r'^api/v1/notifications/$', views.notify),
 )
 
 userpatterns = patterns('',
@@ -42,5 +42,5 @@ restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
 restapiurlpatterns += biometricsprecisepatterns 
-restapiurlpatterns += washroompatterns 
-restapiurlpatterns += weightpatterns 
+#restapiurlpatterns += washroompatterns 
+#restapiurlpatterns += weightpatterns 
