@@ -2,6 +2,12 @@ from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from rest_api import views
 
+
+biometricsprecisepatterns = patterns('',
+    url(r'^api/v1/biometricsprecise/(?P<user_name>\w+)/$', views.GetBiometricsPrecise.as_view()),
+    url(r'^api/v1/biometricsprecise/$', views.PostBiometricsPrecise.as_view()),
+)
+
 notificationpatterns = patterns('',
     url(r'^api/v1/notification/$', views.notify),
 )
@@ -27,3 +33,4 @@ restapiurlpatterns = patterns('',
 restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
+restapiurlpatterns += biometricsprecisepatterns 

@@ -15,10 +15,10 @@ class CuraUser(models.Model):
         
     def __unicode__(self):
         return self.user_id
-    
+
 class Biometrics(models.Model):
     user_name = models.CharField(max_length = 255)
-    time_recorded = models.DateTimeField(max_length = 255, null = True, blank = True)
+    time_recorded = models.DateTimeField(null = True, blank = True)
     time_received = models.DateTimeField(auto_now = True)
     breathing_rate = models.CharField(max_length = 255, null = True, blank = True) 
     heart_rate = models.CharField(max_length = 255, null = True, blank = True)
@@ -31,3 +31,18 @@ class Biometrics(models.Model):
         
     def __unicode__(self):
         return self.user_id
+
+class BiometricsPrecise(models.Model):
+
+    RECORD_CHOICES = ((0, 'ECG'), (1, 'BREATH')) 
+
+    user_name = models.CharField(max_length = 255)
+    record_type = models.CharField(max_length = 255, choices = RECORD_CHOICES)
+    time_recorded = models.DateTimeField(null = True, blank = True)
+    time_received = models.DateTimeField(auto_now = True)
+    sequence_number = models.CharField(max_length = 100, blank = True, null = True)
+    timestamp_year = models.IntegerField(null = True)
+    timestamp_month = models.IntegerField(null = True)
+    timestamp_msofday = models.IntegerField(null = True)
+    samples_per_packet = models.IntegerField(null = True)
+    samples = models.CharField(max_length = 100, blank = True, null = True)
