@@ -7,9 +7,8 @@ washroompatterns = patterns('',
     url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
 
 weightpatterns = patterns('',
-    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
-    url(r'^api/v1/weight/$', views.WashroomPost.as_view()),)
-
+    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.WeightGetDestroy.as_view()),
+    url(r'^api/v1/weight/$', views.WeightPost.as_view()),)
 
 biometricsprecisepatterns = patterns('',
     url(r'^api/v1/biometricsprecise/(?P<user_name>\w+)/$', views.GetBiometricsPrecise.as_view()),
@@ -42,5 +41,5 @@ restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
 restapiurlpatterns += biometricsprecisepatterns 
-#restapiurlpatterns += washroompatterns 
-#restapiurlpatterns += weightpatterns 
+restapiurlpatterns += washroompatterns 
+restapiurlpatterns += weightpatterns 

@@ -35,6 +35,8 @@ pip-delete-this-directory.txt
 
 # Vim swp file
 *.swp
+*.swn
+*.swo
 
 # SQLite3
 *.sqlite3
