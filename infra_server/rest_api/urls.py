@@ -34,6 +34,16 @@ biometricspatterns = patterns('',
         view = views.GetTimeUser.as_view()),
 )
 
+homeautomationpatterns = patterns('',
+    url(r'^api/v1/homeAutomation/$', views.HomeAutomationAPI.as_view()),
+    url(r'^api/v1/homeAutomation/(?P<user_name>\w+)/$', views.HomeAutomationUserUpdate.as_view()),
+)
+
+stresspatterns = patterns('',
+    url(r'^api/v1/stress/$', views.StressView.as_view()),
+    url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
+)    
+
 restapiurlpatterns = patterns('', 
 )
 
@@ -43,3 +53,5 @@ restapiurlpatterns += notificationpatterns
 restapiurlpatterns += biometricsprecisepatterns 
 restapiurlpatterns += washroompatterns 
 restapiurlpatterns += weightpatterns 
+restapiurlpatterns += homeautomationpatterns
+restapiurlpatterns += stresspatterns 

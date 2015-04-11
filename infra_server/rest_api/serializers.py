@@ -1,4 +1,4 @@
-from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight
+from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, Stress
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -62,3 +62,28 @@ class WeightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Weight 
+
+class HomeAutomationSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)  
+    tag_id = serializers.CharField(max_length = 255)  
+    signal_type = serializers.CharField(max_length = 255)  
+    current_value = serializers.IntegerField(required = False)  
+    required_value = serializers.IntegerField()  
+    mode = serializers.CharField(max_length = 255, required = False)  
+
+    class Meta:
+        model = HomeAutomation
+
+class StressSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    stress_score = serializers.DecimalField(required = False, max_digits = 15, decimal_places = 5)
+    skin_conductance = serializers.IntegerField(required = False)
+    duration = serializers.IntegerField(required = False)
+    number_relax_events = serializers.IntegerField(required = False)
+    number_stress_events = serializers.IntegerField(required = False)
+    number_steady_events = serializers.IntegerField(required = False)
+    time_recorded = serializers.DateTimeField(required = True)
+    time_received = serializers.DateTimeField(required = False)
+    
+    class Meta:
+        model = Stress

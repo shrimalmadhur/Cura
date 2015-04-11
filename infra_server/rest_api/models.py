@@ -59,3 +59,22 @@ class Weight(models.Model):
     time_recorded = models.DateTimeField()
     time_received = models.DateTimeField(auto_now = True)
     weight = models.IntegerField()
+
+class HomeAutomation(models.Model):
+    user_name = models.CharField(max_length = 255)
+    tag_id = models.CharField(max_length = 255)
+    signal_type = models.CharField(max_length = 255)
+    current_value = models.IntegerField()
+    required_value = models.IntegerField()
+    mode = models.CharField(max_length = 255)
+
+class Stress(models.Model):
+    user_name = models.CharField(max_length = 255)
+    stress_score = models.DecimalField( max_digits = 15, decimal_places = 5)
+    skin_conductance = models.IntegerField()
+    duration = models.IntegerField()
+    number_relax_events = models.IntegerField()
+    number_stress_events = models.IntegerField()
+    number_steady_events = models.IntegerField()
+    time_recorded = models.DateTimeField()
+    time_received = models.DateTimeField(auto_now = True)

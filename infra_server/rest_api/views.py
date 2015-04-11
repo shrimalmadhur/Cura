@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_api.models import Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom
-from rest_api.serializers import BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer
+from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, Stress)
+from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer,
+        WeightSerializer, WashroomSerializer, HomeAutomationSerializer, StressSerializer)
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -126,3 +127,35 @@ class GetTimeUser(generics.ListAPIView):
         filtered_objects = Biometrics.objects.filter(user_name= user_name)
         filtered_objects = filtered_objects.filter(time_recorded__gte = start_time, time_recorded__lte = end_time)
         return filtered_objects
+
+# Home Automation #
+class HomeAutomationAPI(generics.ListCreateAPIView):
+    serializer_class = HomeAutomationSerializer 
+
+    def get_queryset(self):
+        return HomeAutomation.objects.all()
+
+class HomeAutomationUserUpdate(generics.RetrieveUpdateAPIView):
+    serializer_class = HomeAutomationSerializer
+    lookup_field = 'user_name'
+
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = HomeAutomation.objects.filter(user_name = user_name)
+        return result
+
+# Stress #
+class StressView(generics.ListCreateAPIView):
+    serializer_class = StressSerializer
+
+    def get_queryset(self):
+        return Stress.objects.all()
+
+class StressByUser(generics.ListAPIView):
+    serializer_class = StressSerializer
+    lookup_field = 'user_name'
+
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = Stress.objects.filter(user_name = user_name)
+        return result
