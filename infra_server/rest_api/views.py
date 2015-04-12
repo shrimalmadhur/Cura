@@ -1,14 +1,72 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, Stress)
+from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, Stress, Events, Medication, Contacts)
 from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer,
-        WeightSerializer, WashroomSerializer, HomeAutomationSerializer, StressSerializer)
+        WeightSerializer, WashroomSerializer, HomeAutomationSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer)
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
 import httplib
+
+
+### Events ###
+
+# api/v1/events/#
+class EventsPost(generics.CreateAPIView):
+    serializer_class = EventsSerializer
+
+# api/v1/events/(userId) #
+class EventsByUser(generics.ListAPIView):
+    serializer_class = EventsSerializer
+    lookup_field = 'user_name'
+    
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = Events.objects.filter(user_name = user_name)
+        return result
+
+# Put/Delete based on id /medication_id
+#class EventsPutDestroy(APIView):
+    
+    #def delete(self, request, id):
+    #result = Events.objects.get(id = id)
+    #    result.delete()
+    #    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+### Medication ###
+
+# api/v1/medication (POST) #
+class MedicationPost(generics.CreateAPIView):
+    serializer_class = MedicationSerializer
+
+# api/v1/medication/(userId) #
+class MedicationByUser(generics.ListAPIView):
+    serializer_class = MedicationSerializer
+    lookup_field = 'user_name'
+    
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = Medication.objects.filter(user_name = user_name)
+        return result
+
+### Contacts ###
+
+# api/v1/contacts/ (POST) #
+class ContactsPost(generics.CreateAPIView):
+    serializer_class = ContactsSerializer
+
+# api/v1/contacts/(userId)  (GET) #
+class ContactsByUser(generics.ListAPIView):
+    serializer_class = ContactsSerializer
+    lookup_field = 'user_name'
+    
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = Contacts.objects.filter(user_name = user_name)
+        return result
 
 #  Weight #
 class WeightPost(generics.CreateAPIView):
@@ -129,11 +187,47 @@ class GetTimeUser(generics.ListAPIView):
         return filtered_objects
 
 # Home Automation #
-class HomeAutomationAPI(generics.ListCreateAPIView):
+class HomeAutomationPostGet(generics.ListCreateAPIView):
     serializer_class = HomeAutomationSerializer 
 
     def get_queryset(self):
         return HomeAutomation.objects.all()
+
+class HomeAutomationViewSet(viewsets.ModelViewSet):
+    serializer_class = HomeAutomationSerializer 
+
+    def get_queryset(self):
+        return HomeAutomation.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = HomeAutomationSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = HomeAutomation.objects.get(user_name = user_name, tag_id = request.data['tag_id'])
+        
+        current_value = result.current_value
+        mode = result.mode
+
+        if 'current_value' in request.data:
+                current_value = request.data['current_value']
+        if 'mode' in request.data:
+                mode = request.data['mode']
+
+        result.signal_type = request.data['signal_type']
+        result.current_value = current_value
+        result.required_value = request.data['required_value']
+        result.mode = mode 
+        result.save()
+
+        json_result = HomeAutomationSerializer(result)
+        return Response(json_result.data)
+
+    def destroy(self, request, user_name):
+        result = HomeAutomation.objects.filter(user_name = user_name)
+        result.delete()
+        return Response("Deleted Successfully")
 
 class HomeAutomationUserUpdate(generics.RetrieveUpdateAPIView):
     serializer_class = HomeAutomationSerializer

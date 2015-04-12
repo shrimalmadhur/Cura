@@ -1,6 +1,25 @@
 from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from rest_api import views
+#from rest_api import views_contacts
+
+homeautomation_list = views.HomeAutomationViewSet.as_view({
+        'get': 'list',
+        'put' : 'update',
+        'delete' : 'destroy',
+}) 
+
+contactspatterns = patterns('',
+                            url(r'^api/v1/contacts/(?P<user_name>\w+)/$', views.ContactsByUser.as_view()),
+                            url(r'^api/v1/contacts/$', views.ContactsPost.as_view()),)
+
+medicationpatterns = patterns('',
+                              url(r'^api/v1/medication/(?P<user_name>\w+)/$', views.MedicationByUser.as_view()),
+                              url(r'^api/v1/medication/$', views.MedicationPost.as_view()),)
+
+eventspatterns = patterns('',
+    url(r'^api/v1/events/(?P<user_name>\w+)/$', views.EventsByUser.as_view()),
+    url(r'^api/v1/events/$', views.EventsPost.as_view()),)
 
 washroompatterns = patterns('',
     url(r'^api/v1/washroom/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
@@ -35,8 +54,8 @@ biometricspatterns = patterns('',
 )
 
 homeautomationpatterns = patterns('',
-    url(r'^api/v1/homeAutomation/$', views.HomeAutomationAPI.as_view()),
-    url(r'^api/v1/homeAutomation/(?P<user_name>\w+)/$', views.HomeAutomationUserUpdate.as_view()),
+    url(r'^api/v1/homeAutomation/$', views.HomeAutomationPostGet.as_view()),
+    url(r'^api/v1/homeAutomation/(?P<user_name>\w+)/$', homeautomation_list),
 )
 
 stresspatterns = patterns('',
@@ -52,6 +71,9 @@ restapiurlpatterns += userpatterns
 restapiurlpatterns += notificationpatterns 
 restapiurlpatterns += biometricsprecisepatterns 
 restapiurlpatterns += washroompatterns 
-restapiurlpatterns += weightpatterns 
+restapiurlpatterns += weightpatterns
+restapiurlpatterns += eventspatterns
+restapiurlpatterns += medicationpatterns
+restapiurlpatterns += contactspatterns
 restapiurlpatterns += homeautomationpatterns
 restapiurlpatterns += stresspatterns 

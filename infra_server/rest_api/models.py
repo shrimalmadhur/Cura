@@ -78,3 +78,28 @@ class Stress(models.Model):
     number_steady_events = models.IntegerField()
     time_recorded = models.DateTimeField()
     time_received = models.DateTimeField(auto_now = True)
+
+class Contacts(models.Model):
+    user_name = models.CharField(max_length = 255)
+    contact_name = models.CharField(max_length = 255)
+    contact_phone = models.CharField(max_length = 255)
+    contact_mail = models.CharField(max_length = 255)
+    contact_role = models.CharField(max_length = 255)
+    contact_comments = models.CharField(max_length = 255)
+
+class Medication(models.Model):
+    user_name = models.CharField(max_length = 255)
+    created_by = models.CharField(max_length = 255)
+    instructions = models.CharField(max_length = 255)
+    schedule = models.CharField(max_length = 255)
+    drug_name = models.CharField(max_length = 255)
+    drug_details = models.CharField(max_length = 255)
+
+class Events(models.Model):
+    user_name = models.CharField(max_length = 255)
+    created_by = models.CharField(max_length = 255)
+    event_type = models.CharField(max_length = 255)
+    event_time = models.DateTimeField()
+    event_linked_users = models.CharField(max_length = 255)
+    description = models.CharField(max_length = 255)
+

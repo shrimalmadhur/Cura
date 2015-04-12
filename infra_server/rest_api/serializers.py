@@ -1,4 +1,4 @@
-from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, Stress
+from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, Stress, Contacts, Medication, Events
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -87,3 +87,37 @@ class StressSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Stress
+
+class ContactsSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    contact_name = serializers.CharField(max_length = 255)
+    contact_phone = serializers.CharField(max_length = 255, required = False)
+    contact_mail = serializers.CharField(max_length = 255, required = False)
+    contact_role = serializers.CharField(max_length = 255)
+    contact_comments = serializers.CharField(max_length = 255, required = False)
+
+    class Meta:
+        model = Contacts
+
+class MedicationSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    created_by = serializers.CharField(max_length = 255)
+    instructions = serializers.CharField(max_length = 255, required = False)
+    schedule = serializers.CharField(max_length = 255, required = False)
+    drug_name = serializers.CharField(max_length = 255)
+    drug_details = serializers.CharField(max_length = 255)
+
+    class Meta:
+        model = Medication
+
+class EventsSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    created_by = serializers.CharField(max_length = 255)
+    event_type = serializers.CharField(max_length = 255)
+    event_time = serializers.DateTimeField(required = True)
+    event_linked_users = serializers.CharField(max_length = 255)
+    description = serializers.CharField(max_length = 255)
+
+    class Meta:
+        model = Events
+
