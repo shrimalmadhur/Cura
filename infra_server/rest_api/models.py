@@ -59,3 +59,55 @@ class Weight(models.Model):
     time_recorded = models.DateTimeField()
     time_received = models.DateTimeField(auto_now = True)
     weight = models.IntegerField()
+
+class HomeAutomation(models.Model):
+    user_name = models.CharField(max_length = 255)
+    tag_id = models.CharField(max_length = 255)
+    signal_type = models.CharField(max_length = 255)
+    current_value = models.IntegerField()
+    required_value = models.IntegerField()
+    mode = models.CharField(max_length = 255)
+
+class MoodLight(models.Model):
+    user_name = models.CharField(max_length = 255)
+    device_id = models.CharField(max_length = 255)
+    bridge_ip_address = models.CharField(max_length = 255)
+    parameter = models.CharField(max_length = 255)
+    resource1 = models.CharField(max_length = 255)
+    resource2 = models.CharField(max_length = 255)
+    message = models.CharField(max_length = 255)
+
+class Stress(models.Model):
+    user_name = models.CharField(max_length = 255)
+    stress_score = models.DecimalField( max_digits = 15, decimal_places = 5)
+    skin_conductance = models.IntegerField()
+    duration = models.IntegerField()
+    number_relax_events = models.IntegerField()
+    number_stress_events = models.IntegerField()
+    number_steady_events = models.IntegerField()
+    time_recorded = models.DateTimeField()
+    time_received = models.DateTimeField(auto_now = True)
+
+class Contacts(models.Model):
+    user_name = models.CharField(max_length = 255)
+    contact_name = models.CharField(max_length = 255)
+    contact_phone = models.CharField(max_length = 255)
+    contact_mail = models.CharField(max_length = 255)
+    contact_role = models.CharField(max_length = 255)
+    contact_comments = models.CharField(max_length = 255)
+
+class Medication(models.Model):
+    user_name = models.CharField(max_length = 255)
+    created_by = models.CharField(max_length = 255)
+    instructions = models.CharField(max_length = 255)
+    schedule = models.CharField(max_length = 255)
+    drug_name = models.CharField(max_length = 255)
+    drug_details = models.CharField(max_length = 255)
+
+class Events(models.Model):
+    user_name = models.CharField(max_length = 255)
+    created_by = models.CharField(max_length = 255)
+    event_type = models.CharField(max_length = 255)
+    event_time = models.DateTimeField()
+    event_linked_users = models.CharField(max_length = 255)
+    description = models.CharField(max_length = 255)
