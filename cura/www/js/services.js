@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ngResource'])
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
@@ -100,18 +100,34 @@ angular.module('starter.services', [])
   }
 })
 
-.factory('Visuals', function() {
-  var data = [];
+.factory('Visuals', function($resource) {
+  /*var data = [];
   for (var i = 0; i < 100; i++) {
                 data.push({x: i, y: Math.sin(i/10)});   
-            }
-  return {
+             }*/
+  //console.log($resource('http://128.2.109.230:4001/sleep'));
+  console.log("called");
+  return $resource('http://128.2.109.230:4001/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
+    'query': 
+    {
+        method:'JSONP', 
+        params:{}, 
+        isArray:true
+    },
+    'bp': 
+    {
+        method:'JSONP', 
+        params:{}, 
+        isArray:true
+    }
+  })/*{
     all: function() {
-      return data;
+      //return data;
+      return $resource('http://128.2.109.230:4001/sleep');
     },
     get: function(friendId) {
       // Simple index lookup
       return null;
     }
-  }
+  }*/
 });
