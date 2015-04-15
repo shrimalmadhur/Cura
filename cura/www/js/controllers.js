@@ -58,6 +58,10 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   }
 })
 
+.controller('StressCtrl', function($scope, Stress) {
+  
+})
+
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
   $scope.friend = Friends.get($stateParams.friendId);
 })
@@ -77,8 +81,9 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
   
   $scope.update = function(){
-    
-    $scope.updateWithParams(0,0);
+    $scope.vOption.period.value = moment().format("M/D/YY");
+    $scope.dayfn(0);
+    //$scope.updateWithParams(0,0);
     /*$scope.vOption.title.text = $scope.vOption.menuSelect.name+" Chart";
     $scope.vOption.chart.yAxis.axisLabel = $scope.vOption.menuSelect.yAxisLabel;
 
@@ -112,34 +117,102 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     }); 
   }
 
-  $scope.day = function(){
-    var fd = new Date();
-    var y = fd.getFullYear();
-    var m = fd.getMonth();
-    var d = fd.getDate();
-    var currentDay = y+"-"+m+"-"+d+"T00:00:00.000000Z";
-    var nd = new Date();
-    nd.setDate(d+10);
-    var nextDay = y+"-"+m+"-"+nd.getDate()+"T00:00:00.000000Z";
-    console.log(currentDay+"  "+nextDay);
+
+  $scope.dayfn = function(date_v){
+    //$scope.current = new moment();
+    console.log(date_v);
+    $scope.vOption.periodType = 0;
+    var temp = {start:0, end:0};
+    if (date_v == 0) {
+      temp = getDateRange(new moment(), "day");
+      $scope.day.tracker = 0;
+    }else{
+      temp = getDateRange(date_v, "day");
+    }
+    
+    $scope.day.start = temp.start;
+    $scope.day.end = temp.end;
+    console.log($scope.day);
+    $scope.updateWithParams($scope.day.start, $scope.day.end);
+    $scope.vOption.period.value = temp.start.format("M/D/YY");
   }
   
-  $scope.week = function(){
-    console.log("week"); 
+  $scope.weekfn = function(){
+    $scope.vOption.periodType = 1;
+    //var now = moment().day(7);
+    //var newStart = getFormatted(-7,0, );
+    //console.log($scope.today.month()); 
+    //console.log($scope.today.year()); 
+    //console.log(getMonthDateRange($scope.today.year(), $scope.today.month()));
   }
 
-  $scope.month = function(){
+  $scope.monthfn = function(){
     console.log("month");
+    $scope.vOption.periodType = 2;
   }
 
-  $scope.next = function(){
+  $scope.nextfn = function(){
     console.log("next");
+    $scope.day.tracker++;
+    console.log($scope.day.tracker);
+    var temp = moment().add($scope.day.tracker,'d');
+    $scope.dayfn(temp);
   }
 
-  $scope.prev = function(){
+  $scope.prevfn = function(){
     console.log("prev");
+    $scope.day.tracker--;
+    console.log($scope.day.tracker);
+    var temp = moment().add($scope.day.tracker,'d');
+    $scope.dayfn(temp);
+    
   }
 
+  function getMonthDateRange(year, month) {
+
+    // month in moment is 0 based, so 9 is actually october, subtract 1 to compensate
+    // array is 'year', 'month', 'day', etc
+    var startDate = moment([year, month]);
+
+    // Clone the value before .endOf()
+    var endDate = moment(startDate).endOf('month');
+
+    // just for demonstration:
+    //console.log(startDate.toDate());
+    //console.log(endDate.toDate());
+
+    // make sure to call toDate() for plain JavaScript date type
+    return { start: startDate, end: endDate };
+  }
+
+  function getDateRange(date_v, attr){
+    var startDate = moment(date_v).startOf(attr);
+    var endDate = moment(startDate).endOf(attr)
+    return { start: startDate, end: endDate };
+  }
+  
+  //$scope.curr = moment();
+  /*$scope.day = getDateRange($scope.current, "day");
+  $scope.day.tracker = 0;
+  $scope.week = getDateRange($scope.curr);
+  $scope.week.tracker = 0;
+  $scope.month = getMonthDateRange($scope.current.year(), $scope.current.month());
+  $scope.month.tracker = 0;*/
+  $scope.day = {
+            start: 0,
+            end: 0,
+            tracker:0
+            };
+  $scope.week = {
+            start: 0,
+            end: 0,
+            tracker:0
+            };
+  $scope.month = {
+            start: 0,
+            end: 0,
+            tracker:0
+            };
   $scope.visuals = [{values:$scope.entries, key:'Test Wave', color: '#ff7f0e'}];
   $scope.vOption = {
             chart: {
@@ -175,6 +248,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
                 }
             },
             period:{ value: new Date()},
+            periodType: 0, //0 is day, 1 is week and 2 is month
             title: {
                 enable: false,
                 text: 'Line Chart Sample 1'
@@ -199,6 +273,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
         
         $scope.vOption.menuSelect = $scope.items[0];
         $scope.update();
+        //$scope.dayfn(0);
 })
 
 .controller('MedicationsCtrl', function($scope, $stateParams, $ionicModal, $cordovaLocalNotification, Medications){

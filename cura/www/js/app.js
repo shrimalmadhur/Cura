@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'nvd3'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'nvd3','angularMoment'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -115,6 +115,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'tab-medication': {
         templateUrl: 'templates/tab-medication.html',
         controller: 'MedicationsCtrl'
+      }
+    }
+  })
+
+  .state('tab.stress', {
+    url: '/stress',
+    views: {
+      'tab-stress': {
+        templateUrl: 'templates/tab-stress.html',
+        controller: 'StressCtrl'
       }
     }
   })

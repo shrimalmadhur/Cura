@@ -100,6 +100,19 @@ angular.module('starter.services', ['ngResource'])
   }
 })
 
+.factory('Stress', function() {
+  var friends = [];
+  return {
+    all: function() {
+      return friends;
+    },
+    get: function(friendId) {
+      // Simple index lookup
+      return friends[friendId];
+    }
+  }
+})
+
 .factory('Visuals', function($resource) {
   /*var data = [];
   for (var i = 0; i < 100; i++) {
