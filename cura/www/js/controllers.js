@@ -194,10 +194,11 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 })
 
 .controller('HomeCtrl', function($scope, $http, $timeout) {
+  var url = "http://128.2.83.208:8006/api/v1/homeautomation/ha_user/";
   // init
-  //$http.get(url).success(function(data){
+  $http.get(url).success(function(data){
     //update settings with data
-  //});
+  });
 
   $scope.settings = {
     tvSwitch: true,
@@ -208,10 +209,16 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     }
   };
 
-  // TV Swtich
+  // TV Swtich, 1155B6
   $scope.$watch('settings.tvSwitch', function() {
     console.log('TV changed:' + $scope.settings.tvSwitch);
-    // make http call
+    $http.put(url, JSON.stringify({
+      user_name: "ha_user",
+      tag_id: "1155B6",
+      signal_type: "swtich",
+      current_value: 0,
+      required_value: $scope.settings.tvSwitch ? 0 : 1
+    }))
   });
 
   //temprature
