@@ -106,9 +106,20 @@
       </label>
 
       <div class="item item-divider">Temperature</div>
+      <ion-item class="item-toggle"> Mode: {{settings.mode()}}
+        <label class="toggle">
+          <input type="checkbox" ng-model="settings.isHeating">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item>
+        Temprature: <span class="badge">{{settings.temprature}} &deg;F</span>
+      </ion-item>
       <div class="item range range-positive">
         <i class="icon ion-ios7-rainy-outline"></i>
-        <input type="range" name="volume" min="0" max="100" value="33">
+        <input type="range" name="volume" min="60" max="90" ng-model="settings.temprature">
         <i class="icon ion-ios7-sunny"></i>
       </div>
     </ion-list>

@@ -195,6 +195,11 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 
 .controller('HomeCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    enableFriends: true,
+    isHeating: true,
+    temprature: 70,
+    mode: function(){
+      return $scope.settings.isHeating ? "Heating" : "Cooling";
+    }
   };
 });
