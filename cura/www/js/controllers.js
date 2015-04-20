@@ -193,13 +193,49 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   console.log(Medications.all())
 })
 
-.controller('HomeCtrl', function($scope) {
+.controller('HomeCtrl', function($scope, $http, $timeout) {
+  // init
+  //$http.get(url).success(function(data){
+    //update settings with data
+  //});
+
   $scope.settings = {
-    enableFriends: true,
+    tvSwitch: true,
     isHeating: true,
     temprature: 70,
     mode: function(){
       return $scope.settings.isHeating ? "Heating" : "Cooling";
     }
   };
+
+  // TV Swtich
+  $scope.$watch('settings.tvSwitch', function() {
+    console.log('TV changed:' + $scope.settings.tvSwitch);
+    // make http call
+  });
+
+  //temprature
+  var timeoutId = null;
+  $scope.$watch('settings.temprature', function() {
+    //console.log('Has changed');
+        if(timeoutId !== null) {
+            //console.log('Ignoring this movement');
+            return;
+        }
+        //console.log('Not going to ignore this one');
+        timeoutId = $timeout( function() {
+            console.log('It changed recently!');
+            $timeout.cancel(timeoutId);
+            timeoutId = null;
+            // Now load data from server, check url and params
+            url = "/api/v1/home_automation";
+            data = {
+              user_name: 'ha_user',
+              tag_id: '111',
+              current_value: 0,
+              required_value: 1
+          }
+            //$http.put(url, JSON.stringify(data));
+        }, 1000); 
+  });
 });
