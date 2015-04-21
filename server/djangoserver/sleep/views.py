@@ -42,12 +42,12 @@ class DayGraph(APIView):
         session_end__month=dt.month, session_end__day=dt.day).order_by('session_end')
 
     if dtype == 'cycle':
-      ret = {'values': []}
+      ret = {'values': [], 'key': 'cycle'}
       for s in sessions:
         cycles = s.time_series_data.filter(data_type=TSData.TYPE_CYCLE).order_by('timestamp')
         values = [ {'x': c.int_timestamp, 'y': c.value} for c in cycles ]
         ret['values'] = ret['values'] + values
-      return Response(ret)
+      return Response([ret])
     else:
       raise Http404()
 
@@ -66,7 +66,7 @@ class RangeGraph(APIView):
 
     if dtype == 'score':
       scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
-      return Response({'values': scores})
+      return Response([{'values': scores, 'key': 'score'}])
     else:
       raise Http404()
 
