@@ -1,15 +1,24 @@
 <ion-view view-title="Medication">
   <ion-content>
 
-    <button class="button button-full button-assertive" ng-click="openModal()"> Add Medication </button>
 
     <ion-list>
-      <ion-item class="item-avatar" ng-repeat="medication in medications" type="item-text-wrap" href="#/tab/medication/{{medication._id}}">
-        <img ng-src="http://placehold.it/50x50">
-        <h2>{{medication.drugName}}</h2>
-        <h5>{{medication.instructions}}</h5>
 
-      </ion-item>
+
+      <a class="item item-thumbnail-left" ng-repeat="medication in medications" type="item-text-wrap" href="#/tab/medication/{{medication._id}}" >
+        <img ng-src="http://placehold.it/100x100">
+        <h2>{{medication.drugName}}</h2>
+        <p>{{medication.instructions}}</p>
+      </a>
+
     </ion-list>
+
+
+
   </ion-content>
+
+  <ion-footer-bar align-title="right" >
+    <button id="circleButton" ng-click="openModal()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
+  </ion-footer-bar>
+
 </ion-view>

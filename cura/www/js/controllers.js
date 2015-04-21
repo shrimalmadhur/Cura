@@ -196,12 +196,10 @@ angular.module('starter.controllers', ['ngCordova'])
   };
 
   $scope.updateMedications = function(){
-    console.log("UPDATING MEDICATIONS");
     $scope.medications = Medication.query(function(){
       console.log($scope.medications);
       $scope.$apply();
     });
-    
   }
 
   $scope.$on('$destroy', function() {
@@ -211,10 +209,8 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('MedicationDetailCtrl', function($scope, $stateParams, Medication) {
-
   $scope.medication = {};
   $scope.medication = Medication.get({id: $stateParams.medicationId});
-
 })
 
 .controller('HomeCtrl', function($scope) {
