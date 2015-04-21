@@ -1,11 +1,11 @@
 angular.module('starter.services', ['ngResource'])
 
 
-.factory('Forms', function() {
+.factory('Forms', function ($resource) {
   return $resource('/api/v1/Forms/:id');
 })
 
-.factory('Resources', function () {
+.factory('Resources', function ($resource) {
   return $resource('/api/v1/Resources/:id');
 })
 
