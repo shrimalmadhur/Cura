@@ -1,3 +1,4 @@
+from time import mktime
 from django.db import models
 from django.contrib.auth.models import User
 from encrypted_fields import EncryptedTextField
@@ -35,6 +36,15 @@ class SleepSession(models.Model):
   score_sleep_efficiency = models.SmallIntegerField(null=True, blank=True)
   score_awakening = models.SmallIntegerField(null=True, blank=True)
 
+  @property
+  def total_score(self):
+    score = self.score_amount_sleep + self.score_sleep_efficiency + self.score_awakening
+    score += self.score_awakening + self.score_snoring
+    return score
+
+  @property
+  def int_session_end(self):
+    return int(mktime(self.session_end.timetuple()))
 
 # timeseries data from beddit
 class TSData(models.Model):
@@ -56,3 +66,6 @@ class TSData(models.Model):
   timestamp = models.DateTimeField()
   value = models.FloatField()
 
+  @property
+  def int_timestamp(self):
+    return int(mktime(self.timestamp.timetuple()))
