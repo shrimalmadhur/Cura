@@ -119,8 +119,9 @@ angular.module('starter.services', ['ngResource'])
                 data.push({x: i, y: Math.sin(i/10)});   
              }*/
   //console.log($resource('http://128.2.109.230:4001/sleep'));
+  //http://128.2.109.230:4001/:attr/:sd/:ed
   console.log("called");
-  return $resource('http://128.2.109.230:4001/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
+  return $resource('http://128.2.83.208:9000/api/v1/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
     'query': 
     {
         method:'JSONP', 
@@ -133,14 +134,5 @@ angular.module('starter.services', ['ngResource'])
         params:{}, 
         isArray:true
     }
-  })/*{
-    all: function() {
-      //return data;
-      return $resource('http://128.2.109.230:4001/sleep');
-    },
-    get: function(friendId) {
-      // Simple index lookup
-      return null;
-    }
-  }*/
+  })
 });

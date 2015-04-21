@@ -69,13 +69,15 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 .controller('VisualCtrl', function($scope, $stateParams, Visuals) {
   
   $scope.items = [
-            {id:0,urlName:"sleep", name:"Sleep", yAxisLabel:"Phases"},
-            {id:1,urlName:"bp",name:"Blood Pressure", yAxisLabel:"bp level"},
-            {id:2, urlName:"rr",name: "Respiration Rate", yAxisLabel:"rr level"},
-            {id:3, urlName:"wgt",name: "Weight over time", yAxisLabel:"Lbs"},
-            {id:4, urlName:"multi",name: "Heart Rate", yAxisLabel:"beats/mins"},
-            {id:5, urlName:"stress",name: "Stress", yAxisLabel:"Stress Units"},
-            {id:6, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
+            {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases"},
+            {id:1,urlName:"rr", name:"Resting Heart Rate", yAxisLabel:"beats/min"},
+            {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:""},
+            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"bp level"},
+            {id:4, urlName:"rr",name: "Respiration Rate", yAxisLabel:"rr level"},
+            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Lbs"},
+            {id:6, urlName:"multi",name: "Heart Rate", yAxisLabel:"beats/mins"},
+            {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Units"},
+            {id:8, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
             ];
   
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
@@ -109,8 +111,9 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
-
-    $scope.visuals = Visuals.bp({attr:$scope.vOption.menuSelect.urlName,sd:"2013-01-29T00:00:00.000000Z", ed:"2013-01-30T00:00:00.000000Z"}, function(){  
+    console.log("Hi");
+    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed}, function(){  
+      console.log("Inside");
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
       };
@@ -120,6 +123,9 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 
   $scope.dayfn = function(date_v){
     //$scope.current = new moment();
+    $scope.dayClass = "button button-calm";
+    $scope.weekClass = "button button-light";
+    $scope.monthClass = "button button-light";
     console.log(date_v);
     $scope.vOption.periodType = 0;
     var temp = {start:0, end:0};
@@ -132,13 +138,29 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     
     $scope.day.start = temp.start;
     $scope.day.end = temp.end;
-    console.log($scope.day);
-    $scope.updateWithParams($scope.day.start, $scope.day.end);
+    console.log($scope.day.start.format("YYYY/M/D"));
+    $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), "");
     $scope.vOption.period.value = temp.start.format("M/D/YY");
   }
   
-  $scope.weekfn = function(){
+  $scope.weekfn = function(date_v){
+    $scope.dayClass = "button button-light";
+    $scope.weekClass = "button button-calm";
+    $scope.monthClass = "button button-light";
     $scope.vOption.periodType = 1;
+    var temp = {start:0, end:0};
+    if (date_v == 0) {
+      temp = getDateRange(new moment(), "week");
+      $scope.day.tracker = 0;
+    }else{
+      temp = getDateRange(date_v, "week");
+    }
+    
+    $scope.day.start = temp.start;
+    $scope.day.end = temp.end;
+    console.log($scope.day.start.format("YYYY/M/D")+" AP "+$scope.day.end.format("YYYY/M/D"));
+    $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), $scope.day.end.format("YYYY-MM-DD"));
+    $scope.vOption.period.value = temp.start.format("M/D/YY")+" to "+temp.end.format("M/D/YY"); 
     //var now = moment().day(7);
     //var newStart = getFormatted(-7,0, );
     //console.log($scope.today.month()); 
@@ -148,24 +170,50 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 
   $scope.monthfn = function(){
     console.log("month");
+    $scope.dayClass = "button button-light";
+    $scope.weekClass = "button button-light";
+    $scope.monthClass = "button button-calm";
     $scope.vOption.periodType = 2;
   }
 
   $scope.nextfn = function(){
     console.log("next");
-    $scope.day.tracker++;
-    console.log($scope.day.tracker);
-    var temp = moment().add($scope.day.tracker,'d');
-    $scope.dayfn(temp);
+    if ($scope.vOption.periodType == 0) {
+      $scope.day.tracker++;
+      console.log("Day tracker: "+$scope.day.tracker);
+      var temp = moment().add($scope.day.tracker,'d');
+      console.log(temp);
+      $scope.dayfn(temp);
+    }else if ($scope.vOption.periodType == 1) {
+      $scope.week.tracker += 7;
+      console.log("Week tracker: "+$scope.week.tracker);
+      var temp = moment().add($scope.week.tracker,'d');
+      console.log(temp);
+      $scope.weekfn(temp);
+    }else{
+
+    }
+    
   }
 
   $scope.prevfn = function(){
     console.log("prev");
-    $scope.day.tracker--;
-    console.log($scope.day.tracker);
-    var temp = moment().add($scope.day.tracker,'d');
-    $scope.dayfn(temp);
-    
+    if ($scope.vOption.periodType == 0) {
+      $scope.day.tracker--;
+      console.log("day tracker: "+$scope.day.tracker);
+      var temp = moment().add($scope.day.tracker,'d');
+      console.log(temp);
+      $scope.dayfn(temp);
+    }else if ($scope.vOption.periodType == 1) {
+      $scope.week.tracker -= 7;
+      console.log("Week tracker: "+$scope.week.tracker);
+      var temp = moment().add($scope.week.tracker,'d');
+      console.log(temp);
+      $scope.weekfn(temp);
+    }else{
+      
+    }
+        
   }
 
   function getMonthDateRange(year, month) {
@@ -234,7 +282,10 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
                     tooltipHide: function(e){ console.log("tooltipHide"); }*/
                 },
                 xAxis: {
-                    axisLabel: 'Time (ms)'
+                    axisLabel: 'Time (ms)',
+                    tickFormat: function(d){
+                        return d3.time.format("%I:%M %p %a %Y")(new Date(d*1000))
+                    }
                 },
                 yAxis: {
                     axisLabel: 'Voltage (v)',
@@ -273,6 +324,9 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
         
         $scope.vOption.menuSelect = $scope.items[0];
         $scope.update();
+        $scope.dayClass = "button button-calm";
+        $scope.weekClass = "button button-light";
+        $scope.monthClass = "button button-light";
         //$scope.dayfn(0);
 })
 
