@@ -19,6 +19,21 @@
 			    <textarea placeholder="Instructions" ng-model="newMedication.instructions"></textarea>
 			  </label>
 
+			  <!-- <div class="calendar" style="display: inline-flex"> -->
+			  <ionic-time-picker etime="slots.epochTime" format="slots.format" step="slots.step">
+			  	<button class="button button-full button-positive" ng-model="newMedication.time">{{formattedDate(slots.epochTime) | date: 'shortTime'}}
+			  	</button>
+				</ionic-time-picker>
+				<label class="item item-input item-select">
+				    <div class="input-label">
+				      Frequency
+				    </div>
+				    <select ng-model="newMedication.frequency">
+				      <option>Daily</option>
+				      <option selected>Weekly</option>
+				    </select>
+  				</label>
+  			<!-- </div> -->
 			</div>
 
 
