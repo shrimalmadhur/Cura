@@ -1,0 +1,82 @@
+<ion-view view-title="Health Monitor">
+  <ion-content>
+	<div class="button-bar">
+	  <!--<a class="button button-light" ng-click="dayfn(0)">Day</a>
+	  <a class="button button-light" ng-click="weekfn(0)">Week</a>
+	  <a class="button button-light" ng-click="monthfn(0)">Month</a>-->
+	  <a ng-class="dayClass" ng-click="dayfn(0)">Day</a>
+	  <a ng-class="weekClass" ng-click="weekfn(0)">Week</a>
+	  <a ng-class="monthClass" ng-click="monthfn(0)">Month</a>
+	</div>
+
+	<div class="list">
+
+	  <label class="item item-input item-select">
+	    <div class="input-label">
+	     &nbsp
+	    </div>
+	    <select ng-model="vOption.menuSelect" ng-options="item as item.name for item in items" ng-change="update()">
+	    </select>
+	  </label>
+
+	</div>
+	<div class="list card">
+		<!--<div class="item item-divider">
+		    {{vOption.title.text}}
+		</div>-->
+	  
+
+	  <div class="item tabs tabs-secondary tabs-icon-left">
+	    <a class="tab-item" href="#">
+	      <i class="button icon-left ion-chevron-left button-clear button-dark"  ng-click="prevfn()"></i>
+	      
+	    </a>
+	    <a class="tab-item">
+	      {{vOption.period.value}}
+	    </a>
+	    <a class="tab-item" href="#">
+	      <i class="button icon-right ion-chevron-right button-clear button-dark"  ng-click="nextfn()"></i>
+	      
+	    </a>
+	  </div>
+	  <nvd3 options="vOption" data="visuals" class="with-3d-shadow with-transitions" config="{refreshDataOnly: true}"></nvd3>
+	</div>
+
+	<div class="list" ng-show="sleepDisplay">
+		<a class="item item-icon-left item-divider" href="#">
+		    <i class="icon ion-podium"></i>
+		    Sleep Score
+		    <span class="badge badge-royal">68</span>
+		</a>
+		<a class="item">
+			<h2>Sleep Time</h2>
+			<p>7h 36min</p>
+		</a>
+		<a class="item">
+			<h2>Time taken to fall asleep</h2>
+			<p>36 Minutes</p>
+		</a>
+		<a class="item">
+			<h2>Bathroom exits</h2>
+			<p>Count: 1</p>
+		</a>
+		<a class="item">
+			<h2>Bed exits</h2>
+			<p>Count: 2</p>
+		</a>
+		<a class="item">
+			<h2>Respiration Rate</h2>
+			<p>15 breaths/min</p>
+		</a>
+	</div>
+
+	<!--<div class="card" ng-show="sleepDisplay">
+	  <div class="item item-divider">
+	    Sleep Latency
+	  </div>
+	  <div class="item item-text-wrap">
+	    36 minutes
+	  </div>
+	</div>-->
+  </ion-content>
+</ion-view>

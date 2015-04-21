@@ -3,7 +3,9 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-only tabs-color-active-positive">
+
+<ion-tabs class="tabs-icon-top tabs-background-positive tabs-color-light">
+
 
 
   <!-- Dashboard Tab -->
@@ -23,6 +25,10 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="tab-medication"></ion-nav-view>
   </ion-tab>
   
+  <!-- Stress Tab -->
+  <ion-tab title="Stress" icon-off="ion-help-buoy" icon-on="ion-help-buoy" href="#/tab/stress">
+    <ion-nav-view name="tab-stress"></ion-nav-view>
+  </ion-tab>
 
   <!-- Virtual Coatch Tab -->
   <ion-tab title="Coach" icon-off="ion-help-circled" icon-on="ion-help-circled" href="#/tab/coach">
@@ -39,5 +45,12 @@ navigation history that also transitions its views in and out.
   <ion-tab title="Settings" icon-off="ion-ios7-settings" icon-on="ion-ios7-settings" href="#/tab/settings">
     <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
+
+  <!-- Visulation Tab -->
+  <ion-tab title="Health Monitor" icon-off="ion-ios7-gear-outline" icon-on="ion-ios7-gear" href="#/tab/visual">
+    <ion-nav-view name="tab-visualization"></ion-nav-view>
+  </ion-tab>
+
+
 
 </ion-tabs>
