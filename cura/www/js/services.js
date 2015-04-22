@@ -2,15 +2,30 @@ angular.module('starter.services', ['ngResource'])
 
 
 .factory('Forms', function ($resource) {
-  return $resource('/api/v1/Forms/:id');
+  //return $resource('/api/v1/Forms/:id');
+  return {
+    all: function(){
+      return [];
+    }
+  }
 })
 
 .factory('Resources', function ($resource) {
-  return $resource('/api/v1/Resources/:id');
+  // return $resource('/api/v1/Resources/:id');
+  return {
+    all: function(){
+      return [];
+    }
+  }
 })
 
-.factory("Medication", function ($resource){
-  return $resource('/api/v1/Medications/:id', { id: '@_id'});
+.factory("Medications", function ($resource){
+  //return $resource('/api/v1/Medications/:id', { id: '@_id'});
+  return {
+    all: function(){
+      return [];
+    }
+  }
 })
 
 .factory('Friends', function() {

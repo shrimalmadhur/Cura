@@ -70,41 +70,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
 
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
 
-  .state('tab.friends', {
-      url: '/friends',
+
+  .state('tab.contacts', {
+      url: '/contacts',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
+        'tab-contacts': {
+          templateUrl: 'templates/tab-contacts.html',
+          controller: 'ContactsCtrl'
         }
       }
     })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
+    .state('tab.contact-detail', {
+      url: '/contact/:contactId',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
+        'tab-contacts': {
+          templateUrl: 'templates/contact-detail.html',
+          controller: 'ContactDetailCtrl'
         }
       }
     })
@@ -116,10 +99,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'tab-home': {
         templateUrl: 'templates/tab-home.html',
-        // controller: 'HomeCtrl'
+        controller: 'HomeCtrl'
       }
     }
   })
+
+  // TODO: Change this to monitor
   .state('tab.visualization', {
     url: '/visual',
     views: {
@@ -140,15 +125,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.stress', {
-    url: '/stress',
-    views: {
-      'tab-stress': {
-        templateUrl: 'templates/tab-stress.html',
-        controller: 'StressCtrl'
-      }
-    }
-  })
+  // .state('tab.stress', {
+  //   url: '/stress',
+  //   views: {
+  //     'tab-stress': {
+  //       templateUrl: 'templates/tab-stress.html',
+  //       controller: 'StressCtrl'
+  //     }
+  //   }
+  // })
 
   .state('tab.medication-detail', {
     url: '/medication/:medicationId',
@@ -159,7 +144,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-
 
   .state('tab.coach', {
     url: '/coach',
