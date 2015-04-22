@@ -70,14 +70,16 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   
   $scope.items = [
             {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases"},
-            {id:1,urlName:"rr", name:"Resting Heart Rate", yAxisLabel:"beats/min"},
+            {id:1,urlName:"rhr", name:"Resting Heart Rate", yAxisLabel:"beats/min"},
             {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:""},
-            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"bp level"},
-            {id:4, urlName:"rr",name: "Respiration Rate", yAxisLabel:"rr level"},
-            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Lbs"},
-            {id:6, urlName:"multi",name: "Heart Rate", yAxisLabel:"beats/mins"},
+            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"millimeters of mercury"},
+            {id:4, urlName:"rr",name: "Respiration Rate", yAxisLabel:"breaths/min"},
+            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Kgs"},
+            {id:6, urlName:"hr",name: "Heart Rate", yAxisLabel:"beats/mins"},
             {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Units"},
-            {id:8, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
+            {id:8, urlName:"bo",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %"},
+            {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits"},
+            {id:10, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
             ];
   
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
@@ -112,7 +114,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
     console.log("Hi");
-    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed}, function(){  
+    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:"ed"}, function(){  
       console.log("Inside");
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];

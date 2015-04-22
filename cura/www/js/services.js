@@ -121,7 +121,9 @@ angular.module('starter.services', ['ngResource'])
   //console.log($resource('http://128.2.109.230:4001/sleep'));
   //http://128.2.109.230:4001/:attr/:sd/:ed
   console.log("called");
-  return $resource('http://128.2.83.208:9000/api/v1/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
+  //http://128.2.109.230:4001/
+  //http://128.2.83.208:9000/api/v1/:attr/:sd/:ed
+  return $resource('http://128.2.109.230:4001/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
     'query': 
     {
         method:'JSONP', 
