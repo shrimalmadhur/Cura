@@ -70,9 +70,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-
-
-
   .state('tab.contacts', {
       url: '/contacts',
       views: {
@@ -181,11 +178,3 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 })
 
-.controller('SignInCtrl', function($scope, $state) {
-  
-  $scope.signIn = function(user) {
-    console.log('Sign-In', user);
-    $state.go('tab.dash');
-  };
-  
-});
