@@ -3,6 +3,7 @@ from rest_framework import serializers
 from StringIO import StringIO
 from django.contrib.auth.models import User
 import json
+import ast
 
 class UserSerializer(serializers.Serializer):
     class Meta:
@@ -42,12 +43,14 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
     timestamp_month = serializers.IntegerField(required = False)
     timestamp_msofday = serializers.IntegerField(required = False)
     samples_per_packet = serializers.IntegerField(required = False)
+    sample = serializers.CharField(required = False)
 
     def create(self, validated_data):
-        print ('Validated data before ' , validated_data)
-        print ('Validated data before samples ', validated_data['samples'])
-        io = StringIO()
-        validated_data['samples'] = json.dump(validated_data['samples'], io)
+        #print ('Validated data before samples ', validated_data['samples'])
+        char_to_dict = ast.literal_eval( validated_data['samples'] ) 
+        validated_data['samples'] = json.dumps( char_to_dict )
+        #io = StringIO()
+        #validated_data['samples'] = json.dumps(validated_data['samples'], io)
         print ('Validated data after samples ' , validated_data['samples'])
         return BiometricsPrecise(**validated_data)
 
