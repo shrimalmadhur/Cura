@@ -51,7 +51,6 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
         validated_data['samples'] = json.dumps( char_to_dict )
         #io = StringIO()
         #validated_data['samples'] = json.dumps(validated_data['samples'], io)
-        print ('Validated data after samples ' , validated_data['samples'])
         return BiometricsPrecise(**validated_data)
 
     class Meta:

@@ -187,20 +187,14 @@ class ContactsPost(generics.ListCreateAPIView):
     serializer_class = ContactsSerializer
 
 #  Weight #
-class WeightPost(generics.CreateAPIView):
+class GetWeight(generics.ListAPIView):
     serializer_class = WeightSerializer 
 
-class WeightGetDestroy(APIView):
-    
-    def get(self, request, user_name):
-        result = Weight.objects.filter(user_name = user_name)
-        serialized = WeightSerializer(result)
-        return Response(serialized)
+    def get_queryset(self):
+        return Weight.objects.filter(user_name = self.kwargs['user_name'])
 
-    def delete(self, request, user_name):
-        result = Weight.objects.get(user_name = user_name)
-        result.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class PostWeight(generics.CreateAPIView):
+    serializer_class = WeightSerializer 
 
 #  Washroom #
 class WashroomPost(generics.CreateAPIView):
