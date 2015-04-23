@@ -1,56 +1,147 @@
-  <div class="modal" >
+<div class="modal">
     <ion-header-bar>
-      <h1 class="title">Add Medications</h1>
+
+        <button class="button button-clear" ng-click="resetForm()"> Reset </button>
+        <h1 class="title">Add Medications</h1>
+        <button class="button button-clear" ng-click="cancelForm()"> Cancel </button>
+
     </ion-header-bar>
-    <ion-content>
+    <ion-content class="has-header has-footer">
+
+        <div class="item item-input-inset" ng-if="!newMedicationSelected()">
+            <label class="item-input-wrapper">
+                <form novalidate class="simple-form">
+                    <input type="text" placeholder="Search FDA..." ng-model="search.query">
+                </form>
+            </label>
+            <button ng-click="searchButtonClicked()" class="button icon-left ion-search">
+                Search
+            </button>
+        </div>
+
+        <div class="list list-inset" ng-if="!newMedicationSelected()">
+            <div class="item" ng-repeat="item in searchResults track by $index" ng-click="searchResultSelected($index)"
+            ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}" >
+                <h2> {{item.openfda.brand_name[0]}} </h2>
+                <h3> {{ item.openfda.generic_name[0] }} </h3>
+            </div>
+        </div>
+
+        <div class="list" ng-if="newMedicationSelected()">
+
+            <div class="item item-divider">
+                Drug Infomation
+            </div>
+
+
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Brand Name</span>
+                <input type="text" placeholder="Brand Name" ng-model="newMedication.openfda.brand_name[0]">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Drug Name</span>
+                <input type="text" placeholder="Drug Name" ng-model="newMedication.openfda.generic_name[0]">
+            </label>
+
+            <div class="item item-divider">
+                Schedule
+            </div>
+
+
+            <span class="input-label"> &nbsp Instructions </span>
+            <label class="item item-input item-floating-label">
+                <textarea ng-model="newMedication.instructions" type="text" rows="3" placeholder="Instructions" > </textarea>
+            </label>
+
+
+            <div class="item item-divider">
+                <div class="button-bar">
+                    <a class="button" ng-class="{'button-positive': newMedicationSchedule.scheduled}" ng-click="setScheduled(true)">Scheduled</a>
+                    <a class="button" ng-class="{'button-positive': !newMedicationSchedule.scheduled}" ng-click="setScheduled(false)">As Needed</a>
+                </div>
+            </div>
+
+
+            <div ng-if="newMedicationSchedule.scheduled">
+	            <li class="item item-toggle">
+	                Notifications
+	                <label class="toggle toggle-positive">
+	                    <input type="checkbox" ng-model="newMedicationSchedule.notifications">
+	                    <div class="track">
+	                        <div class="handle"></div>
+	                    </div>
+	                </label>
+	            </li>
+
+	            <div class="item item-divider">
+	                Frequency
+	            </div>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="1" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    once a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="2" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    twice a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="3" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    3 times a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="4" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    4 times a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="5" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    5 times a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
+
+	            <label class="item item-radio">
+	                <input type="radio" name="schedule" value="6" ng-model="newMedicationSchedule.frequency">
+	                <div class="item-content">
+	                    6 times a day
+	                </div>
+	                <i class="radio-icon ion-checkmark"></i>
+	            </label>
 
 
 
 
-		<form novalidate class="simple-form">
-
-			<div class="list">
-
-			  <label class="item item-input">
-			    <input type="text" placeholder="Drug" ng-model="newMedication.drugName">
-			  </label>
-
-			  <label class="item item-input">
-			    <textarea placeholder="Instructions" ng-model="newMedication.instructions"></textarea>
-			  </label>
-
-			  <!-- <div class="calendar" style="display: inline-flex"> -->
-			  <ionic-time-picker etime="slots.epochTime" format="slots.format" step="slots.step">
-			  	<button class="button button-full button-positive" ng-model="newMedication.time">{{formattedDate(slots.epochTime) | date: 'shortTime'}}
-			  	</button>
-				</ionic-time-picker>
-				<label class="item item-input item-select">
-				    <div class="input-label">
-				      Frequency
-				    </div>
-				    <select ng-model="newMedication.frequency">
-				      <option>Daily</option>
-				      <option selected>Weekly</option>
-				    </select>
-  				</label>
-  			<!-- </div> -->
-			</div>
+            </div>
 
 
-	    </form>
+        </div>
 
 
 
     </ion-content>
 
-	<ion-footer-bar align-title="left" class="bar-balanced">
-	  <div class="buttons">
-	    <button class="button button-clear" ng-click="closeModal()">Cancel</button>
-	  </div>
-	  <h1 class="title"></h1>
-	  <div class="buttons">
-	    <button class="button button-clear" ng-click="saveNewMed()" >Add</button>
-	  </div>
-	</ion-footer-bar>
+    <ion-footer-bar align-title="left" class="bar-balanced" ng-if="newMedicationSelected()">
+        <h1 class="title"></h1>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="saveNewMedication()">Add</button>
+        </div>
+    </ion-footer-bar>
 
-  </div>
+</div>

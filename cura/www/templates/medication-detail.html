@@ -4,12 +4,59 @@ This template loads for the 'tab.friend-detail' state (app.js)
 The FriendsCtrl pulls data from the Friends service (service.js)
 The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{medication.drugName}}">
+<ion-view view-title="{{medication.drugDetails.openfda.brand_name[0]}}">
   <ion-content class="padding">
-    <img ng-src="http://placehold.it/50x50" style="width: 64px; height: 64px">
-    <h3>{{medication.instructions}}</h3>
-    <p>
-      More Information
-    </p>
+
+
+	<div class="list card">
+
+		<div class="item item-avatar">
+			<img src="http://placehold.it/50x50">
+			<h2>{{medication.drugDetails.openfda.brand_name[0]}}</h2>
+			<p>{{medication.drugDetails.openfda.generic_name[0]}}</p>
+		</div>
+
+		<div class="item item-body">
+			<p> <b> Instructions </b> {{medication.instructions}} </p>
+			<p> <b> Active Ingredient </b> {{medication.drugDetails.active_ingredient[0]}} </p>
+			<p> <b> Purpose </b> {{medication.drugDetails.purpose[0]}} </p>
+		</div>
+
+		<div class="button-bar item">
+		  <a class="button button-positive button-outline">Delete</a>
+		  <a class="button button-positive button-outline">Mute</a>
+		  <a class="button button-positive button-outline">Take One</a>
+		</div>
+
+		<div class="item item-divider">
+		    More information
+		</div>
+		<a class="item item-body">
+		    <p> {{medication.drugDetails.indications_and_usage[0]}} </p>
+		    <p> {{medication.drugDetails.ask_doctor[0]}} </p>
+		    <p> {{medication.drugDetails.ask_doctor_or_pharmacist[0]}} </p>
+		    <p> {{medication.drugDetails.do_not_use[0]}} </p>
+		</a>
+
+		<div class="item item-divider">
+		    Dosage and Administration
+		</div>
+		<a class="item item-body">
+		    <p ng-repeat="text in medication.drugDetails.dosage_and_administration"> {{text}} </p>
+		</a>
+
+		<div class="item item-divider">
+		    Warnings
+		</div>
+		<a class="item item-body">
+		    <p ng-repeat="text in medication.drugDetails.stop_use"> {{text}} </p>
+		    <p ng-repeat="text in medication.drugDetails.warnings"> {{text}} </p>
+		</a>
+
+
+
+
+	</div>
+
   </ion-content>
 </ion-view>

@@ -5,9 +5,10 @@
     <ion-list>
 
 
-      <a class="item item-thumbnail-left" ng-repeat="medication in medications" type="item-text-wrap" href="#/tab/medication/{{medication._id}}" >
-        <img ng-src="http://placehold.it/100x100">
-        <h2>{{medication.drugName}}</h2>
+      <a class="item" ng-repeat="medication in medications" type="item-text-wrap" href="#/tab/medication/{{medication._id}}" >
+        <h2>{{medication.drugDetails.openfda.brand_name[0]}}</h2>
+        <h3>{{medication.drugDetails.openfda.generic_name[0]}}</h3>
+
         <p>{{medication.instructions}}</p>
       </a>
 

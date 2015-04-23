@@ -13,7 +13,7 @@ angular.module('starter.controllers')
     $http.post('/login', $scope.loginForm).
     success(function(data, status, headers, config) {
       $rootScope.user = data;
-
+      
       setTimeout(function(){
         window.location = "#/tab/dash";
         $ionicLoading.hide();

@@ -1,5 +1,10 @@
 angular.module('starter.services', ['ngResource'])
 
+.factory('FDA', function ($resource){
+  return $resource('https://api.fda.gov/drug/label.json', {}, {
+    'query': {isArray: false}
+  });
+})
 
 .factory('Forms', function ($resource) {
   //return $resource('/api/v1/Forms/:id');
@@ -20,12 +25,7 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory("Medications", function ($resource){
-  //return $resource('/api/v1/Medications/:id', { id: '@_id'});
-  return {
-    all: function(){
-      return [];
-    }
-  }
+  return $resource('/api/v1/Medications/:id', { id: '@_id'});
 })
 
 .factory('Friends', function() {
