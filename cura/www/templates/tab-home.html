@@ -90,7 +90,7 @@
       <div class="item item-divider">Temperature</div>
       <ion-item class="item-toggle"> Mode: {{tempMode()}}
         <label class="toggle">
-          <input type="checkbox" ng-model="thermostat.isHeating">
+          <input type="checkbox" ng-model="thermostat.isHeating" ng-change="thermoModeChange()">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -101,7 +101,7 @@
       </ion-item>
       <div class="item range range-positive">
         <i class="icon ion-ios7-rainy-outline"></i>
-        <input type="range" name="volume" min="60" max="90" ng-model="thermostat.temp">
+        <input type="range" name="volume" min="60" max="90" ng-model="thermostat.temp" ng-change="thermoTempChange()">
         <i class="icon ion-ios7-sunny"></i>
       </div>
     </ion-list>

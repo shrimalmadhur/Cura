@@ -235,4 +235,38 @@ $scope.reset = function() {
             mode:"null"
         });
     }
+
+    $scope.thermoModeChange = function(){
+        var temp  = $scope.thermostat.temp*2;
+
+        $http.put(url, {
+            user_name:"ha_user",
+            tag_id:$scope.thermostat.name,
+            signal_type:"thermo",
+            current_value:"0",
+            required_value: temp.toString(16),
+            mode: $scope.thermostat.isHeating ? "hot": "cold",
+        });
+    }
+
+    var timeoutId = null;
+    $scope.thermoTempChange = function(){
+        if(timeoutId !== null) {
+            return;
+        }
+        timeoutId = $timeout( function() {
+            $timeout.cancel(timeoutId);
+            timeoutId = null;
+            var temp  = $scope.thermostat.temp*2;
+            $http.put(url, {
+                user_name:"ha_user",
+                tag_id:$scope.thermostat.name,
+                signal_type:"thermo",
+                current_value:"0",
+                required_value: temp.toString(16),
+                mode: $scope.thermostat.isHeating ? "hot": "cold",
+            });
+        }, 2000); 
+
+    }
 });
