@@ -4,12 +4,53 @@ This template loads for the 'tab.friend-detail' state (app.js)
 The FriendsCtrl pulls data from the Friends service (service.js)
 The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{friend.name.formatted}}">
+<ion-view view-title="{{contact.name.formatted}}">
   <ion-content class="padding">
-    <img ng-src="{{friend.face}}" style="width: 64px; height: 64px">
-    <h3>Notes</h3>
-    <p>
-      {{friend.name.formatted}}
-    </p>
+
+	<div class="list card">
+
+	  <div class="item item-avatar">
+	    <img src="http://placehold.it/100x100">
+	    <h2>{{contact.name.formatted}}</h2>
+	    <p>Last Active Yesterday</p>
+
+	    <button class="button button-stable button-clear pull-right" style="float:right"> Edit </button>
+	  </div>
+
+
+
+	  <label class="item item-input item-select">
+	    <div class="input-label">
+	      Role
+	    </div>
+	    <select disabled>
+	      <option>Doctor</option>
+	      <option selected>Caregiver</option>
+	      <option>Family</option>
+	    </select>
+	  </label>
+
+
+	  <label class="item item-input item-stacked-label">
+	    <span class="input-label">Phone Number</span>
+	    <input disabled type="text" placeholder="John Doe" value="{{contact.phoneNumbers[0].value}}">
+	  </label>
+
+
+	  <label class="item item-input item-stacked-label">
+	    <span class="input-label">Email</span>
+	    <input disabled type="text" placeholder="No Email Avaliable" value="{{contact.emails[0].value}}">
+	  </label>
+
+
+		<div class="button-bar">
+			<a href="tel:{{contact.phoneNumbers[0].value}}" class="button icon-left button-clear ion-ios-telephone button-positive">Call</a>
+			<a href="sms:{{contact.phoneNumbers[0].value}}" class="button icon-left button-clear ion-chatbox button-positive">Text</a>
+			<a class="button icon-left ion-alert-circled button-assertive">Panic</a>
+		</div>
+
+	</div>
+
+
   </ion-content>
 </ion-view>

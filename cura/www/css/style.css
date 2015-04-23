@@ -19,3 +19,7 @@
 .animate-enter.animate-enter-active {
 	opacity: 1;
 }
+
+input[disabled] {
+	background-color: rgba(248, 248, 248, 0);
+}

@@ -1,19 +1,26 @@
 <ion-view view-title="Contacts">
-  <ion-content>
+  <ion-content class="has-header">
 
-    <button class="button button-full button-assertive" ng-click="addContact()">Add Contact</button>
+    <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+            <form novalidate class="simple-form">
+                <input type="text" placeholder="Search Cura for users..." ng-model="search.query">
+            </form>
+        </label>
+    </div>
+
 
     <ion-list>
-      <ion-item class="item-avatar" ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-        <img ng-src="{{friend.face}}">
-        <h2>{{friend.name.formatted}}</h2>
+      <ion-item class="item-avatar" ng-repeat="contact in contacts track by $index" type="item-text-wrap" href="#/tab/contact/{{$index}}">
+        <img ng-src="http://placehold.it/50x50">
+        <p>{{contact.name.formatted}}</p>
       </ion-item>
     </ion-list>
   </ion-content>
 
   <ion-footer-bar align-title="right" >
-    <button id="circleButton" ng-click="openModal()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
+    <button id="circleButton" ng-click="addContactClicked()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
   </ion-footer-bar>
 
-  
+
 </ion-view>
