@@ -43,7 +43,7 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
     timestamp_month = serializers.IntegerField(required = False)
     timestamp_msofday = serializers.IntegerField(required = False)
     samples_per_packet = serializers.IntegerField(required = False)
-    sample = serializers.CharField(required = False)
+    #sample = serializers.CharField(required = False)
 
     def create(self, validated_data):
         #print ('Validated data before samples ', validated_data['samples'])

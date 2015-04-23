@@ -431,8 +431,6 @@ class HomeAutomationViewSet(viewsets.ModelViewSet):
 
             return Response(json_result.data)
 
-
-
 @api_view(['DELETE'])
 def homeautomation_destroy(request, user_name, tag_id):
     result = HomeAutomation.objects.get(user_name = user_name, tag_id = tag_id) 
@@ -484,7 +482,6 @@ def destroy_moodlight(request, user_name, device_id):
     result = MoodLight.objects.get(user_name = user_name, device_id = device_id)
     result.delete()
     return Response("Deleted Successfully")
-
 
 # Stress #
 class StressView(generics.ListCreateAPIView):
