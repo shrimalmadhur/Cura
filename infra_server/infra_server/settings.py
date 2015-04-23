@@ -26,7 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -37,6 +36,10 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework_swagger',
     'rest_api',
+    'rest_auth',
+    #'allauth',
+    #'allauth.account',
+    'rest_auth.registration',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )

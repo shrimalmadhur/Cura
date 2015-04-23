@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class CuraUser(models.Model):
     #user_id = models.OneToOneField(User) # First Name, Last Name, Password, Email
-    user_name = models.CharField(max_length = 300) # First Name, Last Name, Password, Email
+    #user_name = models.CharField(max_length = 300) # First Name, Last Name, Password, Email
     mail = models.CharField(max_length = 255)  
     role = models.CharField(blank = True, null = True, max_length = 255)
     phone = models.CharField(blank = True, null = True,  max_length = 255)
@@ -64,9 +64,18 @@ class HomeAutomation(models.Model):
     user_name = models.CharField(max_length = 255)
     tag_id = models.CharField(max_length = 255)
     signal_type = models.CharField(max_length = 255)
-    current_value = models.IntegerField()
-    required_value = models.IntegerField()
+    current_value = models.CharField(max_length = 10)
+    required_value = models.CharField(max_length = 10)
     mode = models.CharField(max_length = 255)
+
+class MoodLight(models.Model):
+    user_name = models.CharField(max_length = 255)
+    device_id = models.CharField(max_length = 255)
+    bridge_ip_address = models.CharField(max_length = 255)
+    parameter = models.CharField(max_length = 255)
+    resource1 = models.CharField(max_length = 255)
+    resource2 = models.CharField(max_length = 255)
+    message = models.CharField(max_length = 255)
 
 class Stress(models.Model):
     user_name = models.CharField(max_length = 255)
@@ -102,4 +111,3 @@ class Events(models.Model):
     event_time = models.DateTimeField()
     event_linked_users = models.CharField(max_length = 255)
     description = models.CharField(max_length = 255)
-

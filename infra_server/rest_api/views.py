@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, Stress, Events, Medication, Contacts)
-from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer,
-        WeightSerializer, WashroomSerializer, HomeAutomationSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer)
+from django.contrib.auth.models import User 
+from django.contrib.auth import login, authenticate, logout 
+from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, MoodLight, Stress, Events, Medication, Contacts)
+from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer)
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -10,63 +11,180 @@ from rest_framework.response import Response
 import json
 import httplib
 
+### Home Automation Demo Changes ###
+import httplib
+import requests
+import time
+from requests.auth import HTTPBasicAuth
+
 
 ### Events ###
+class EventsPostGet(generics.ListCreateAPIView):
+    serializer_class = EventsSerializer 
 
-# api/v1/events/#
-class EventsPost(generics.CreateAPIView):
-    serializer_class = EventsSerializer
-
-# api/v1/events/(userId) #
-class EventsByUser(generics.ListAPIView):
-    serializer_class = EventsSerializer
-    lookup_field = 'user_name'
-    
     def get_queryset(self):
-        user_name = self.kwargs['user_name']
-        result = Events.objects.filter(user_name = user_name)
-        return result
+        return Events.objects.all()
 
-# Put/Delete based on id /medication_id
-#class EventsPutDestroy(APIView):
-    
-    #def delete(self, request, id):
-    #result = Events.objects.get(id = id)
-    #    result.delete()
-    #    return Response(status=status.HTTP_204_NO_CONTENT)
+class EventsViewSet(viewsets.ModelViewSet):
+    serializer_class = EventsSerializer 
 
+    def get_queryset(self):
+        return Events.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = EventsSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = Events.objects.get(id = int(request.data['id']))
+        
+        created_by = result.created_by
+        event_type = result.event_type
+        event_time = result.event_time
+        event_linked_users = result.event_linked_users
+        description = result.description
+
+        if 'created_by' in request.data:
+            created_by = request.data['created_by']
+
+        if 'event_type' in request.data:
+            event_type = request.data['event_type']
+        
+        '''
+        if 'event_time' in request.data:
+            event_time = request.data['event_time']
+        '''
+
+        if 'event_linked_users' in request.data:
+            event_linked_users = request.data['event_linked_users']
+
+        if 'description' in request.data:
+            description = request.data['description']
+
+        result.created_by = created_by
+        result.event_type = event_type
+        result.event_time = event_time
+        result.event_linked_users = event_linked_users
+        result.description = description
+        result.save()
+
+        json_result = EventsSerializer(result)
+        return Response(json_result.data)
+
+@api_view(['DELETE'])
+def destroy_event(request, user_name, pk):
+    result = Events.objects.get(user_name = user_name, pk = pk)
+    result.delete()
+    return Response("Deleted Successfully")
 
 ### Medication ###
 
 # api/v1/medication (POST) #
-class MedicationPost(generics.CreateAPIView):
-    serializer_class = MedicationSerializer
+# Home Automation #
+class MedicationPostGet(generics.ListCreateAPIView):
+    serializer_class = MedicationSerializer 
 
-# api/v1/medication/(userId) #
-class MedicationByUser(generics.ListAPIView):
-    serializer_class = MedicationSerializer
-    lookup_field = 'user_name'
-    
     def get_queryset(self):
-        user_name = self.kwargs['user_name']
-        result = Medication.objects.filter(user_name = user_name)
-        return result
+        return Medication.objects.all()
+
+class MedicationViewSet(viewsets.ModelViewSet):
+    serializer_class = MedicationSerializer 
+
+    def get_queryset(self):
+        return Medication.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = MedicationSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = Medication.objects.get(id = int(request.data['id']))
+
+        created_by = result.created_by
+        instructions = result.instructions
+        schedule = result.schedule 
+        drug_name = result.drug_name
+        drug_details = result.drug_details
+
+        if 'created_by' in request.data:
+            created_by = request.data['created_by']
+
+        if 'instructions' in request.data:
+            instructions = request.data['instructions']
+
+        if 'schedule' in request.data:
+            schedule = request.data['schedule']
+
+        if 'drug_name' in request.data:
+            drug_name = request.data['drug_name']
+
+        if 'drug_details' in request.data:
+            drug_details = request.data['drug_details']
+
+        result.created_by = created_by
+        result.instructions = instructions
+        result.schedule = schedule
+        result.drug_name = drug_name
+        result.drug_details = drug_details
+        result.save()
+
+        json_result = MedicationSerializer(result)
+        return Response(json_result.data)
+
+@api_view(['DELETE'])
+def destroy_medications(request, user_name, pk):
+    result = Medication.objects.get(user_name = user_name, pk = pk)
+    result.delete()
+    return Response("Deleted Successfully")
 
 ### Contacts ###
+class ContactsViewSet(viewsets.ModelViewSet):
+    serializer_class = ContactsSerializer 
+
+    def get_queryset(self):
+        return Contacts.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = ContactsSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = Contacts.objects.get(id = int(request.data['id']))
+
+        contact_phone = result.contact_phone
+        contact_mail = result.contact_mail
+        contact_comments = result.contact_comments
+
+        if 'contact_phone' in request.data:
+            contact_phone = request.data['contact_phone']
+
+        if 'contact_mail' in request.data:
+            contact_mail = request.data['contact_mail'] 
+
+        if 'contact_comments' in request.data:
+            contact_comments = request.data['contact_comments']
+
+        result.contact_name = request.data['contact_name']
+        result.contact_role = request.data['contact_role']
+        result.contact_phone = contact_phone
+        result.contact_mail = contact_mail
+        result.contact_comments = contact_comments
+        result.save()
+        return Response("Successfully Updated")
+
+@api_view(['DELETE'])
+def destroy_contact(request, user_name, pk):
+    result = Contacts.objects.get(user_name = user_name, pk = pk)
+    result.delete()
+    return Response("Deleted Successfully")
 
 # api/v1/contacts/ (POST) #
-class ContactsPost(generics.CreateAPIView):
+class ContactsPost(generics.ListCreateAPIView):
+    queryset = Contacts.objects.all() 
     serializer_class = ContactsSerializer
-
-# api/v1/contacts/(userId)  (GET) #
-class ContactsByUser(generics.ListAPIView):
-    serializer_class = ContactsSerializer
-    lookup_field = 'user_name'
-    
-    def get_queryset(self):
-        user_name = self.kwargs['user_name']
-        result = Contacts.objects.filter(user_name = user_name)
-        return result
 
 #  Weight #
 class WeightPost(generics.CreateAPIView):
@@ -101,21 +219,11 @@ class GetBiometricsPrecise(generics.ListAPIView):
 
     def get_queryset(self):
         user_name = self.kwargs['user_name']
+        result = BiomtericsPrecise
         return BiometricsPrecise.objects.filter(user_name = user_name)
 
 class PostBiometricsPrecise(generics.CreateAPIView):
     serializer_class = BiometricsPreciseSerializer 
-
-@api_view(['GET'])
-@csrf_exempt
-def get_biometrics_precise(request):
-    if request.method == 'GET':
-        query = BiometricsPrecise.objects.filter(user_name = user_name)
-        if len(query) < 1:
-            return Response('Invalid user')
-        query = query[0]
-        json_response = BiometricsPreciseSerializer(query)
-        return Response(json_response)
 
 # Push Notification #
 @api_view(['POST'])
@@ -146,8 +254,38 @@ def notify(request):
     result = json.loads(connection.getresponse().read())
     return Response("Success")
 
-# Cura Users #
-# api/v1/users/(userId) - GET PUT DELETE
+# api/v1/users/- GET PUT DELETE
+class User(viewsets.ModelViewSet):
+    serializer_class = CuraUser 
+
+    def get_queryset(self):
+        return CuraUser.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = CuraUserSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = HomeAutomation.objects.get(user_name = user_name)
+        
+        current_value = result.current_value
+        mode = result.mode
+
+        if 'current_value' in request.data:
+                current_value = request.data['current_value']
+        if 'mode' in request.data:
+                mode = request.data['mode']
+
+        result.signal_type = request.data['signal_type']
+        result.current_value = current_value
+        result.required_value = request.data['required_value']
+        result.mode = mode 
+        result.save()
+
+        json_result = CuraUserSerializer(result)
+        return Response(json_result.data)
+
 class GetUser(generics.ListCreateAPIView):
     '''
     Function to get and post to the CuraUser
@@ -193,6 +331,7 @@ class HomeAutomationPostGet(generics.ListCreateAPIView):
     def get_queryset(self):
         return HomeAutomation.objects.all()
 
+
 class HomeAutomationViewSet(viewsets.ModelViewSet):
     serializer_class = HomeAutomationSerializer 
 
@@ -222,21 +361,113 @@ class HomeAutomationViewSet(viewsets.ModelViewSet):
         result.save()
 
         json_result = HomeAutomationSerializer(result)
+
+       ### demo changes ###
+       device = '115341'
+       required_value = '1'
+       mode = ''
+
+       ip_addr = 'http://128.2.82.2:25105/3?0262'
+       tag1 = '1155B6'
+       tag2 = '115341'
+       tag3 = '148C60'
+       tag4 = 'QWERT'
+       tag_thermo = '12345'
+
+       sd_flag = '0F'
+       level = 'FF'
+
+       state_on = '11'
+       state_off = '13'
+
+       hops = '=I=3'
+
+       if required_value == '1':
+            required_value = state_on
+                
+        elif required_value == '0':
+                required_value = state_off
+
+                if device == tag1:
+                        req = ip_addr + tag1 + sd_flag + required_value + level + hops
+                            print req
+                                
+                        elif device == tag2:
+                                req = ip_addr + tag2 + sd_flag + required_value + level + hops
+                                    print req
+                                        
+                                elif device == tag3:
+                                        req = ip_addr + tag3 + sd_flag + required_value + level + hops
+                                            print req
+                                                
+                                        elif device == tag4:
+                                                req = ip_addr + tag4 + sd_flag + required_value + level + hops
+                                                    print req
+                                                        
+                                                elif device == tag_thermo
+                                                    req = ip_addr + tag_thermo + sd_flag +
+                                                        print req
+
+                                                        for i in range (1,3):
+                                                                r = requests.get(req,auth=HTTPBasicAuth('Guinever',
+                                                                    'HYXzAfQN'))
+                                                                    time.sleep(0.5);
+### demo changes end ###
+
         return Response(json_result.data)
 
-    def destroy(self, request, user_name):
-        result = HomeAutomation.objects.filter(user_name = user_name)
-        result.delete()
-        return Response("Deleted Successfully")
+@api_view(['DELETE'])
+def homeautomation_destroy(request, user_name, tag_id):
+    result = HomeAutomation.objects.get(user_name = user_name, tag_id = tag_id) 
+    result.delete()
+    return Response("Deleted Successfully")
 
-class HomeAutomationUserUpdate(generics.RetrieveUpdateAPIView):
-    serializer_class = HomeAutomationSerializer
-    lookup_field = 'user_name'
+# Mood Light #
+class MoodLightPostGet(generics.ListCreateAPIView):
+    serializer_class = MoodLightSerializer 
 
     def get_queryset(self):
-        user_name = self.kwargs['user_name']
-        result = HomeAutomation.objects.filter(user_name = user_name)
-        return result
+        return MoodLight.objects.all()
+
+class MoodLightViewSet(viewsets.ModelViewSet):
+    serializer_class = MoodLightSerializer 
+
+    def get_queryset(self):
+        return MoodLight.objects.filter(user_name = self.kwargs['user_name'])
+
+    def list(self, request, user_name):
+        result = self.get_queryset() 
+        json_result = MoodLightSerializer(result, many = True)
+        return Response(json_result.data)
+
+    def update(self, request, user_name):
+        result = MoodLight.objects.get(user_name = user_name, device_id = request.data['device_id'])
+        
+        '''
+        current_value = result.current_value
+        mode = result.mode
+
+        if 'current_value' in request.data:
+                current_value = request.data['current_value']
+        if 'mode' in request.data:
+                mode = request.data['mode']
+        '''
+        result.bridge_ip_address = request.data['bridge_ip_address']
+        result.parameter = request.data['parameter']
+        result.resource1 = request.data['resource1']
+        result.resource2 = request.data['resource2']
+        result.message = request.data['message'] 
+        result.save()
+
+        json_result = MoodLightSerializer(result)
+        return Response(json_result.data)
+
+@api_view(['DELETE'])
+def destroy_moodlight(request, user_name, device_id):
+    result = MoodLight.objects.get(user_name = user_name, device_id = device_id)
+    result.delete()
+    return Response("Deleted Successfully")
+
 
 # Stress #
 class StressView(generics.ListCreateAPIView):
