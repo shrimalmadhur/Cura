@@ -143,3 +143,28 @@ class EventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
 
+class BloodOxygenSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    blood_oxygen=serializers.FloatField(required = False)
+    timestamp_year=serializers.IntegerField(required = False)
+    timestamp_month=serializers.IntegerField(required = False)
+    timestamp_day=serializers.IntegerField(required = False)
+    timestamp_msofday=serializers.IntegerField(required = False)
+    time_recorded = serializers.DateTimeField(required = False)  
+
+    class Meta:
+        model = BloodOxygen
+
+class BloodPressureSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(max_length = 255)
+    systolic=serializers.FloatField(required = False)
+    dystolic=serializers.FloatField(required = False)
+    pulse=serializers.IntegerField(required = False)
+    timestamp_year=serializers.IntegerField(required = False)
+    timestamp_month=serializers.IntegerField(required = False)
+    timestamp_day=serializers.IntegerField(required = False)
+    timestamp_msofday=serializers.IntegerField(required = False)
+    time_recorded = serializers.DateTimeField(required = False)  
+   
+    class Meta:
+        model = BloodPressure

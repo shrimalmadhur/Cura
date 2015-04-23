@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User 
 from django.contrib.auth import login, authenticate, logout 
 from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, MoodLight, Stress, Events, Medication, Contacts)
-from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer)
+from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer, BloodOxygenSerializer, BloodPressureSerializer) 
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -343,78 +343,101 @@ class HomeAutomationViewSet(viewsets.ModelViewSet):
         json_result = HomeAutomationSerializer(result, many = True)
         return Response(json_result.data)
 
-    def update(self, request, user_name):
-        result = HomeAutomation.objects.get(user_name = user_name, tag_id = request.data['tag_id'])
-        
-        current_value = result.current_value
-        mode = result.mode
+        def update(self, request, user_name):
+            result = HomeAutomation.objects.get(user_name = user_name, tag_id = request.data['tag_id'])
+            
+            current_value = result.current_value
+            mode = result.mode
 
-        if 'current_value' in request.data:
-                current_value = request.data['current_value']
-        if 'mode' in request.data:
-                mode = request.data['mode']
+            if 'current_value' in request.data:
+                    current_value = request.data['current_value']
+            if 'mode' in request.data:
+                    mode = request.data['mode']
 
-        result.signal_type = request.data['signal_type']
-        result.current_value = current_value
-        result.required_value = request.data['required_value']
-        result.mode = mode 
-        result.save()
+            result.signal_type = request.data['signal_type']
+            result.current_value = current_value
+            result.required_value = request.data['required_value']
+            result.mode = mode 
+            result.save()
 
-        json_result = HomeAutomationSerializer(result)
+            json_result = HomeAutomationSerializer(result)
+            ### ha demo changes ###
+            ###device = '115341'
+            ###required_value = '1'
+            ###mode = ''
 
-       ### demo changes ###
-       device = '115341'
-       required_value = '1'
-       mode = ''
+            device = request.data['tag_id']
+            required_value = request.data['required_value']
+            mode = request.data['mode']
 
-       ip_addr = 'http://128.2.82.2:25105/3?0262'
-       tag1 = '1155B6'
-       tag2 = '115341'
-       tag3 = '148C60'
-       tag4 = 'QWERT'
-       tag_thermo = '12345'
+            ip_addr = 'http://128.2.82.2:25105/3?0262'
+            tag1 = '1155B6'
+            tag2 = '115341'
+            tag3 = '115914'
+            tag4 = '115498'
+            tag_thermo = '11B264'
 
-       sd_flag = '0F'
-       level = 'FF'
+            sd_flag = '0F'
+            level = 'FF'
 
-       state_on = '11'
-       state_off = '13'
+            state_on = '11'
+            state_off = '13'
 
-       hops = '=I=3'
+            hops = '=I=3'
+            if mode == 'hot':
+                required_value1 = '6B'
+                required_value2 = '6D'
+                level1 = '04'
 
-       if required_value == '1':
-            required_value = state_on
+            elif mode == 'cold':
+                required_value1 = '6B'
+                required_value2 = '6C'
+                level1 = '05'
+
+
+            if device == tag_thermo:
+                req1 = ip_addr + tag_thermo + sd_flag + required_value1 + level1 + hops
+                print req1
+                for i in range (1,3):
+                    r = requests.get(req1,auth=HTTPBasicAuth('Guinever','HYXzAfQN'))
+                    time.sleep(0.5);
                 
-        elif required_value == '0':
+                req = ip_addr + tag_thermo + sd_flag + required_value2 + required_value + hops
+                print req
+            
+            if required_value == '1':
+                required_value = state_on
+                
+            elif required_value == '0':
                 required_value = state_off
 
-                if device == tag1:
-                        req = ip_addr + tag1 + sd_flag + required_value + level + hops
-                            print req
+            if device == tag1:
+                req = ip_addr + tag1 + sd_flag + required_value + level + hops
+                print req
                                 
-                        elif device == tag2:
-                                req = ip_addr + tag2 + sd_flag + required_value + level + hops
-                                    print req
+            elif device == tag2:
+                req = ip_addr + tag2 + sd_flag + required_value + level + hops
+                print req
                                         
-                                elif device == tag3:
-                                        req = ip_addr + tag3 + sd_flag + required_value + level + hops
-                                            print req
+            elif device == tag3:
+                req = ip_addr + tag3 + sd_flag + required_value + level + hops
+                print req
                                                 
-                                        elif device == tag4:
-                                                req = ip_addr + tag4 + sd_flag + required_value + level + hops
-                                                    print req
+            elif device == tag4:
+                req = ip_addr + tag4 + sd_flag + required_value + level + hops
+                print req
                                                         
-                                                elif device == tag_thermo
-                                                    req = ip_addr + tag_thermo + sd_flag +
-                                                        print req
+            elif device == tag_thermo:
+                ### req = ip_addr + tag_thermo + sd_flag +
+                print req
 
-                                                        for i in range (1,3):
-                                                                r = requests.get(req,auth=HTTPBasicAuth('Guinever',
-                                                                    'HYXzAfQN'))
-                                                                    time.sleep(0.5);
-### demo changes end ###
+            for i in range (1,3):
+                r = requests.get(req,auth=HTTPBasicAuth('Guinever', 'HYXzAfQN'))
+                time.sleep(0.5);
 
-        return Response(json_result.data)
+            return Response(json_result.data)
+
+
 
 @api_view(['DELETE'])
 def homeautomation_destroy(request, user_name, tag_id):
@@ -483,4 +506,36 @@ class StressByUser(generics.ListAPIView):
     def get_queryset(self):
         user_name = self.kwargs['user_name']
         result = Stress.objects.filter(user_name = user_name)
+        return result
+
+# Blood Oxygen #
+class BloodOxygenView(generics.ListCreateAPIView):
+    serializer_class = BloodOxygenSerializer
+    
+    def get_queryset(self):
+        return BloodOxygen.objects.all()
+
+class BloodOxygenByUser(generics.ListAPIView):
+    serializer_class = BloodOxygenSerializer
+    lookup_field = 'user_name'
+    
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = BloodOxygen.objects.filter(user_name = user_name)
+        return result
+
+# Blood Pressure #
+class BloodPressureView(generics.ListCreateAPIView):
+    serializer_class = BloodPressureSerializer
+    
+    def get_queryset(self):
+        return BloodPressure.objects.all()
+
+class BloodPressureByUser(generics.ListAPIView):
+    serializer_class = BloodPressureSerializer
+    lookup_field = 'user_name'
+    
+    def get_queryset(self):
+        user_name = self.kwargs['user_name']
+        result = BloodPressure.objects.filter(user_name = user_name)
         return result

@@ -42,6 +42,8 @@ eventspatterns = patterns('',
     url(r'^api/v1/events/(?P<user_name>\w+)/$', events_list),
     url(r'api/v1/events/(?P<user_name>\w+)/(?P<pk>\d+)/$', views.destroy_event),) 
 
+
+'''
 washroompatterns = patterns('',
     url(r'^api/v1/washroom/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
     url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
@@ -50,6 +52,7 @@ weightpatterns = patterns('',
     url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetWeight.as_view()),
     url(r'^api/v1/weight/$', views.PostWeight.as_view()),
 )
+'''
 
 biometricsprecisepatterns = patterns('',
     url(r'^api/v1/biometricsprecise/(?P<user_name>\w+)/$', views.GetBiometricsPrecise.as_view()),
@@ -60,9 +63,11 @@ notificationpatterns = patterns('',
     url(r'^api/v1/notifications/$', views.notify),
 )
 
+'''
 alertspatterns = patterns('',
     url(r'^api/v1/alerts/$', views.alerts),
 )
+'''
 
 userpatterns = patterns('',
     url(r'^api/v1/users/$', views.GetUser.as_view()),
@@ -111,10 +116,10 @@ restapiurlpatterns = patterns('',
 restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
-restapiurlpatterns += alertspatterns 
+#restapiurlpatterns += alertspatterns 
 restapiurlpatterns += biometricsprecisepatterns 
-restapiurlpatterns += washroompatterns 
-restapiurlpatterns += weightpatterns
+#restapiurlpatterns += washroompatterns 
+#restapiurlpatterns += weightpatterns
 restapiurlpatterns += eventspatterns
 restapiurlpatterns += medicationpatterns
 restapiurlpatterns += contactspatterns
