@@ -22,7 +22,7 @@ class Biometrics(models.Model):
     time_received = models.DateTimeField(auto_now = True)
     breathing_rate = models.CharField(max_length = 255, null = True, blank = True) 
     heart_rate = models.CharField(max_length = 255, null = True, blank = True)
-    estimated_core_temperature = models.IntegerField(null = True, blank = True)
+    estimated_core_temperature = models.DecimalField(max_digits = 10, decimal_places = 5,null = True, blank = True )
     ecg = models.CharField(max_length=255, null = True, blank = True)
     posture = models.IntegerField(blank = True, null = True)
 
@@ -45,7 +45,7 @@ class BiometricsPrecise(models.Model):
     timestamp_month = models.IntegerField(null = True)
     timestamp_msofday = models.IntegerField(null = True)
     samples_per_packet = models.IntegerField(null = True)
-    samples = models.CharField(max_length = 100, blank = True, null = True)
+    samples = models.CharField(max_length = 1000, blank = True, null = True)
 
 class Washroom(models.Model):
     user_name = models.CharField(max_length = 255)
@@ -87,6 +87,26 @@ class Stress(models.Model):
     number_steady_events = models.IntegerField()
     time_recorded = models.DateTimeField()
     time_received = models.DateTimeField(auto_now = True)
+
+class BloodOxygen(models.Model):
+    user_name=models.CharField(max_length = 255)
+    blood_oxygen=models.FloatField(blank = True, null = True)
+    timestamp_year=models.IntegerField(blank = True, null = True)
+    timestamp_month=models.IntegerField(blank = True, null = True)
+    timestamp_day=models.IntegerField(blank = True, null = True)
+    timestamp_msofday=models.BigIntegerField(blank = True, null = True)
+    time_recorded = models.DateTimeField(null = True, blank = True)
+
+class BloodPressure(models.Model):
+    user_name=models.CharField(max_length = 255)
+    systolic=models.FloatField(blank = True, null = True)
+    dystolic=models.FloatField(blank = True, null = True)
+    pulse=models.IntegerField(blank = True, null = True)
+    timestamp_year=models.IntegerField(blank = True, null = True)
+    timestamp_month=models.IntegerField(blank = True, null = True)
+    timestamp_day=models.IntegerField(blank = True, null = True)
+    timestamp_msofday=models.BigIntegerField(blank = True, null = True)
+    time_recorded = models.DateTimeField(null = True, blank = True)
 
 class Contacts(models.Model):
     user_name = models.CharField(max_length = 255)

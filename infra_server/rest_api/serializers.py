@@ -1,4 +1,4 @@
-from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, MoodLight, Stress, Contacts, Medication, Events
+from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, MoodLight, Stress, Contacts, Medication, Events, BloodOxygen, BloodPressure
 from rest_framework import serializers
 from StringIO import StringIO
 from django.contrib.auth.models import User
