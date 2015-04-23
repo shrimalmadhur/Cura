@@ -200,7 +200,7 @@ class PostWeight(generics.CreateAPIView):
 class WashroomPost(generics.CreateAPIView):
     serializer_class = WashroomSerializer 
 
-class WashroomGetDestroy(generics.RetrieveDestroyAPIView):
+class WashroomGetDestroy(generics.ListAPIView):
     serializer_class = WashroomSerializer
 
     def get_queryset(self):

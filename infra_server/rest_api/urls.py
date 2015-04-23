@@ -43,11 +43,10 @@ eventspatterns = patterns('',
     url(r'api/v1/events/(?P<user_name>\w+)/(?P<pk>\d+)/$', views.destroy_event),) 
 
 
-'''
 washroompatterns = patterns('',
     url(r'^api/v1/washroom/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
     url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
-'''
+
 weightpatterns = patterns('',
     url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetWeight.as_view()),
     url(r'^api/v1/weight/$', views.PostWeight.as_view()),
@@ -117,7 +116,7 @@ restapiurlpatterns += userpatterns
 restapiurlpatterns += notificationpatterns 
 #restapiurlpatterns += alertspatterns 
 restapiurlpatterns += biometricsprecisepatterns 
-#restapiurlpatterns += washroompatterns 
+restapiurlpatterns += washroompatterns 
 restapiurlpatterns += weightpatterns
 restapiurlpatterns += eventspatterns
 restapiurlpatterns += medicationpatterns
