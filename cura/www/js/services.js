@@ -6,6 +6,20 @@ angular.module('starter.services', ['ngResource'])
   });
 })
 
+.factory('Config', function (){
+  
+  //var host = "";
+  var host = "http://rpcs.herokuapp.com";
+  var apiUrl = host + "/api/v1/";
+  var loginEndpoint = host + "/login";
+
+  return {
+    host: host,
+    apiUrl: apiUrl,
+    loginEndpoint: loginEndpoint
+  }
+})
+
 .factory('Forms', function ($resource) {
   //return $resource('/api/v1/Forms/:id');
   return {
@@ -24,8 +38,9 @@ angular.module('starter.services', ['ngResource'])
   }
 })
 
-.factory("Medications", function ($resource){
-  return $resource('/api/v1/Medications/:id', { id: '@_id'});
+.factory("Medications", function ($resource, Config){
+  var url = Config.apiUrl + "Medications/:id"
+  return $resource(url, { id: '@_id'});
 })
 
 .factory('Friends', function() {

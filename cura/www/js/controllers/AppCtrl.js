@@ -1,5 +1,5 @@
 angular.module('starter.controllers')
-.controller('AppCtrl', function ($scope, $ionicPlatform, $ionicModal, $http, $ionicLoading, $rootScope) {
+.controller('AppCtrl', function ($scope, $ionicPlatform, $ionicModal, $http, $ionicLoading, $rootScope, Config) {
 
   $scope.registrationForm = {};
   $scope.loginForm = {};
@@ -9,8 +9,10 @@ angular.module('starter.controllers')
     $ionicLoading.show({
       template: "Loading"
     })
+
+    var authEndpoint = Config.a
     
-    $http.post('/login', $scope.loginForm).
+    $http.post(Config.loginEndpoint, $scope.loginForm).
     success(function(data, status, headers, config) {
       $rootScope.user = data;
       

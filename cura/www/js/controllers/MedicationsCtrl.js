@@ -8,13 +8,10 @@ angular.module('starter.controllers')
   $scope.updateMedications = function(){
     Medications.query({ patient: $rootScope.user._id }, function (res){
       $scope.medications = res;
-      console.log("MY MEDS", res);
     })
   }
 
-  $scope.resetForm = function(){
-    console.log("RESET CALLED");
-    
+  $scope.resetForm = function(){    
     $scope.search = {query: "", limit: 10};
     $scope.newMedication = undefined;
     $scope.searchResults = [];
@@ -46,10 +43,7 @@ angular.module('starter.controllers')
     console.log($scope.newMedicationSchedule.scheduled);
   }
 
-
-
   $scope.searchButtonClicked = function(){
-    console.log("SEARCH QUERY", $scope.search.query);
     FDA.query({ search: $scope.search.query, limit: $scope.search.limit}, function (response){
       $scope.searchResults = response.results;
       console.log(response);
@@ -57,7 +51,6 @@ angular.module('starter.controllers')
   }
 
   $scope.searchResultSelected = function(i){
-    console.log("A medication was selected", i, $scope.searchResults[i])
     $scope.newMedication = $scope.searchResults[i];
   }
 
@@ -74,7 +67,6 @@ angular.module('starter.controllers')
   }
 
   $scope.addNotification = function() {
-
     // var alarmTime = new Date();
     var alarmTime = $scope.newMedication.time;
     var message = $scope.newMedication.drugName + " " + $scope.newMedication.instructions;
@@ -92,15 +84,12 @@ angular.module('starter.controllers')
   };
 
   $scope.openModal = function() {
-    //$scope.newMedication = new Medication();
-    // $scope.newMedication.frequency = "Daily";
     $scope.modal.show();
   }
 
   $scope.closeModal = function() {
     $scope.modal.hide();
   };
-
 
   $scope.saveNewMedication = function() {
     if ($rootScope.user === undefined){
@@ -123,7 +112,6 @@ angular.module('starter.controllers')
     })
 
     newMed.$save(function (res){
-      console.log("SAVED SUCCESSFULLY", res);
       $scope.updateMedications();
       $scope.cancelForm();
       $ionicLoading.hide();
@@ -133,15 +121,6 @@ angular.module('starter.controllers')
       })
       setTimeout(function(){ $ionicLoading.hide() }, 1000)
     });
-
-    console.log(newMed);
-        
-
-    // $scope.newMedication.time = $scope.date;
-    // $scope.newMedication.$save();
-    // $scope.addNotification();
-    // $scope.closeModal();
-    // $scope.updateMedications();
   };
 
   $scope.reset = function() {
@@ -149,11 +128,9 @@ angular.module('starter.controllers')
   };
 
   $scope.updateMedications = function(){
-    console.log("UPDATING MEDICATIONS");
     var patientId = $rootScope.user._id;
     Medications.query({patient: patientId}, function (res){
       $scope.medications = res;
-      $scope.$apply();
     });
   }
 
@@ -161,15 +138,40 @@ angular.module('starter.controllers')
     $scope.modal.remove();
   });
 
+  $rootScope.$on('medicationsUpdated', function (){
+    $scope.updateMedications();
+  })
+
 })
 
-.controller('MedicationDetailCtrl', function ($scope, $stateParams, Medications) {
+.controller('MedicationDetailCtrl', function ($scope, $state, $rootScope, $stateParams, Medications) {
   $scope.medication = {};
   Medications.query({_id: $stateParams.medicationId}, function (res){
     $scope.medication = res[0];
-    console.log("CURRENT MED", $scope.medication);
   });
-  //$scope.medication = Medications.get({id: $stateParams.medicationId});
+
+  $scope.deleteMed = function(){
+    $scope.medication.$remove(function(){
+      $rootScope.$emit('medicationsUpdated', {});
+      $state.go("tab.medication");
+    });
+  }
+
+  $scope.muteMed = function(){
+    $scope.medication.schedule.notifications = false;
+    $scope.medication.$save();
+    $scope.updateMedications();
+  }
+
+  $scope.unmuteMed = function(){
+    $scope.medication.schedule.notifications = true;
+    $scope.medication.$save();    
+  }
+
+  $scope.toggleNotifications = function(){
+    if ($scope.medication.schedule.notifications) $scope.muteMed()
+    else $scope.unmuteMed()
+  }
 })
 
 

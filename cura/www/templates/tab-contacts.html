@@ -1,4 +1,4 @@
-<ion-view view-title="Friends">
+<ion-view view-title="Contacts">
   <ion-content>
 
     <button class="button button-full button-assertive" ng-click="addContact()">Add Contact</button>
@@ -10,4 +10,10 @@
       </ion-item>
     </ion-list>
   </ion-content>
+
+  <ion-footer-bar align-title="right" >
+    <button id="circleButton" ng-click="openModal()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
+  </ion-footer-bar>
+
+  
 </ion-view>

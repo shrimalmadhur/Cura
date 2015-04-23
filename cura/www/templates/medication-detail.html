@@ -9,7 +9,6 @@ The Friends service returns an array of friend data
 
 
 	<div class="list card">
-
 		<div class="item item-avatar">
 			<img src="http://placehold.it/50x50">
 			<h2>{{medication.drugDetails.openfda.brand_name[0]}}</h2>
@@ -23,9 +22,12 @@ The Friends service returns an array of friend data
 		</div>
 
 		<div class="button-bar item">
-		  <a class="button button-positive button-outline">Delete</a>
-		  <a class="button button-positive button-outline">Mute</a>
-		  <a class="button button-positive button-outline">Take One</a>
+		  <a class="button button-positive button-outline" ng-click="deleteMed()" >Delete</a>
+
+
+		  <a class="button button-positive button-outline" ng-click="toggleNotifications()">{{medication.schedule.notifications === true ? "Mute" : "Unmute"}}</a>
+
+		  <a class="button button-positive button-outline" ng-click="takeMed()">Take One</a>
 		</div>
 
 		<div class="item item-divider">
