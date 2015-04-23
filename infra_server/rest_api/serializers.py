@@ -1,6 +1,8 @@
 from models import Biometrics, CuraUser, BiometricsPrecise, Washroom, Weight, HomeAutomation, MoodLight, Stress, Contacts, Medication, Events
 from rest_framework import serializers
+from StringIO import StringIO
 from django.contrib.auth.models import User
+import json
 
 class UserSerializer(serializers.Serializer):
     class Meta:
@@ -41,6 +43,14 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
     timestamp_msofday = serializers.IntegerField(required = False)
     samples_per_packet = serializers.IntegerField(required = False)
 
+    def create(self, validated_data):
+        print ('Validated data before ' , validated_data)
+        print ('Validated data before samples ', validated_data['samples'])
+        io = StringIO()
+        validated_data['samples'] = json.dump(validated_data['samples'], io)
+        print ('Validated data after samples ' , validated_data['samples'])
+        return BiometricsPrecise(**validated_data)
+
     class Meta:
         model = BiometricsPrecise
 
@@ -67,8 +77,8 @@ class HomeAutomationSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(max_length = 255)  
     tag_id = serializers.CharField(max_length = 255)  
     signal_type = serializers.CharField(max_length = 255)  
-    current_value = serializers.IntegerField(required = False)  
-    required_value = serializers.IntegerField()  
+    current_value = serializers.CharField(max_length = 10)
+    required_value = serializers.CharField(max_length = 10)  
     mode = serializers.CharField(max_length = 255, required = False)  
 
     class Meta:

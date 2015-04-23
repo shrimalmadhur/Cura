@@ -47,8 +47,9 @@ washroompatterns = patterns('',
     url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
 
 weightpatterns = patterns('',
-    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.WeightGetDestroy.as_view()),
-    url(r'^api/v1/weight/$', views.WeightPost.as_view()),)
+    url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetWeight.as_view()),
+    url(r'^api/v1/weight/$', views.PostWeight.as_view()),
+)
 
 biometricsprecisepatterns = patterns('',
     url(r'^api/v1/biometricsprecise/(?P<user_name>\w+)/$', views.GetBiometricsPrecise.as_view()),
@@ -57,6 +58,10 @@ biometricsprecisepatterns = patterns('',
 
 notificationpatterns = patterns('',
     url(r'^api/v1/notifications/$', views.notify),
+)
+
+alertspatterns = patterns('',
+    url(r'^api/v1/alerts/$', views.alerts),
 )
 
 userpatterns = patterns('',
@@ -89,14 +94,24 @@ moodlightpatterns = patterns('',
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
     url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
-)    
+)
 
+bloodoxygenpatterns = patterns('',
+                               url(r'^api/v1/bloodoxygen/$', views.BloodOxygenView.as_view()),
+                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),
+                               
+                               )
+bloodpressurepatterns = patterns('',
+                                 url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
+                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),
+                                 )
 restapiurlpatterns = patterns('', 
 )
 
 restapiurlpatterns += biometricspatterns
 restapiurlpatterns += userpatterns 
 restapiurlpatterns += notificationpatterns 
+restapiurlpatterns += alertspatterns 
 restapiurlpatterns += biometricsprecisepatterns 
 restapiurlpatterns += washroompatterns 
 restapiurlpatterns += weightpatterns
@@ -105,4 +120,6 @@ restapiurlpatterns += medicationpatterns
 restapiurlpatterns += contactspatterns
 restapiurlpatterns += homeautomationpatterns
 restapiurlpatterns += moodlightpatterns
-restapiurlpatterns += stresspatterns 
+restapiurlpatterns += stresspatterns
+restapiurlpatterns += bloodoxygenpatterns
+restapiurlpatterns += bloodpressurepatterns
