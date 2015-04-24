@@ -153,7 +153,7 @@ moodlightpatterns = patterns('',
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
     url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
-    url(r'^api/v1/stress/recent/(?P<user_name>\w+)/$', stress_recent_list),
+    #url(r'^api/v1/stress/recent/(?P<user_name>\w+)/$', stress_recent_list),
     url(r'^api/v1/stress/recent/(?P<user_name>\w+)/$', views.get_stress_recent),
     url(r'^api/v1/stress/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), stress_list), 
 )
