@@ -1,13 +1,14 @@
 def json_format(json_array):
 
-	init = '{"x":0,"y":0},'
+	#init = '{"x":0,"y":0},'
 	heartRate = ''
 	breathingRate = ''
 	postureData = ''
 	skinTemp = ''
 	legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
-
+	
 	for i in range(0,len(json_array)):
+		if json_array[i].get("time_recorded") 
 		heartRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("heart_rate"))+'},'	
 		breathingRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("breathing_rate"))+'},'	
 		postureData += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("posture"))+'},'	
@@ -17,13 +18,13 @@ def json_format(json_array):
 	breathingRate = breathingRate.rstrip(',')
 	postureData = postureData.rstrip(',')
 	skinTemp = skinTemp.rstrip(',')
-	heartRate = '[{"values":[' + init + heartRate +'],"key":"'+legend_name[index]+'"}]'
+	heartRate = '[{"values":[' + heartRate +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
-	breathingRate = '[{"values":[' + init + breathingRate +'],"key":"'+legend_name[index]+'"}]'
+	breathingRate = '[{"values":[' + breathingRate +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
-	postureData = '[{"values":[' + init + postureData +'],"key":"'+legend_name[index]+'"}]'
+	postureData = '[{"values":[' + postureData +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
-	skinTemp = '[{"values":[' + init + skinTemp +'],"key":"'+legend_name[index]+'"}]'
+	skinTemp = '[{"values":[' + skinTemp +'],"key":"'+legend_name[index]+'"}]'
 	print heartRate
 	print breathingRate
 	print postureData
