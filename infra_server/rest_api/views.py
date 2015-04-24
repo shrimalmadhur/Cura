@@ -20,6 +20,24 @@ import requests
 import time
 from requests.auth import HTTPBasicAuth
 
+def alert(user_name, text):
+    connection = httplib.HTTPSConnection('api.parse.com', 443)
+    connection.connect()
+    connection.request('POST', '/1/push', json.dumps({
+           "where": {
+               'curaUser' : user_name
+           },
+           "data": {
+               "user_name" : user_name,
+               "text" : text,
+           }
+         }), {
+           "X-Parse-Application-Id": "UBBIKb8y8RqzSsoXXJS6iCO7D2Idb1HNk2XUcmA0",
+           "X-Parse-REST-API-Key": "uhA6OWZl6zp21UM6A5eSAfXipu2tYN9wqyx6LnSt",
+           "Content-Type": "application/json"
+         })
+    result = json.loads(connection.getresponse().read())
+
 def parse_date(date):
     try:
         dt = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=pytz.UTC)
@@ -284,6 +302,35 @@ class GetBiometricsPrecise(generics.ListAPIView):
         #io = StringIO()
         #validated_data['samples'] = json.dumps(validated_data['samples'], io)
            
+
+class BiometricsPost(viewsets.ModelViewSet):
+    serializer_class = BiometricsSerializer
+
+    def create(self, request):
+        user_name = request.data['user_name']
+        heart_rate = request.data['heart_rate']
+        text = "Heart Rate Alert " + heart_rate
+        heart_rate_int = int( heart_rate )
+        if heart_rate_int > 90:
+            alert(user_name, text)
+
+        time_recorded = request.data['time_recorded']
+        breathing_rate = request.data['breathing_rate']
+        ecg = request.data['ecg']
+        estimated_core_temperature = request.data['estimated_core_temperature']
+        posture = request.data['posture']
+
+
+        new_object = Biometrics(user_name = user_name,
+                                heart_rate = heart_rate,
+                                time_recorded = time_recorded,
+                                breathing_rate = breathing_rate,
+                                ecg = ecg,
+                                estimated_core_temperature = estimated_core_temperature,
+                                posture = posture)
+        new_object.save()
+        return Response("Created")
+
 class PostBiometricsPrecise(generics.CreateAPIView):
     serializer_class = BiometricsPreciseSerializer 
 

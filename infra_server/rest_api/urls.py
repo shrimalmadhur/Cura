@@ -13,6 +13,10 @@ washroom_list = views.WashroomCount.as_view({
         'get': 'list',
 }) 
 
+biometrics_post_list = views.BiometricsPost.as_view({
+    'post' : 'create',
+})
+
 moodlight_list = views.MoodLightViewSet.as_view({
         'get': 'list',
         'put': 'update',
@@ -121,13 +125,12 @@ userpatterns = patterns('',
 
 biometricspatterns = patterns('',
     url(regex = r'^api/v1/biometrics/$', 
-        view = views.GetBiometricsData.as_view()),
+        view = biometrics_post_list),
 
     url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/$', 
         view = views.GetCuraUser.as_view()),
 
-    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-        view = biometrics_list),
+    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), view = biometrics_list),
 )
 
 homeautomationpatterns = patterns('',
