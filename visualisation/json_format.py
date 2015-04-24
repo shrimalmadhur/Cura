@@ -30,37 +30,37 @@ def json_format(json_array):
 	print skinTemp
 	return heartRate, breathingRate, postureData, skinTemp
 
-json_array = [
-	  {
-		"user_name": "mshrimal",
-		"heart_rate": "120",
-		"time_recorded": "1970-01-01T15:28:23.044000Z",
-		"time_received": "2015-04-12T04:32:53.042339Z",
-		"breathing_rate": "23",
-		"ecg": "12",
-		"estimated_core_temperature": 32,
-		"posture": 30
-	  },
-	  {
-		"user_name": "mshrimal",
+# json_array = [
+	  # {
+		# "user_name": "mshrimal",
+		# "heart_rate": "120",
+		# "time_recorded": "1970-01-01T15:28:23.044000Z",
+		# "time_received": "2015-04-12T04:32:53.042339Z",
+		# "breathing_rate": "23",
+		# "ecg": "12",
+		# "estimated_core_temperature": 32,
+		# "posture": 30
+	  # },
+	  # {
+		# "user_name": "mshrimal",
 		
-		"heart_rate": "0",
-		"time_recorded": "1970-01-01T15:28:23.044000Z",
-		"time_received": "2015-04-12T06:20:31.639728Z",
-		"breathing_rate": 34,
-		"ecg": 12,
-		"estimated_core_temperature": 33,
-		"posture": 60
-	  },
-	   {
-		"user_name": "mshrimal",
-		"heart_rate": "0",
-		"time_recorded": "1970-01-01T15:28:23.044000Z",
-		"time_received": "2015-04-21T00:30:10.734027Z",
-		"breathing_rate": "-0.1",
-		"ecg": "0.0008",
-		"estimated_core_temperature": 36,
-		"posture": 90
-	  }
-	]
+		# "heart_rate": "0",
+		# "time_recorded": "1970-01-01T15:28:23.044000Z",
+		# "time_received": "2015-04-12T06:20:31.639728Z",
+		# "breathing_rate": 34,
+		# "ecg": 12,
+		# "estimated_core_temperature": 33,
+		# "posture": 60
+	  # },
+	   # {
+		# "user_name": "mshrimal",
+		# "heart_rate": "0",
+		# "time_recorded": "1970-01-01T15:28:23.044000Z",
+		# "time_received": "2015-04-21T00:30:10.734027Z",
+		# "breathing_rate": "-0.1",
+		# "ecg": "0.0008",
+		# "estimated_core_temperature": 36,
+		# "posture": 90
+	  # }
+	# ]
 hR, bR, pos, skinTem = json_format(json_array)
