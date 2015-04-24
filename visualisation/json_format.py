@@ -8,11 +8,15 @@ def json_format(json_array):
 	legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
 
 	for i in range(0,len(json_array)):
-		heartRate += '{"x":'+ json_array[i].get("time_recorded")+',"y": '+json_array[i].get("heart_rate")+'},'	
-		breathingRate += '{"x":'+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("breathing_rate"))+'},'	
-		postureData += '{"x": '+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("posture"))+'},'	
-		skinTemp += '{"x": '+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("estimated_core_temperature"))+'},'	
+		heartRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("heart_rate"))+'},'	
+		breathingRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("breathing_rate"))+'},'	
+		postureData += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("posture"))+'},'	
+		skinTemp += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("estimated_core_temperature"))+'},'	
 	index = 0
+	heartRate = heartRate.rstrip(',')
+	breathingRate = breathingRate.rstrip(',')
+	postureData = postureData.rstrip(',')
+	skinTemp = skinTemp.rstrip(',')
 	heartRate = '[{"values":[' + init + heartRate +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
 	breathingRate = '[{"values":[' + init + breathingRate +'],"key":"'+legend_name[index]+'"}]'
