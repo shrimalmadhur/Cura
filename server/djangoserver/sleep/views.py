@@ -85,6 +85,15 @@ def prepare_response(dtype, sessions):
   elif dtype == 'score':
     scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
     return Response({'values': scores})
+  elif dtype == 'rest':
+    values = [ {'x': s.int_session_end, 'y': s.rest_heart_rate} for s in sessions]
+    return Response({'values': values})
+  elif dtype == 'exit':
+    values = [ {'x': s.int_session_end, 'y': s.score_bed_exits} for s in sessions]
+    return Response({'values': values})
+  elif dtype == 'latency':
+    values = [ {'x': s.int_session_end, 'y': s.sleep_latency} for s in sessions]
+    return Response({'values': values})
   else:
     raise Http404()
 
