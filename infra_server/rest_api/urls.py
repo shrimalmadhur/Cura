@@ -167,8 +167,7 @@ bloodoxygenpatterns = patterns('',
 bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', blood_pressure_post_list),
                                  url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),
-                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),
-                               url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), blood_pressure_list),) 
+                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), blood_pressure_list),) 
 
 graphpatterns = patterns('',
     url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
