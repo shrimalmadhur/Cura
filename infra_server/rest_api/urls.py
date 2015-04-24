@@ -33,6 +33,18 @@ stress_list = views.StressGetTime.as_view({
     'get' : 'list',
 })
 
+weight_list = views.WeightGetTime.as_view({
+    'get' : 'list',
+})
+
+blood_oxygen_list = views.BloodOxygenGetTime.as_view({
+    'get' : 'list',
+})
+
+stress_recent_list = views.StressRecent.as_view({
+    'get' : 'list',
+})
+
 biometrics_list = views.BiometricsGetTime.as_view({
     'get' : 'list',
 })
@@ -76,6 +88,7 @@ washroompatterns = patterns('',
 weightpatterns = patterns('',
     url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetWeight.as_view()),
     url(r'^api/v1/weight/$', views.PostWeight.as_view()),
+    url(r'^api/v1/weight/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), weight_list), 
 )
 
 biometricsprecisepatterns = patterns('',
@@ -124,12 +137,16 @@ moodlightpatterns = patterns('',
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
     url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
+    url(r'^api/v1/stress/recent/(?P<user_name>\w+)/$', stress_recent_list),
     url(r'^api/v1/stress/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), stress_list), 
 )
 
 bloodoxygenpatterns = patterns('',
                                url(r'^api/v1/bloodoxygen/$', views.BloodOxygenView.as_view()),
-                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),)
+                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),
+                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt),
+                                   blood_oxygen_list), 
+)
 
 bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
@@ -139,12 +156,12 @@ graphpatterns = patterns('',
     #url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
     #view = heart_rate_list ),
 
-    #url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    #view = breathing_rate_list ),
+    url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = breathing_rate_list ),
 
-    #url(regex = r'^api/v1/iexpress/posture/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    #view = posture_list ),
-
+    url(regex = r'^api/v1/iexpress/posture/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = posture_list ),
+    
     url(regex = r'^api/v1/iexpress/skintemperature/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), view = skin_temperature_list ),
 )
 

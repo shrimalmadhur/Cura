@@ -503,6 +503,13 @@ def destroy_moodlight(request, user_name, device_id):
     result.delete()
     return Response("Deleted Successfully")
 
+class StressRecent(viewsets.ViewSet):
+
+    def list(self, request, user_name):
+        result = Stress.objects.filter(user_name = user_name).order_by('-time_recorded')
+        result = StressSerializer( result )
+        return Response( result )
+
 # Stress #
 class StressGetTime(viewsets.ViewSet):
 
@@ -539,6 +546,87 @@ class StressGetTime(viewsets.ViewSet):
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
         return Response(json_data)
+
+# Stress #
+
+# Weight Time #
+class WeightGetTime(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+
+        output = []
+        count = 0 
+        serialized = {}
+
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = WeightSerializer( result, many = True)
+            #return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = WeightSerializer( result, many = True)
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output.append(({"x": count ,"y": temp["weight"] }))
+        
+        output1 = {}
+        output1['values'] = output
+        output1['key'] = "Weight Measure"
+
+        json_data = json.dumps(output1)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
+
+# Weight Time #
+
+# Blood Oxygen Time #
+class BloodOxygenGetTime(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+
+        output = []
+        count = 0 
+        serialized = {}
+
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = BloodOxygenSerializer( result, many = True)
+            #return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = BloodOxygenSerializer( result, many = True)
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output.append(({"x": count ,"y": temp["blood_oxygen"] }))
+        
+        output1 = {}
+        output1['values'] = output
+        output1['key'] = "Blood Oxygen Measure"
+
+        json_data = json.dumps(output1)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
+
+# Blood Oxygen Time #
+
 
 class StressView(generics.ListCreateAPIView):
     serializer_class = StressSerializer
@@ -609,39 +697,74 @@ class HeartRate(viewsets.ViewSet):
 class BreathingRate(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
+
+        output = []
+        count = 0 
+        serialized = {}
+
         if start != end:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name) 
-            result = result.filter(time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output.append(({"x": count ,"y": temp["breathing_rate"] }))
+        
+        output1 = {}
+        output1['values'] = output
+        output1['key'] = "Breathing Rate Measure"
+
+        json_data = json.dumps(output1)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
 
 class Posture(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
+
+        output = []
+        count = 0 
+        serialized = {}
+
         if start != end:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output.append(({"x": count ,"y": temp["posture"] }))
+        
+        output1 = {}
+        output1['values'] = output
+        output1['key'] = "Posture Measure"
+
+        json_data = json.dumps(output1)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
 
 class SkinTemperature(viewsets.ViewSet):
 
