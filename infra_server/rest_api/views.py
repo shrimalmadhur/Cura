@@ -503,8 +503,26 @@ def destroy_moodlight(request, user_name, device_id):
     result.delete()
     return Response("Deleted Successfully")
 
+@api_view(['GET'])
+def get_stress_recent(request, user_name):
+        result  = Stress.objects.filter(user_name = user_name).latest('time_recorded')
+        data = StressSerializer(result)
+        return Response(data.data)
+
+class StressRecent(viewsets.ModelViewSet):
+    serializer_class = StressSerializer  
+
+    def get_queryset(self, user_name):
+        return Stress.objects.filter(user_name = user_name).order_by('-time_recorded')
+
+    def list(self, request, user_name):
+        result = list(self.get_queryset(user_name))[0]
+        print result
+        return Response( result )
+
 # Stress #
-class StressGetTime(viewsets.ViewSet):
+class StressGetTime(viewsets.ModelViewSet):
+    
 
     def list(self, request, user_name, start, end):
 
@@ -539,6 +557,10 @@ class StressGetTime(viewsets.ViewSet):
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
         return Response(json_data)
+
+# Stress #
+
+
 
 class StressView(generics.ListCreateAPIView):
     serializer_class = StressSerializer
@@ -632,7 +654,7 @@ class Posture(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
             return Response( serialized.data )
         else:

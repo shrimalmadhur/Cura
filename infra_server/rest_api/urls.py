@@ -33,6 +33,10 @@ stress_list = views.StressGetTime.as_view({
     'get' : 'list',
 })
 
+stress_recent_list = views.StressRecent.as_view({
+    'get' : 'list',
+})
+
 biometrics_list = views.BiometricsGetTime.as_view({
     'get' : 'list',
 })
@@ -124,6 +128,7 @@ moodlightpatterns = patterns('',
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
     url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
+    url(r'^api/v1/stress/recent/(?P<user_name>\w+)/$', views.get_stress_recent),
     url(r'^api/v1/stress/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), stress_list), 
 )
 
@@ -144,7 +149,7 @@ graphpatterns = patterns('',
 
     #url(regex = r'^api/v1/iexpress/posture/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
     #view = posture_list ),
-
+    
     url(regex = r'^api/v1/iexpress/skintemperature/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), view = skin_temperature_list ),
 )
 
