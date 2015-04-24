@@ -31,7 +31,7 @@ class BiometricsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Biometrics
         list_serializer_class = BiometricsListSerializer
-        fields = ('user_name','heart_rate', 'time_recorded', 'time_received', 'breathing_rate', 'ecg', 'estimated_core_temperature', 'posture')
+        fields = ('user_name','heart_rate', 'time_recorded', 'time_received', 'breathing_rate', 'ecg', 'estimated_core_temperature', 'posture',)
 
 class BiometricsPreciseSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(max_length = 255)  
@@ -45,14 +45,15 @@ class BiometricsPreciseSerializer(serializers.ModelSerializer):
     samples_per_packet = serializers.IntegerField(required = False)
     #sample = serializers.CharField(required = False)
 
+    '''
     def create(self, validated_data):
         #print ('Validated data before samples ', validated_data['samples'])
         char_to_dict = ast.literal_eval( validated_data['samples'] ) 
         validated_data['samples'] = json.dumps( char_to_dict )
         #io = StringIO()
         #validated_data['samples'] = json.dumps(validated_data['samples'], io)
-        return BiometricsPrecise(**validated_data)
-
+        return BiometricsPrecise(**validated_data) 
+    '''
     class Meta:
         model = BiometricsPrecise
 

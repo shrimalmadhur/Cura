@@ -78,8 +78,8 @@ biometricspatterns = patterns('',
     url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/$', 
         view = views.GetCuraUser.as_view()),
 
-    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>\d+)/(?P<end>\d+)/$', 
-        view = views.GetTimeUser.as_view()),
+    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>\w+)/(?P<end>\w+)/$', 
+        view = views.GetBiometricsTimeUser.as_view()),
 )
 
 homeautomationpatterns = patterns('',

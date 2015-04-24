@@ -9,6 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import json
+import ast
+from datetime import datetime
 import httplib
 
 ### Home Automation Demo Changes ###
@@ -209,13 +211,18 @@ class WashroomGetDestroy(generics.ListAPIView):
 
 # Biometrics Precise #
 class GetBiometricsPrecise(generics.ListAPIView):
-    serializer_class = BiometricsPreciseSerializer 
+    serializer_class = BiometricsPreciseSerializer
 
     def get_queryset(self):
         user_name = self.kwargs['user_name']
         result = BiometricsPrecise
         return BiometricsPrecise.objects.filter(user_name = user_name)
 
+        #char_to_dict = ast.literal_eval( request.data['samples'] ) 
+        #validated_data['samples'] = json.dumps( char_to_dict )
+        #io = StringIO()
+        #validated_data['samples'] = json.dumps(validated_data['samples'], io)
+           
 class PostBiometricsPrecise(generics.CreateAPIView):
     serializer_class = BiometricsPreciseSerializer 
 
@@ -253,7 +260,7 @@ class User(viewsets.ModelViewSet):
     serializer_class = CuraUser 
 
     def get_queryset(self):
-        return CuraUser.objects.filter(user_name = self.kwargs['user_name'])
+        return CuraUser.objects.filter(user_name = self.kwargs['user_name']) 
 
     def list(self, request, user_name):
         result = self.get_queryset() 
@@ -306,17 +313,24 @@ class GetBiometricsData(generics.CreateAPIView):
     def get_queryset(self):
         return Biometrics.objects.all()
 
-class GetTimeUser(generics.ListAPIView):
+class GetBiometricsTimeUser(generics.ListAPIView):
     serializer_class = BiometricsSerializer
 
-    # Fix this #
     def get_queryset(self):
         user_id = self.kwargs['user_name']
         start_time = self.kwargs['start']
         end_time = self.kwargs['end']
-        filtered_objects = Biometrics.objects.filter(user_name= user_name)
+        
+        print "start time ", start_time
+        print "end time ",  end_time 
+
+        start_time = datetime.strptime(start_time, '%Y-%m-%d')
+        end_time = datetime.strptime(end_time, '%Y-%m-%d')
+
+        filtered_objects = Biometrics.objects.filter(user_name = user_name)
         filtered_objects = filtered_objects.filter(time_recorded__gte = start_time, time_recorded__lte = end_time)
         return filtered_objects
+
 
 # Home Automation #
 class HomeAutomationPostGet(generics.ListCreateAPIView):
