@@ -3,10 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User 
 from django.contrib.auth import login, authenticate, logout 
 from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, MoodLight, Stress, Events, Medication, Contacts, BloodOxygen, BloodPressure)
-from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer, BloodOxygenSerializer, BloodPressureSerializer) 
+from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer, BloodOxygenSerializer, BloodPressureSerializer, ) 
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 import json
 import ast
@@ -19,6 +20,12 @@ import requests
 import time
 from requests.auth import HTTPBasicAuth
 
+def parse_date(date):
+    try:
+        dt = datetime.strptime(date, '%Y-%m-%d').replace(tzinfo=pytz.UTC)
+        return dt
+    except ValueError as e:
+        raise ParseError(str(e))
 
 ### Events ###
 class EventsPostGet(generics.ListCreateAPIView):
@@ -471,7 +478,6 @@ class MoodLightViewSet(viewsets.ModelViewSet):
 
     def update(self, request, user_name):
         result = MoodLight.objects.get(user_name = user_name, device_id = request.data['device_id'])
-        
         '''
         current_value = result.current_value
         mode = result.mode
@@ -498,6 +504,24 @@ def destroy_moodlight(request, user_name, device_id):
     return Response("Deleted Successfully")
 
 # Stress #
+class StressGetTime(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            result = Stress.objects.filter(user_name = user_name) 
+            result = result.filter(time_recorded__gte = start, time_recorded__lte = end)
+            serialized = StressSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Stress.objects.filter(time_recorded__gte = start, time_recorded__lte = end)
+            serialized = StressSerializer( result, many = True)
+            return Response( serialized.data )
+
 class StressView(generics.ListCreateAPIView):
     serializer_class = StressSerializer
 

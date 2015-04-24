@@ -27,6 +27,10 @@ events_list = views.EventsViewSet.as_view({
         'put' : 'update',
 }) 
 
+stress_list = views.StressGetTime.as_view({
+    'get' : 'list',
+})
+
 contactspatterns = patterns('',
         url(r'^api/v1/contacts/$', views.ContactsPost.as_view()),
         url(r'api/v1/contacts/(?P<user_name>\w+)/$', contacts_list),
@@ -94,16 +98,18 @@ moodlightpatterns = patterns('',
     url(r'^api/v1/moodlight/(?P<user_name>\w+)/(?P<device_id>\w+)/$', views.destroy_moodlight),
 )
 
+fmt = '\d{4}-\d{2}-\d{2}'
+
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
     url(r'^api/v1/stress/(?P<user_name>\w+)/$', views.StressByUser.as_view()),
+    url(r'^api/v1/stress/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), stress_list), 
 )
 
 bloodoxygenpatterns = patterns('',
                                url(r'^api/v1/bloodoxygen/$', views.BloodOxygenView.as_view()),
-                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),
-                               
-                               )
+                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),)
+
 bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
                                  url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),

@@ -112,6 +112,9 @@ class StressSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Stress
+        #fields = ('user_name', 'stress_score', 'skin_conductance', 'duration', 'number_relax_events',
+        #'number_stress_events', 'number_steady_events', 'time_recorded', 'time_received')
+        #list_serializer_class = StressListSerializer 
 
 class ContactsSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(max_length = 255)
