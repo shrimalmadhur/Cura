@@ -301,7 +301,32 @@ class GetBiometricsPrecise(generics.ListAPIView):
         #validated_data['samples'] = json.dumps( char_to_dict )
         #io = StringIO()
         #validated_data['samples'] = json.dumps(validated_data['samples'], io)
+
+class PostBiometricsPrecise(generics.CreateAPIView):
+    serializer_class = BiometricsPreciseSerializer
            
+class BloodPressurePost(viewsets.ModelViewSet):
+    serializer_class = BloodPressureSerializer 
+
+    def create(self, request):
+        user_name = request.data['user_name']
+        systolic = request.data['systolic']
+        dystolic = request.data['dystolic']
+        pulse = request.data['pulse']
+        time_recorded = request.data['time_recorded']
+        text = "Blood Pressure Alert " + systolic + " Dystolic: " + dystolic 
+        systolic_int = int( systolic )
+        dystolic_int  = int( dystolic )
+        if systolic_int > 120 or dystolic_int < 80:
+            alert(user_name, text)
+
+        new_object = BloodPressure(user_name = user_name,
+                                   systolic = systolic,
+                                   dystolic = dystolic,
+                                   pulse = pulse,
+                                   time_recorded = time_recorded)
+        new_object.save()
+        return Response("Created")
 
 class BiometricsPost(viewsets.ModelViewSet):
     serializer_class = BiometricsSerializer
@@ -330,9 +355,6 @@ class BiometricsPost(viewsets.ModelViewSet):
                                 posture = posture)
         new_object.save()
         return Response("Created")
-
-class PostBiometricsPrecise(generics.CreateAPIView):
-    serializer_class = BiometricsPreciseSerializer 
 
 # Push Notification #
 @api_view(['POST'])
@@ -963,3 +985,5 @@ class SkinTemperature(viewsets.ViewSet):
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
         return Response(json_data)
+
+
