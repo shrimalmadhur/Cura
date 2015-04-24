@@ -37,6 +37,22 @@ biometrics_list = views.BiometricsGetTime.as_view({
     'get' : 'list',
 })
 
+heart_rate_list = views.HeartRate.as_view({
+    'get' : 'list',
+})
+
+breathing_rate_list = views.BreathingRate.as_view({
+    'get' : 'list',
+})
+
+posture_list = views.Posture.as_view({
+    'get' : 'list',
+})
+
+skin_temperature_list = views.SkinTemperature.as_view({
+    'get' : 'list',
+})
+
 contactspatterns = patterns('',
         url(r'^api/v1/contacts/$', views.ContactsPost.as_view()),
         url(r'api/v1/contacts/(?P<user_name>\w+)/$', contacts_list),
@@ -119,21 +135,18 @@ bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
                                  url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),)
 
-'''
 graphpatterns = patterns('',
-    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    view = ),
+    #url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    #view = heart_rate_list ),
 
-    url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    view = ),
+    #url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    #view = breathing_rate_list ),
 
-    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    view = ),
+    #url(regex = r'^api/v1/iexpress/posture/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    #view = posture_list ),
 
-    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    view = ),
+    url(regex = r'^api/v1/iexpress/skintemperature/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), view = skin_temperature_list ),
 )
-'''
 
 restapiurlpatterns = patterns('', 
 )
@@ -153,3 +166,4 @@ restapiurlpatterns += moodlightpatterns
 restapiurlpatterns += stresspatterns
 restapiurlpatterns += bloodoxygenpatterns
 restapiurlpatterns += bloodpressurepatterns
+restapiurlpatterns += graphpatterns 

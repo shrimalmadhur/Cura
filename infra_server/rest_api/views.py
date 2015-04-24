@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User 
 from django.contrib.auth import login, authenticate, logout 
 from rest_api.models import (Biometrics, CuraUser, BiometricsPrecise, Weight, Washroom, HomeAutomation, MoodLight, Stress, Events, Medication, Contacts, BloodOxygen, BloodPressure)
+from rest_api.json_visualizer import ( json_format_heart_rate, json_format_breathing_rate, json_format_breathing_rate, json_format_posture_rate, json_format_skin_temperature ) 
 from rest_api.serializers import (BiometricsSerializer, CuraUserSerializer, BiometricsPreciseSerializer, WeightSerializer, WashroomSerializer, HomeAutomationSerializer, MoodLightSerializer, StressSerializer, EventsSerializer, MedicationSerializer,ContactsSerializer, BloodOxygenSerializer, BloodPressureSerializer, ) 
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
@@ -321,7 +322,7 @@ class BiometricsGetTime(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
             return Response( serialized.data )
         else:
@@ -337,21 +338,6 @@ class GetBiometricsData(generics.CreateAPIView):
 
     def get_queryset(self):
         return Biometrics.objects.all()
-
-class GetBiometricsTimeUser(generics.ListAPIView):
-    serializer_class = BiometricsSerializer
-
-    def get_queryset(self):
-        user_id = self.kwargs['user_name']
-        start_time = self.kwargs['start']
-        end_time = self.kwargs['end']
-        
-        start_time = datetime.strptime(start_time, '%Y-%m-%d')
-        end_time = datetime.strptime(end_time, '%Y-%m-%d')
-
-        filtered_objects = filtered_objects.filter(user_name = user_name, time_recorded__gte = start_time, time_recorded__lte = end_time)
-        return filtered_objects
-
 
 # Home Automation #
 class HomeAutomationPostGet(generics.ListCreateAPIView):
@@ -646,13 +632,20 @@ class SkinTemperature(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            print result
+            print "Before serialization"
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            print "After serialization"
+            skin_temperature = json_format_skin_temperature(Response( serialized))
+            print skin_temperature
+            return Response( skin_temperature )
+
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            skin_temperature = json_format_skin_temperature(serialized)
+            return Response( skin_temperature )
