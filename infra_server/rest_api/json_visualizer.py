@@ -27,6 +27,7 @@ def json_format_posture_rate(json_array):
         return postureData
 
 def json_format_skin_temperature(json_array):
+        print json_array
         skinTemp = ''
         for i in range(0,len(json_array)):
             skinTemp += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("estimated_core_temperature"))+'},'       

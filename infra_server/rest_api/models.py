@@ -27,10 +27,10 @@ class Biometrics(models.Model):
     posture = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
-        return str(self.user_id)
+        return str(self.user_name)
         
     def __unicode__(self):
-        return self.user_id
+        return self.user_name
 
 class BiometricsPrecise(models.Model):
 

@@ -507,20 +507,38 @@ def destroy_moodlight(request, user_name, device_id):
 class StressGetTime(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
+
+        output = []
+        count = 0 
+        serialized = {}
+
         if start != end:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = StressSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = StressSerializer( result, many = True)
-            return Response( serialized.data )
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output.append(({"x": count ,"y": temp["stress_score"] }))
+        
+        output1 = {}
+        output1['values'] = output
+        output1['key'] = "Stress Measure"
+
+        json_data = json.dumps(output1)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
 
 class StressView(generics.ListCreateAPIView):
     serializer_class = StressSerializer
@@ -633,19 +651,16 @@ class SkinTemperature(viewsets.ViewSet):
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
-            print result
-            print "Before serialization"
             serialized = BiometricsSerializer( result, many = True)
-            print "After serialization"
-            skin_temperature = json_format_skin_temperature(Response( serialized))
-            print skin_temperature
-            return Response( skin_temperature )
-
+            skin_temperature = json_format_skin_temperature( serialized)
+            #return Response( skin_temperature )
+            return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
-            skin_temperature = json_format_skin_temperature(serialized)
-            return Response( skin_temperature )
+            #skin_temperature = json_format_skin_temperature( serialized )
+            #return Response( skin_temperature )
+            return Response( serialized.data )
