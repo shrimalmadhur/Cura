@@ -2,8 +2,8 @@ def json_format(json_array):
 
 	#init = '{"x":0,"y":0},'
 	weight = ''
-	#legend_name = ['Weight']
-	legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
+	legend_name = ['Weight']
+	#legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
 	
 	for i in range(0,len(json_array)):
 		if json_array[i].get("time_recorded") 
