@@ -2,6 +2,8 @@ from django.conf.urls import url, include, patterns
 from django.contrib import admin
 from rest_api import views
 
+fmt = '\d{4}-\d{2}-\d{2}'
+
 homeautomation_list = views.HomeAutomationViewSet.as_view({
         'get': 'list',
         'put' : 'update',
@@ -28,6 +30,10 @@ events_list = views.EventsViewSet.as_view({
 }) 
 
 stress_list = views.StressGetTime.as_view({
+    'get' : 'list',
+})
+
+biometrics_list = views.BiometricsGetTime.as_view({
     'get' : 'list',
 })
 
@@ -82,8 +88,8 @@ biometricspatterns = patterns('',
     url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/$', 
         view = views.GetCuraUser.as_view()),
 
-    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>\w+)/(?P<end>\w+)/$', 
-        view = views.GetBiometricsTimeUser.as_view()),
+    url(regex = r'^api/v1/biometrics/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+        view = biometrics_list),
 )
 
 homeautomationpatterns = patterns('',
@@ -98,7 +104,6 @@ moodlightpatterns = patterns('',
     url(r'^api/v1/moodlight/(?P<user_name>\w+)/(?P<device_id>\w+)/$', views.destroy_moodlight),
 )
 
-fmt = '\d{4}-\d{2}-\d{2}'
 
 stresspatterns = patterns('',
     url(r'^api/v1/stress/$', views.StressView.as_view()),
@@ -112,8 +117,24 @@ bloodoxygenpatterns = patterns('',
 
 bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
-                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),
-                                 )
+                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),)
+
+'''
+graphpatterns = patterns('',
+    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = ),
+
+    url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = ),
+
+    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = ),
+
+    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = ),
+)
+'''
+
 restapiurlpatterns = patterns('', 
 )
 

@@ -314,6 +314,24 @@ class GetCuraUser(generics.ListAPIView):
         user_name = self.kwargs['user_name']
         return Biometrics.objects.filter(user_name= user_name)
 
+class BiometricsGetTime(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+
 class GetBiometricsData(generics.CreateAPIView):
     serializer_class = BiometricsSerializer
 
@@ -328,14 +346,10 @@ class GetBiometricsTimeUser(generics.ListAPIView):
         start_time = self.kwargs['start']
         end_time = self.kwargs['end']
         
-        print "start time ", start_time
-        print "end time ",  end_time 
-
         start_time = datetime.strptime(start_time, '%Y-%m-%d')
         end_time = datetime.strptime(end_time, '%Y-%m-%d')
 
-        filtered_objects = Biometrics.objects.filter(user_name = user_name)
-        filtered_objects = filtered_objects.filter(time_recorded__gte = start_time, time_recorded__lte = end_time)
+        filtered_objects = filtered_objects.filter(user_name = user_name, time_recorded__gte = start_time, time_recorded__lte = end_time)
         return filtered_objects
 
 
@@ -510,15 +524,15 @@ class StressGetTime(viewsets.ViewSet):
         if start != end:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
-            result = Stress.objects.filter(user_name = user_name) 
-            result = result.filter(time_recorded__gte = start, time_recorded__lte = end)
+            end = end.replace(hour = 23, minute = 59)
+            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = StressSerializer( result, many = True)
             return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(time_recorded__gte = start, time_recorded__lte = end)
+            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = StressSerializer( result, many = True)
             return Response( serialized.data )
 
@@ -568,3 +582,77 @@ class BloodPressureByUser(generics.ListAPIView):
         user_name = self.kwargs['user_name']
         result = BloodPressure.objects.filter(user_name = user_name)
         return result
+
+# IExpress #
+class HeartRate(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+
+class BreathingRate(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name) 
+            result = result.filter(time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+
+class Posture(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+
+class SkinTemperature(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = result.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            serialized = BiometricsSerializer( result, many = True)
+            return Response( serialized.data )
