@@ -9,6 +9,10 @@ homeautomation_list = views.HomeAutomationViewSet.as_view({
         'put' : 'update',
 }) 
 
+washroom_list = views.WashroomCount.as_view({
+        'get': 'list',
+}) 
+
 moodlight_list = views.MoodLightViewSet.as_view({
         'get': 'list',
         'put': 'update',
@@ -75,7 +79,8 @@ eventspatterns = patterns('',
 
 washroompatterns = patterns('',
     url(r'^api/v1/washroom/(?P<user_name>\w+)/$', views.WashroomGetDestroy.as_view()),
-    url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),)
+    url(r'^api/v1/washroom/$', views.WashroomPost.as_view()),
+    url(r'^api/v1/washroom/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), washroom_list),) 
 
 weightpatterns = patterns('',
     url(r'^api/v1/weight/(?P<user_name>\w+)/$', views.GetWeight.as_view()),
@@ -141,8 +146,8 @@ bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),)
 
 graphpatterns = patterns('',
-    #url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
-    #view = heart_rate_list ),
+    url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
+    view = heart_rate_list ),
 
     #url(regex = r'^api/v1/iexpress/breathingrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
     #view = breathing_rate_list ),
