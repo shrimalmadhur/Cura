@@ -718,6 +718,49 @@ class BloodOxygenByUser(generics.ListAPIView):
         return result
 
 # Blood Pressure #
+class BloodPressureGetTime(viewsets.ViewSet):
+
+    def list(self, request, user_name, start, end):
+        output_dystolic = []
+        output_systolic = []
+        count = 0 
+        serialized = {}
+
+        if start != end:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = BloodPressureSerializer( result, many = True)
+            #return Response( serialized.data )
+        else:
+            start = datetime.strptime(start, '%Y-%m-%d')
+            end = datetime.strptime(end, '%Y-%m-%d')
+            end = end.replace(hour = 23, minute = 59)
+            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            serialized = BloodPressureSerializer( result, many = True)
+            #return Response( serialized.data )
+        vals = serialized.data
+        for temp in vals:
+                count = count + 1
+                output_dystolic.append(({"x": count ,"y": temp["dystolic"] }))
+                output_systolic.append(({"x": count ,"y": temp["systolic"] }))
+        
+        final_output = []
+        output1 = {}
+        output1['values'] = output_dystolic
+        output1['key'] = "Dystolic Measure"
+        output2 = {}
+        output2['values'] = output_systolic
+        output2['key'] = "Systolic Measure"
+
+        final_output.append(output1)
+        final_output.append(output2)
+        json_data = json.dumps(final_output)
+        python_dict = ast.literal_eval(json_data)
+        json_data = ( python_dict )
+        return Response(json_data)
+
 class BloodPressureView(generics.ListCreateAPIView):
     serializer_class = BloodPressureSerializer
     

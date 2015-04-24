@@ -45,6 +45,10 @@ blood_oxygen_list = views.BloodOxygenGetTime.as_view({
     'get' : 'list',
 })
 
+blood_pressure_list = views.BloodPressureGetTime.as_view({
+    'get' : 'list',
+})
+
 stress_recent_list = views.StressRecent.as_view({
     'get' : 'list',
 })
@@ -150,13 +154,13 @@ stresspatterns = patterns('',
 bloodoxygenpatterns = patterns('',
                                url(r'^api/v1/bloodoxygen/$', views.BloodOxygenView.as_view()),
                                url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/$', views.BloodOxygenByUser.as_view()),
-                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt),
-                                   blood_oxygen_list), 
+                               url(r'^api/v1/bloodoxygen/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), blood_oxygen_list), 
 )
 
 bloodpressurepatterns = patterns('',
                                  url(r'^api/v1/bloodpressure/$', views.BloodPressureView.as_view()),
-                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),)
+                                 url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/$', views.BloodPressureByUser.as_view()),
+                               url(r'^api/v1/bloodpressure/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), blood_pressure_list),) 
 
 graphpatterns = patterns('',
     url(regex = r'^api/v1/iexpress/heartrate/(?P<user_name>\w+)/(?P<start>%s)/(?P<end>%s)/$' % (fmt, fmt), 
