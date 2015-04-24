@@ -8,6 +8,7 @@ def json_format(json_array):
 	legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
 	
 	for i in range(0,len(json_array)):
+		if json_array[i].get("time_recorded") 
 		heartRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("heart_rate"))+'},'	
 		breathingRate += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("breathing_rate"))+'},'	
 		postureData += '{"x":"'+ str(json_array[i].get("time_recorded"))+'","y": '+str(json_array[i].get("posture"))+'},'	
@@ -29,38 +30,62 @@ def json_format(json_array):
 	print postureData
 	print skinTemp
 	return heartRate, breathingRate, postureData, skinTemp
-
-# json_array = [
-	  # {
-		# "user_name": "mshrimal",
-		# "heart_rate": "120",
-		# "time_recorded": "1970-01-01T15:28:23.044000Z",
-		# "time_received": "2015-04-12T04:32:53.042339Z",
-		# "breathing_rate": "23",
-		# "ecg": "12",
-		# "estimated_core_temperature": 32,
-		# "posture": 30
-	  # },
-	  # {
-		# "user_name": "mshrimal",
-		
-		# "heart_rate": "0",
-		# "time_recorded": "1970-01-01T15:28:23.044000Z",
-		# "time_received": "2015-04-12T06:20:31.639728Z",
-		# "breathing_rate": 34,
-		# "ecg": 12,
-		# "estimated_core_temperature": 33,
-		# "posture": 60
-	  # },
-	   # {
-		# "user_name": "mshrimal",
-		# "heart_rate": "0",
-		# "time_recorded": "1970-01-01T15:28:23.044000Z",
-		# "time_received": "2015-04-21T00:30:10.734027Z",
-		# "breathing_rate": "-0.1",
-		# "ecg": "0.0008",
-		# "estimated_core_temperature": 36,
-		# "posture": 90
-	  # }
-	# ]
+json_array =[
+  {
+    "id": 8,
+    "user_name": "mshrimal",
+    "time_recorded": "1970-01-17T13:10:25.857000Z",
+    "time_received": "2015-04-24T02:44:59.478681Z",
+    "weight": 74980000
+  },
+  {
+    "id": 9,
+    "user_name": "mshrimal",
+    "time_recorded": "1970-01-17T13:10:25.857000Z",
+    "time_received": "2015-04-24T02:47:00.449079Z",
+    "weight": 75
+  },
+  {
+    "id": 10,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:49:57.914047Z",
+    "weight": 75
+  },
+  {
+    "id": 11,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:50:56.111584Z",
+    "weight": 75
+  },
+  {
+    "id": 12,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:51:09.650433Z",
+    "weight": 75
+  },
+  {
+    "id": 13,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:53:04.114558Z",
+    "weight": 75
+  },
+  {
+    "id": 14,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:53:09.364948Z",
+    "weight": 75
+  },
+  {
+    "id": 15,
+    "user_name": "mshrimal",
+    "time_recorded": "2015-04-23T21:50:57Z",
+    "time_received": "2015-04-24T02:53:15.040279Z",
+    "weight": 75
+  }
+]
 hR, bR, pos, skinTem = json_format(json_array)
