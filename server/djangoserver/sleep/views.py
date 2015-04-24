@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from datetime import datetime
+import itertools
 import pytz
 import json
 
@@ -40,17 +41,7 @@ class DayGraph(APIView):
     dt = parse_date(date)
     sessions = user.sleepsession_set.filter(session_end__year=dt.year, 
         session_end__month=dt.month, session_end__day=dt.day).order_by('session_end')
-
-    if dtype == 'cycle':
-      ret = {'values': [], 'key': 'cycle'}
-      for s in sessions:
-        cycles = s.time_series_data.filter(data_type=TSData.TYPE_CYCLE).order_by('timestamp')
-        values = [ {'x': c.int_timestamp, 'y': c.value} for c in cycles ]
-        ret['values'] = ret['values'] + values
-      return Response([ret])
-    else:
-      raise Http404()
-
+    return prepare_response(dtype, sessions)
 
 class RangeGraph(APIView):
 
@@ -63,11 +54,37 @@ class RangeGraph(APIView):
     dt1 = parse_date(begin)
     dt2 = parse_date(end)
     sessions = user.sleepsession_set.filter(session_end__gte=dt1, session_end__lt=dt2)
+    return prepare_response(dtype, sessions)
 
-    if dtype == 'score':
-      scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
-      return Response([{'values': scores, 'key': 'score'}])
-    else:
-      raise Http404()
-
+def prepare_response(dtype, sessions):
+  ret = {'values': [], 'key': dtype}
+  if dtype == 'cycle':
+    for s in sessions:
+      cycles = s.time_series_data(manager='type_mgr').get_cycles()
+      values = [ {'x': c.int_timestamp, 'y': c.value} for c in cycles ]
+      ret['values'] = ret['values'] + values
+    return Response([ret])
+  elif dtype == 'heart':
+    for s in sessions:
+      hrs = s.time_series_data(manager='type_mgr').get_hearts()
+      values = [ {'x': h.int_timestamp, 'y': h.value} for h in hrs ]
+      ret['values'] = ret['values'] + values
+    return Response([ret])
+  elif dtype == 'stage':
+    for s in sessions:
+      stages = s.time_series_data(manager='type_mgr').get_stages()
+      values = [ {'x': st.int_timestamp, 'y': st.value} for st in stages ]
+      ret['values'] = ret['values'] + values
+    return Response([ret])
+  elif dtype == 'snore':
+    for s in sessions:
+      snores = s.time_series_data(manager='type_mgr').get_snores()
+      values = [ {'x': sn.int_timestamp, 'y': sn.value} for sn in snores ]
+      ret['values'] = ret['values'] + values
+    return Response([ret])
+  elif dtype == 'score':
+    scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
+    return Response({'values': scores})
+  else:
+    raise Http404()
 

@@ -46,6 +46,42 @@ class SleepSession(models.Model):
   def int_session_end(self):
     return int(mktime(self.session_end.timetuple()))
 
+class TSDTypeQS(models.QuerySet):
+  def cycles(self):
+    return self.filter(data_type=TSData.TYPE_CYCLE).order_by('timestamp')
+
+  def snores(self):
+    return self.filter(data_type=TSData.TYPE_SNORE).order_by('timestamp')
+
+  def hearts(self):
+    return self.filter(data_type=TSData.TYPE_HEART).order_by('timestamp')
+
+  def presences(self):
+    return self.filter(data_type=TSData.TYPE_PRESE).order_by('timestamp')
+
+  def stages(self):
+    return self.filter(data_type=TSData.TYPE_STAGE).order_by('timestamp')
+
+class TSDataManager(models.Manager):
+  def get_queryset(self):
+    return TSDTypeQS(self.model, using=self._db)
+
+  def get_cycles(self):
+    return self.get_queryset().cycles()
+
+  def get_snores(self):
+    return self.get_queryset().snores()
+
+  def get_hearts(self):
+    return self.get_queryset().hearts()
+
+  def get_presences(self):
+    return self.get_queryset().presences()
+
+  def get_stages(self):
+    return self.get_queryset().stages()
+
+
 # timeseries data from beddit
 class TSData(models.Model):
   TYPE_STAGE = 1
@@ -65,6 +101,8 @@ class TSData(models.Model):
   data_type = models.IntegerField(choices=TYPE_CHOICES)
   timestamp = models.DateTimeField()
   value = models.FloatField()
+
+  type_mgr = TSDataManager()
 
   @property
   def int_timestamp(self):
