@@ -635,7 +635,8 @@ class StressRecent(viewsets.ViewSet):
 def get_stress_recent(request, user_name):
         result  = Stress.objects.filter(user_name = user_name).latest('time_recorded')
         data = StressSerializer(result)
-        return Response(data.data)
+        output = [ data.data ]
+        return Response(output)
 
 # Stress #
 class StressGetTime(viewsets.ModelViewSet):
