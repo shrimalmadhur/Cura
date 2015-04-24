@@ -4,23 +4,27 @@ def json_format(json_array):
 	heartRate = ''
 	breathingRate = ''
 	postureData = ''
-	legend_name = ['heartRate', 'breathingRate', 'postureData']
+	skinTemp = ''
+	legend_name = ['HeartRate', 'BreathingRate', 'PostureData', 'SkinTemperature']
 
 	for i in range(0,len(json_array)):
 		heartRate += '{"x": '+ json_array[i].get("time_recorded")+',"y": '+json_array[i].get("heart_rate")+'},'	
 		breathingRate += '{"x": '+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("breathing_rate"))+'},'	
 		postureData += '{"x": '+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("posture"))+'},'	
-
+		skinTemp += '{"x": '+ str(json_array[i].get("time_recorded"))+',"y": '+str(json_array[i].get("estimated_core_temperature"))+'},'	
 	index = 0
 	heartRate = '[{"values":[' + init + heartRate +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
 	breathingRate = '[{"values":[' + init + breathingRate +'],"key":"'+legend_name[index]+'"}]'
 	index = index + 1
 	postureData = '[{"values":[' + init + postureData +'],"key":"'+legend_name[index]+'"}]'
+	index = index + 1
+	skinTemp = '[{"values":[' + init + skinTemp +'],"key":"'+legend_name[index]+'"}]'
 	print heartRate
 	print breathingRate
 	print postureData
-	return heartRate, breathingRate, postureData
+	print skinTemp
+	return heartRate, breathingRate, postureData, skinTemp
 
 json_array = [
 	  {
@@ -55,4 +59,4 @@ json_array = [
 		"posture": 90
 	  }
 	]
-hR, bR, pos = json_format(json_array)
+hR, bR, pos, skinTem = json_format(json_array)
