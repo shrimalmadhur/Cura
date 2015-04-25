@@ -26,7 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+# Home Automation #
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -39,6 +41,7 @@ INSTALLED_APPS = (
     'rest_auth',
     #'allauth',
     #'allauth.account',
+    'corsheaders',
     'rest_auth.registration',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -51,6 +54,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
