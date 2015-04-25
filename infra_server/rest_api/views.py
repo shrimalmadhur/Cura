@@ -651,7 +651,7 @@ class StressGetTime(viewsets.ModelViewSet):
     serializer_class = StressSerializer
 
     def list(self, request, user_name, start, end):
-
+        count = 1  
         output = []
         serialized = {}
 
@@ -671,8 +671,8 @@ class StressGetTime(viewsets.ModelViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                x_axis = convert_time_since_epoch(temp['time_recorded'])
-                output.append(({"x": x_axis ,"y": temp["stress_score"] }))
+                output.append(({"x": count,"y": temp["stress_score"] }))
+                count += 1 
         
         output1 = {}
         output1['values'] = output
