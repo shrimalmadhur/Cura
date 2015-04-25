@@ -15,7 +15,6 @@ from datetime import datetime
 import httplib
 import time
 import dateutil.parser
-import datetime
 
 ### Home Automation Demo Changes ###
 import httplib
@@ -654,7 +653,6 @@ class StressGetTime(viewsets.ModelViewSet):
     def list(self, request, user_name, start, end):
 
         output = []
-        count = 0 
         serialized = {}
 
         if start != end:
@@ -673,8 +671,8 @@ class StressGetTime(viewsets.ModelViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["stress_score"] }))
+                x_axis = convert_time_since_epoch(temp['time_recorded'])
+                output.append(({"x": x_axis ,"y": temp["stress_score"] }))
         
         output1 = {}
         output1['values'] = output
@@ -714,8 +712,8 @@ class WeightGetTime(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["weight"] }))
+                x_axis = convert_time_since_epoch(datestring)
+                output.append(({"x": x_axis,"y": temp["weight"] }))
         
         output1 = {}
         output1['values'] = output
@@ -724,7 +722,7 @@ class WeightGetTime(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response( [ json_data ])
 
 # Weight Time #
 
@@ -753,8 +751,8 @@ class BloodOxygenGetTime(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["blood_oxygen"] }))
+                x_axis = convert_time_since_epoch(temp["time_recorded"])
+                output.append(({"x": x_axis,"y": temp["blood_oxygen"] }))
         
         output1 = {}
         output1['values'] = output
@@ -804,7 +802,6 @@ class BloodPressureGetTime(viewsets.ViewSet):
     def list(self, request, user_name, start, end):
         output_dystolic = []
         output_systolic = []
-        count = 0 
         serialized = {}
 
         if start != end:
@@ -823,9 +820,9 @@ class BloodPressureGetTime(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output_dystolic.append(({"x": count ,"y": temp["dystolic"] }))
-                output_systolic.append(({"x": count ,"y": temp["systolic"] }))
+                x_axis = convert_time_since_epoch(temp['time_recorded'])
+                output_dystolic.append(({"x": x_axis ,"y": temp["dystolic"] }))
+                output_systolic.append(({"x": x_axis ,"y": temp["systolic"] }))
         
         final_output = []
         output1 = {}
@@ -989,7 +986,7 @@ class SkinTemperature(viewsets.ViewSet):
         vals = serialized.data
         print vals[2]
         for temp in vals:
-                count = count + 1
+                x_axis = temp['time_recorded']
                 output.append(({"x": count ,"y": temp["estimated_core_temperature"] }))
         
         output1 = {}
