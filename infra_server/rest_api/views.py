@@ -959,13 +959,15 @@ class SkinTemperature(viewsets.ViewSet):
         output = []
         count = 0 
         serialized = {}
-
+        # print count
         if start != end:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            # print result
             serialized = BiometricsSerializer( result, many = True)
+            # print serialized.data
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
@@ -974,6 +976,7 @@ class SkinTemperature(viewsets.ViewSet):
             result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
         vals = serialized.data
+        print vals[2]
         for temp in vals:
                 count = count + 1
                 output.append(({"x": count ,"y": temp["estimated_core_temperature"] }))
