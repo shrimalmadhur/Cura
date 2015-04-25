@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
+from rest_framework.response import Response
 import json
 import ast
 from datetime import datetime
@@ -261,39 +262,37 @@ class WashroomCount(viewsets.ViewSet):
             response = {'user' : user_name, 'washroom count': result }
             return Response( [ response ] )
 
-class SkinTemperature(viewsets.ViewSet):
+# class SkinTemperature(viewsets.ViewSet):
 
-    def list(self, request, user_name, start, end):
-        output = []
-        count = 0 
-        serialized = {}
+    # def list(self, request, user_name, start, end):
+        # output = []
+        # serialized = {}
 
-        if start != end:
-            start = datetime.strptime(start, '%Y-%m-%d')
-            end = datetime.strptime(end, '%Y-%m-%d')
-            end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
-            serialized = BiometricsSerializer( result, many = True)
-            #return Response( serialized.data )
-        else:
-            start = datetime.strptime(start, '%Y-%m-%d')
-            end = datetime.strptime(end, '%Y-%m-%d')
-            end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
-            serialized = BiometricsSerializer( result, many = True)
-        vals = serialized.data
-        for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["estimated_core_temperature"] }))
+        # if start != end:
+            # start = datetime.strptime(start, '%Y-%m-%d')
+            # end = datetime.strptime(end, '%Y-%m-%d')
+            # end = end.replace(hour = 23, minute = 59)
+            # result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            # serialized = BiometricsSerializer( result, many = True)
+            # #return Response( serialized.data )
+        # else:
+            # start = datetime.strptime(start, '%Y-%m-%d')
+            # end = datetime.strptime(end, '%Y-%m-%d')
+            # end = end.replace(hour = 23, minute = 59)
+            # result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            # serialized = BiometricsSerializer( result, many = True)
+        # vals = serialized.data
+        # for temp in vals:
+                # output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["estimated_core_temperature"] }))
         
-        output1 = {}
-        output1['values'] = output
-        output1['key'] = "Skin Temperature"
+        # output1 = {}
+        # output1['values'] = output
+        # output1['key'] = "Skin Temperature"
 
-        json_data = json.dumps(output1)
-        python_dict = ast.literal_eval(json_data)
-        json_data = ( python_dict )
-        return Response(json_data)
+        # json_data = json.dumps(output1)
+        # python_dict = ast.literal_eval(json_data)
+        # json_data = ( python_dict )
+        # return Response(json_data)
 
 
 # Biometrics Precise #
@@ -981,7 +980,6 @@ class SkinTemperature(viewsets.ViewSet):
         # print vals[2]
         for temp in vals:
                 x_axis = temp['time_recorded']
-                output.append(({"x": count ,"y": temp["estimated_core_temperature"] }))
                 output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["estimated_core_temperature"] }))
         
         output1 = {}
