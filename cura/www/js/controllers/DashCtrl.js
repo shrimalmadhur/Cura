@@ -1,9 +1,14 @@
 angular.module('starter.controllers')
-.controller('DashCtrl', function ($scope, $ionicPlatform, $ionicModal, $cordovaVibration, $location, Forms) {
+.controller('DashCtrl', function ($scope, $rootScope, $ionicPlatform, $ionicModal, $cordovaVibration, $location, Forms) {
 
   $scope.alarmInterval = undefined;
   $scope.forms = Forms.all();
+  
   $scope.currentForm = $scope.forms[0];
+
+  if ($rootScope.user.name === undefined){
+    $scope.currentForm = $scope.forms["userInfo"];
+  }
   
   $ionicModal.fromTemplateUrl('templates/form-fill-modal.html', {
     scope: $scope,

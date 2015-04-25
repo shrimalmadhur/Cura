@@ -7,14 +7,20 @@ The Friends service returns an array of friend data
 <ion-view view-title="{{contact.name.formatted}}">
   <ion-content class="padding">
 
-	<div class="list card">
+	<div id="contactContainer" class="list card">
 
 	  <div class="item item-avatar">
 	    <img src="http://placehold.it/100x100">
 	    <h2>{{contact.name.formatted}}</h2>
 	    <p>Last Active Yesterday</p>
 
-	    <button class="button button-stable button-clear pull-right" style="float:right"> Edit </button>
+
+
+
+	    <button class="button button-stable button-clear pull-right" style="float:right" ng-click="toggleEdit()"> {{disable?'edit':'save'}} </button>
+
+	    <button ng-if="!disable" class="button button-stable button-clear pull-right" style="float:right" ng-click="delete()"> delete </button>
+
 	  </div>
 
 
@@ -23,7 +29,7 @@ The Friends service returns an array of friend data
 	    <div class="input-label">
 	      Role
 	    </div>
-	    <select disabled>
+	    <select ng-disabled="{{disable}}">
 	      <option>Doctor</option>
 	      <option selected>Caregiver</option>
 	      <option>Family</option>
@@ -33,13 +39,13 @@ The Friends service returns an array of friend data
 
 	  <label class="item item-input item-stacked-label">
 	    <span class="input-label">Phone Number</span>
-	    <input disabled type="text" placeholder="John Doe" value="{{contact.phoneNumbers[0].value}}">
+	    <input ng-disabled="{{disable}}" type="text" placeholder="John Doe" value="{{contact.phoneNumbers[0].value}}">
 	  </label>
 
 
 	  <label class="item item-input item-stacked-label">
 	    <span class="input-label">Email</span>
-	    <input disabled type="text" placeholder="No Email Avaliable" value="{{contact.emails[0].value}}">
+	    <input ng-disabled="{{disable}}" type="text" placeholder="No Email Avaliable" value="{{contact.emails[0].value}}">
 	  </label>
 
 
