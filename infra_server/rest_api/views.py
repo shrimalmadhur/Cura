@@ -712,7 +712,7 @@ class WeightGetTime(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                x_axis = convert_time_since_epoch(datestring)
+                x_axis = convert_time_since_epoch(temp["time_recorded"])
                 output.append(({"x": x_axis,"y": temp["weight"] }))
         
         output1 = {}
