@@ -243,7 +243,7 @@ class WashroomCount(viewsets.ViewSet):
             end = end.replace(hour = 23, minute = 59)
             result = len( Washroom.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end))
             response = {'user' : user_name, 'washroom count': result }
-            return Response( response )
+            return Response( [ response ] )
 
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
@@ -251,7 +251,7 @@ class WashroomCount(viewsets.ViewSet):
             end = end.replace(hour = 23, minute = 59)
             result = len( Washroom.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end) )
             response = {'user' : user_name, 'washroom count': result }
-            return Response( response )
+            return Response( [ response ] )
 
 class SkinTemperature(viewsets.ViewSet):
 
@@ -446,14 +446,14 @@ class BiometricsGetTime(viewsets.ViewSet):
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            return Response( [ serialized.data ] )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
             result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
             serialized = BiometricsSerializer( result, many = True)
-            return Response( serialized.data )
+            return Response( [ serialized.data ] )
 
 class GetBiometricsData(generics.CreateAPIView):
     serializer_class = BiometricsSerializer
@@ -674,7 +674,9 @@ class StressGetTime(viewsets.ModelViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        output_list = []
+        output_list.append(json_data)
+        return Response(output_list)
 
 # Stress #
 
@@ -752,7 +754,7 @@ class BloodOxygenGetTime(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response( [ json_data ] )
 
 # Blood Oxygen Time #
 
@@ -829,7 +831,7 @@ class BloodPressureGetTime(viewsets.ViewSet):
         json_data = json.dumps(final_output)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response( [ json_data ] )
 
 class BloodPressureView(generics.ListCreateAPIView):
     serializer_class = BloodPressureSerializer
@@ -989,5 +991,3 @@ class SkinTemperature(viewsets.ViewSet):
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
         return Response(json_data)
-
-
