@@ -116,7 +116,7 @@ $scope.initTabs= function(){
    text: "Eat one (ONE!) candy"
   }, {
      number: "10.",
-   text: "Sing your favorite song"
+   text: "Sing a favorite song"
   }];
 	})
 	

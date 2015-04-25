@@ -129,16 +129,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
-  
-  .state('tab.destress', {
-    url: '/stress/:Questions/:GO/:discovery/:wait/:status/:destress',
-    views: {
-      'tab-stress': {
-        templateUrl: 'templates/tab-destress.html',
-        controller: 'StressCtrl6'
-      }
-    }
-  })
 
 .state('tab.stress-discovery', {
     url: '/stress/:Questions/:GO/:discovery',
