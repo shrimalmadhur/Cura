@@ -13,6 +13,9 @@ import json
 import ast
 from datetime import datetime
 import httplib
+import time
+import dateutil.parser
+import datetime
 
 ### Home Automation Demo Changes ###
 import httplib
@@ -44,6 +47,12 @@ def parse_date(date):
         return dt
     except ValueError as e:
         raise ParseError(str(e))
+		
+def convert_time_since_epoch(datestring):
+    yourdate = dateutil.parser.parse(datestring)
+    milliseconds_since_epoch = time.mktime(yourdate.timetuple())
+    print milliseconds_since_epoch
+    return milliseconds_since_epoch
 
 ### Events ###
 class EventsPostGet(generics.ListCreateAPIView):
