@@ -859,7 +859,6 @@ class HeartRate(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
         output = []
-        count = 0 
         serialized = {}
 
         if start != end:
@@ -877,8 +876,7 @@ class HeartRate(viewsets.ViewSet):
             serialized = BiometricsSerializer( result, many = True)
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["heart_rate"] }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["heart_rate"] }))
         
         output1 = {}
         output1['values'] = output
@@ -887,14 +885,13 @@ class HeartRate(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response([ json_data ] )
 
 class BreathingRate(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
 
         output = []
-        count = 0 
         serialized = {}
 
         if start != end:
@@ -913,8 +910,7 @@ class BreathingRate(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["breathing_rate"] }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["breathing_rate"] }))
         
         output1 = {}
         output1['values'] = output
@@ -923,14 +919,13 @@ class BreathingRate(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response( [ json_data ] )
 
 class Posture(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
 
         output = []
-        count = 0 
         serialized = {}
 
         if start != end:
@@ -949,8 +944,7 @@ class Posture(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                count = count + 1
-                output.append(({"x": count ,"y": temp["posture"] }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["posture"] }))
         
         output1 = {}
         output1['values'] = output
@@ -959,13 +953,12 @@ class Posture(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response([ json_data ])
 
 class SkinTemperature(viewsets.ViewSet):
 
     def list(self, request, user_name, start, end):
         output = []
-        count = 0 
         serialized = {}
         # print count
         if start != end:
@@ -984,10 +977,11 @@ class SkinTemperature(viewsets.ViewSet):
             result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
         vals = serialized.data
-        print vals[2]
+        # print vals[2]
         for temp in vals:
                 x_axis = temp['time_recorded']
                 output.append(({"x": count ,"y": temp["estimated_core_temperature"] }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["estimated_core_temperature"] }))
         
         output1 = {}
         output1['values'] = output
@@ -996,4 +990,4 @@ class SkinTemperature(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response(json_data)
+        return Response( [ json_data ] )
