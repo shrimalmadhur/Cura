@@ -51,7 +51,6 @@ def parse_date(date):
 def convert_time_since_epoch(datestring):
     yourdate = dateutil.parser.parse(datestring)
     milliseconds_since_epoch = time.mktime(yourdate.timetuple())
-    print milliseconds_since_epoch
     return milliseconds_since_epoch
 
 ### Events ###
@@ -872,8 +871,9 @@ class HeartRate(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
+
         vals = serialized.data
         for temp in vals:
                 output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": temp["heart_rate"] }))
@@ -974,7 +974,7 @@ class SkinTemperature(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
             serialized = BiometricsSerializer( result, many = True)
         vals = serialized.data
         # print vals[2]
