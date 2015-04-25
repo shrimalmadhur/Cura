@@ -9,4 +9,5 @@ djangorestframework==3.1.1
 django-rest-swagger==0.2.9
 django-rest-auth==0.3.0
 django-allauth==0.19.1
+django-cors-headers==0.11
 python-dateutil==2.4.2

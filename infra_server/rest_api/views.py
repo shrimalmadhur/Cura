@@ -681,6 +681,7 @@ class StressGetTime(viewsets.ModelViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
+        
         output_list = []
         output_list.append(json_data)
         return Response(output_list)
