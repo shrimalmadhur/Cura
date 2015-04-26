@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cura',
+    'rest_framework',
     # custom apps
     'sleep',
 )
@@ -84,6 +85,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+  'DEFAULT_RENDERER_CLASSES': (
+    'rest_framework_jsonp.renderers.JSONPRenderer',
+  ),
+}
 
 ENCRYPTED_FIELDS_KEYDIR = os.path.join(BASE_DIR, 'fieldkeys')
 try:

@@ -22,33 +22,37 @@ def update_sleep(user):
     sleep_to_db(sleep, user)
 
 def sleep_to_db(sleep, user):
+  tz = pytz.timezone(sleep.get('timezone'))
+
   session = SleepSession()
   session.user = user
-  tv_tracks = sleep.pop('time_value_tracks')
-
   session.date = datetime.strptime(sleep.get('date'), '%Y-%m-%d').date()
-  session.sleep_time_target = sleep.get('sleep_time_target')
-  session.rest_heart_rate = sleep.get('resting_heart_rate')
-  session.avg_respiration_rate = sleep.get('average_respiration_rate')
-  session.sleep_latency = sleep.get('sleep_latency')
-  session.total_snore_duration = sleep.get('total_snoring_episode_duration')
-  session.away_count = sleep.get('away_episode_count')
+  session.session_start = datetime.utcfromtimestamp(sleep.get('session_range_start')).replace(tzinfo=tz)
+  session.session_end = datetime.utcfromtimestamp(sleep.get('session_range_end')).replace(tzinfo=tz)
+  tv_tracks = sleep.pop('time_value_tracks')
+  prop = sleep.pop('properties') # get sleep properties dictionary
 
-  session.stage_duration_A = sleep.get('stage_duration_A')
-  session.stage_duration_S = sleep.get('stage_duration_S')
-  session.stage_duration_R = sleep.get('stage_duration_R')
-  session.stage_duration_W = sleep.get('stage_duration_W')
-  session.stage_duration_G = sleep.get('stage_duration_G')
+  session.sleep_time_target = prop.get('sleep_time_target')
+  session.rest_heart_rate = prop.get('resting_heart_rate')
+  session.avg_respiration_rate = prop.get('average_respiration_rate')
+  session.sleep_latency = prop.get('sleep_latency')
+  session.total_snore_duration = prop.get('total_snoring_episode_duration')
+  session.away_count = prop.get('away_episode_count')
 
-  session.score_amount_sleep = sleep.get('score_amount_of_sleep')
-  session.score_bed_exits = sleep.get('score_bed_exits')
-  session.score_snoring = sleep.get('score_snoring')
-  session.score_sleep_latency = sleep.get('score_sleep_latency')
-  session.score_sleep_efficiency = sleep.get('score_sleep_efficiency')
-  session.score_awakening = sleep.get('score_awakenings')
+  session.stage_duration_A = prop.get('stage_duration_A')
+  session.stage_duration_S = prop.get('stage_duration_S')
+  session.stage_duration_R = prop.get('stage_duration_R')
+  session.stage_duration_W = prop.get('stage_duration_W')
+  session.stage_duration_G = prop.get('stage_duration_G')
+
+  session.score_amount_sleep = prop.get('score_amount_of_sleep')
+  session.score_bed_exits = prop.get('score_bed_exits')
+  session.score_snoring = prop.get('score_snoring')
+  session.score_sleep_latency = prop.get('score_sleep_latency')
+  session.score_sleep_efficiency = prop.get('score_sleep_efficiency')
+  session.score_awakening = prop.get('score_awakenings')
   session.save()
   
-  tz = pytz.timezone(sleep.get('timezone'))
   tv_tracks_to_db(tv_tracks, session, tz)
 
 def tv_tracks_to_db(tv_tracks, session, tz):
