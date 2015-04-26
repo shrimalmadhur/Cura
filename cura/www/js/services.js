@@ -117,7 +117,7 @@ angular.module('starter.services', ['ngResource'])
   //http://128.2.109.230:4001/
   //http://128.2.83.208:9000/api/v1/:attr/:sd/:ed
   //return $resource('http://128.2.83.208:8004/api/v1/:attr/:username/:sd/:ed',{callback: 'JSON_CALLBACK'},{
-  return $resource('http://128.2.83.208:8001/api/v1/:attr/:username/:sd/:ed',{},{
+  return $resource('http://128.2.83.208:8080/api/v1/:attr/:username/:sd/:ed',{},{
     'query': { isArray:true }
   })
 });

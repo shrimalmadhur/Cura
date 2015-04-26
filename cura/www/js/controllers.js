@@ -69,7 +69,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 .controller('VisualCtrl', function($scope, $stateParams, Visuals) {
   
   $scope.items = [
-            {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases", xAxisLabel:"Time", username:"mshrimal"},
+            {id:0,urlName:"sleep/cycle", name:"Sleep Cycle", yAxisLabel:"Phases", xAxisLabel:"Time", username:"mshrimal"},
             {id:1,urlName:"rhr", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
             {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:"Score", xAxisLabel:"Time", username:"mshrimal"},
             {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
