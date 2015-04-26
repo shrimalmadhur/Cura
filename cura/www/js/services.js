@@ -23,57 +23,19 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('Forms', function ($resource) {
-  //return $resource('/api/v1/Forms/:id');
-  return {
-    all: function(){
-      return [{
-        name: "Welcome",
-        description: "Tell us a little about yourself",
-        steps:[
-          { 
-            name: "Basic Information",
-            fields: [
-              { label: "Name",name: "name", type: "text", required: true, placeholder: "John Doe", autoPopulate: false },
-              { label: "Number",name: "phone", type: "tel", required: true, placeholder: "(412) 111-3456", autoPopulate: false },
-              { label: "I am a...", name: "role", type: "radio", required: true, placeholder: "John Doe", autoPopulate: false, 
-                options: [
-                  { label: "Patient", value: "patient", isDefault: true}, 
-                  { label: "Family", value: "family"},
-                  { label: "Caregiver", value: "caregiver"},
-                  { label: "Doctor", value: "doctor"}
-                ]}
-              }
-            ]
-          },
+  return $resource('/api/v1/Forms/:id'); 
+})
 
-          { 
-            name: "Medical Information",
-            fields: [
-              { label: "Blood Type", name: "", type: "radio", required: true, placeholder: "John Doe", autoPopulate: false, 
-                options: [
-                  { label: "Patient", value: "patient", isDefault: true}, 
-                  { label: "Family", value: "family"},
-                  { label: "Caregiver", value: "caregiver"},
-                  { label: "Doctor", value: "doctor"}
-                ]}
-              }
-            ]
-          }
+.factory('Events', function ($resource) {
+  return $resource('/api/v1/Events/:id'); 
+})
 
-
-        ]
-      }];
-    }
-  }
+.factory('Biometrics', function ($resource) {
+  return $resource('/api/v1/Biometrics/:id'); 
 })
 
 .factory('Resources', function ($resource) {
-  // return $resource('/api/v1/Resources/:id');
-  return {
-    all: function(){
-      return [];
-    }
-  }
+  return $resource('/api/v1/Resources/:id', { id: '@_id'});
 })
 
 .factory("Users", function ($resource, Config){

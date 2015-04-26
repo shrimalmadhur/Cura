@@ -4,20 +4,21 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{resource.title}}">
+<ion-view view-title="{{ resource.title }}">
 
   <ion-content>
-    <video  ng-if="resource.url!=='' " controls width="100%" >
-      <source src="{{resource.url}}"  type="video/mp4">
+    <video  ng-if="resource.data.videos.length!==0" controls width="100%">
+      <source src="{{ resource.url }}"  type="video/mp4">
     Your browser does not support the video tag.
     </video>
 
 <div class="card">
   <div class="item item-divider">
-      <h2> <b> {{ resource.title }} <b> </h2>
+      <h2> <b> {{ resource.data.title }} <b> </h2>
+      <embed width="100%" ng-if="resource.type==='dialysis'" type="image/svg+xml" src="/img/nx-stage-1.svg">
   </div>
   <div class="item item-text-wrap">
-      <p> {{ resource.description }} </p>
+      <p> {{ resource.data.description }} </p>
   </div>
 
   <ul class="list">
@@ -25,16 +26,15 @@
     <div class="item item-divider">
       Checklist
     </div>
-    <li class="item item-checkbox" ng-repeat="step in resource.steps">
+    <li class="item item-checkbox" ng-repeat="step in resource.data.steps">
        <label class="checkbox">
          <input type="checkbox">
        </label>
        {{ step.title}} 
     </li>
+
+
   </ul>
-
-
-
 </div>
 
 

@@ -1,5 +1,5 @@
 <ion-view view-title="Coach">
-  <ion-content class="has-header">
+  <ion-content>
 
     <ion-list>
 
@@ -20,11 +20,11 @@
 
 
 
-      <ion-item class="item-avatar" ng-repeat="resource in resources" type="item-text-wrap" href="#/tab/coach/{{resource.id}}">
+      <ion-item class="item-avatar" ng-repeat="resource in resources" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
 
-        <h2>{{resource.title}}</h2>
+      <h2><b> {{ resource.data.title }}</b></h2>
 
-        <h2><b> {{ resource.type }} {{resource.code}} </b> </h2> 
+        <h2><b> {{ resource.type }} {{resource.data.code}} </b> </h2> 
         <p>{{resource.description}}</p>
 
 

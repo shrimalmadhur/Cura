@@ -1,7 +1,11 @@
 angular.module('starter.controllers')
 .controller('CoachCtrl', function ($scope, Resources) {
 
-  $scope.resources = Resources.all();
+  $scope.resources = {};
+  Resources.query({}, function( resources ) {
+      $scope.resources = resources;
+      console.log(resources);
+  });
   $scope.speech = { currentText: "", listening: false };
   $scope.recognition = new webkitSpeechRecognition();
   $scope.recognition.continuous = true;
@@ -39,7 +43,6 @@ angular.module('starter.controllers')
 })
 
 .controller('CoachDetailCtrl', function ($scope, $stateParams, $ionicSlideBoxDelegate, Resources) {
-  $scope.resource = Resources.get($stateParams.resourceId);
-
+  $scope.resource = Resources.get( {id: $stateParams.resourceId} );
 })
 

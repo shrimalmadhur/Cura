@@ -1,0 +1,125 @@
+<div class="modal" ng-controller="FormCtrl">
+    <ion-header-bar>
+        <h1 class="title">Welcome to Cura</h1>
+    </ion-header-bar>
+    <ion-content class="has-header has-footer">
+ 
+      <form>
+        <ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="false" >
+          <ion-slide>
+            
+
+
+
+            <!-- Basic information  -->
+            <div class="list">
+
+              <div class="item item-divider">
+                Basic Information
+              </div>
+              <div class="item">
+                <p> Welcome to Cura! Tell us a little bit about yourself.  </p>
+              </div>
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">First Name</span>
+                <input type="text" ng-model="form.first" placeholder="First Name">
+              </label>
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Last Name</span>
+                <input type="text" ng-model="form.last" placeholder="Last Name">
+              </label>
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Email</span>
+                <input type="email" ng-model="form.email" placeholder="Email">
+              </label>
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Phone</span>
+                <input type="tel" ng-model="form.phone" placeholder="Phone">
+              </label>
+
+              <label class="item item-input">
+                <span class="input-label">Date of Birth</span>
+                <input ng-model="form.dob" type="date">
+              </label>
+
+              <div class="item item-divider">
+                Medical Information
+              </div>
+
+              <div class="item">
+                <p> I am a...  </p>
+              </div>
+
+              <label class="item item-radio">
+                <input ng-model="form.role" value="patient" type="radio" name="role">
+                <div class="item-content">
+                  Patient
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+              <label class="item item-radio">
+                <input ng-model="form.role" value="caregiver" type="radio" name="role">
+                <div class="item-content">
+                  Caregiver
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+              <label class="item item-radio">
+                <input ng-model="form.role" value="physician" type="radio" name="role">
+                <div class="item-content">
+                  Physician
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+
+              <div ng-if="isPatient()">
+                <div class="item">
+                  <p> Medical Conditions  </p>
+                </div>
+
+                <li class="item item-checkbox">
+                   <label class="checkbox">
+                     <input type="checkbox" ng-model="form.conditions.dialysis">
+                   </label>
+                   Dialysis
+                </li>
+
+                <li class="item item-checkbox">
+                   <label class="checkbox">
+                     <input type="checkbox" ng-model="form.conditions.chf">
+                   </label>
+                   Congestive Heart Failure
+                </li>
+
+                <li class="item item-checkbox">
+                   <label class="checkbox"ng-model="form.conditions.als" >
+                     <input type="checkbox">
+                   </label>
+                   ALS
+                </li>
+              </div>
+
+              </br></br></br>
+
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+      </form>
+
+
+
+
+    </ion-content>
+
+    <button class="bar bar-footer bar-positive" ng-click="submitForm()">
+      <div class="title">Next</div>
+    </button>
+
+</div>

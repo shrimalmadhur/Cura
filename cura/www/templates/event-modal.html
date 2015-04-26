@@ -1,0 +1,88 @@
+<div class="modal">
+    <ion-header-bar>
+        <button ng-click="closeModal()" class="button button-clear button positive"> Cancel </button>
+        <h1 class="title">New Event</h1>
+    </ion-header-bar>
+    <ion-content class="has-header has-footer">
+ 
+      <form>
+
+            <!-- Basic information  -->
+            <div class="list">
+
+
+              <div class="item item-divider">
+                Event Type
+              </div>
+
+              <label class="item item-radio">
+                <input ng-model="newEvent.eventType" value="appointment" type="radio" name="eventType">
+                <div class="item-content">
+                  Appointment
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+              <label class="item item-radio">
+                <input ng-model="newEvent.eventType" value="dialysis" type="radio" name="eventType">
+                <div class="item-content">
+                  Dialysis
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+              <label class="item item-radio">
+                <input ng-model="newEvent.eventType" value="reminder" type="radio" name="eventType">
+                <div class="item-content">
+                  Reminder
+                </div>
+                <i class="radio-icon ion-checkmark"></i>
+              </label>
+
+              <div class="item item-divider">
+                Event Time
+              </div>
+
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Date</span>
+                <input type="date" ng-model="newEvent.date" placeholder="Date">
+              </label>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Time</span>
+                <input type="time" ng-model="newEvent.time" placeholder="Time">
+              </label>
+
+
+
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">Notes</span>
+                <input type="text" ng-model="newEvent.notes" placeholder="Notes">
+              </label>
+
+
+              <button class="button col col-50 col-offset-25 button-large button-clear button-positive" 
+              ng-click="showContactsPopup()"> Invite Contacts </button>
+
+
+              <li class="item" ng-repeat="invited in newEvent.invited">
+                {{invited.name.formatted}}
+              </li>
+
+
+            </div>
+
+      </form>
+
+
+
+
+    </ion-content>
+
+    <button class="bar bar-footer bar-positive" ng-click="createEvent()">
+      <div class="title">Create Event</div>
+    </button>
+
+</div>

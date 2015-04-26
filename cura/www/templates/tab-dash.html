@@ -1,35 +1,50 @@
 <ion-view view-title="Dashboard">
+    
+
+
+
   <ion-content class="padding">
 
-    <div class="list card">
-      <div class="item item-divider">Schedule</div>
-      <div class="item item-body">
-        <div>
-          You have a dialysis session with Susan at 4 PM 
-        </div> </br>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
 
-        <button ng-click="openModal()"class="button button-large button-block button-balanced icon ion-compose"> Fill Out Pre Treatment Form </button>
-      </div>
+    <div class="row">
+      <img class="col col-20" src="http://placehold.it/80x80"> </img>
+      <h2 class="col col-80"> Hi, {{user.info.first}} </h2>
     </div>
 
-<!--     <div class="list card">
-      <div class="item item-divider"> <i class="ion-heart"> </i> Health</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
+    <ion-list can-swipe="true">
+
+      <ion-item  class="list card ">
+        <div class="item item-avatar">
+          <img src="http://placehold.it/100x100">
+          <h2> Appointment with Dr. Pete</h2>
+          <h3>4.00 PM on Tuesday, November 05</h3>
         </div>
 
-        </br>
+        <ion-option-button class="button-positive"> Dismiss </ion-option-button>
+        <ion-option-button class="button-info"> Edit </ion-option-button>
+        <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
+        </ion-delete-button>
+        <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+        </ion-reorder-button>
+      </ion-item>
 
-        <button class="button button-full button-assertive" ng-click="doAlarm()">Alarm</button>
 
-      </div>
-    </div> -->
+    </ion-list>
 
-    <!-- Alarm Button -->
+
+
 
 
   </ion-content>
+
+    <ion-footer-bar align-title="right" >
+      <button id="circleButton" ng-click="openEventModal()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
+    </ion-footer-bar>
+  
 </ion-view>
 
 
