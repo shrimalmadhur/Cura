@@ -69,17 +69,17 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 .controller('VisualCtrl', function($scope, $stateParams, Visuals) {
   
   $scope.items = [
-            {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases"},
-            {id:1,urlName:"rhr", name:"Resting Heart Rate", yAxisLabel:"beats/min"},
-            {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:""},
-            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"millimeters of mercury"},
-            {id:4, urlName:"rr",name: "Respiration Rate", yAxisLabel:"breaths/min"},
-            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Kgs"},
-            {id:6, urlName:"hr",name: "Heart Rate", yAxisLabel:"beats/mins"},
-            {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Units"},
-            {id:8, urlName:"bo",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %"},
-            {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits"},
-            {id:10, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
+            {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases", xAxisLabel:"Time", username:"mshrimal"},
+            {id:1,urlName:"rhr", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
+            {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:"Score", xAxisLabel:"Time", username:"mshrimal"},
+            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
+            {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"archieag"},
+            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Kgs", xAxisLabel:"Time", username:"mshrimal"},
+            {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"archieag"},
+            {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Score", xAxisLabel:"Events", username:"mshrimal"},
+            {id:8, urlName:"bo",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %", xAxisLabel:"Time", username:"mshrimal"},
+            {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
+            {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"archieag"}
             ];
   
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
@@ -110,11 +110,12 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     }
     $scope.vOption.title.text = $scope.vOption.menuSelect.name+" Chart";
     $scope.vOption.chart.yAxis.axisLabel = $scope.vOption.menuSelect.yAxisLabel;
+    $scope.vOption.chart.xAxis.axisLabel = $scope.vOption.menuSelect.xAxisLabel;
 
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
     console.log("Hi");
-    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:"ed"}, function(){  
+    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed, username:$scope.vOption.menuSelect.username}, function(){  
       console.log("Inside");
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
@@ -141,7 +142,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     $scope.day.start = temp.start;
     $scope.day.end = temp.end;
     console.log($scope.day.start.format("YYYY/M/D"));
-    $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), "");
+    $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), $scope.day.start.format("YYYY-MM-DD"));
     $scope.vOption.period.value = temp.start.format("M/D/YY");
   }
   
@@ -287,6 +288,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
                     axisLabel: 'Time (ms)',
                     tickFormat: function(d){
                         return d3.time.format("%I:%M %p %a %Y")(new Date(d*1000))
+                        //return d3.format('.02f')(d);
                     }
                 },
                 yAxis: {
