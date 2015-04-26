@@ -114,9 +114,10 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
 
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
-    console.log("Hi");
+    console.log("Before making the query call");
     $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed, username:$scope.vOption.menuSelect.username}, function(){  
-      console.log("Inside");
+      console.log("Inside the query call");
+      console.log($scope.visuals);
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
       };
@@ -129,7 +130,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     $scope.dayClass = "button button-calm";
     $scope.weekClass = "button button-light";
     $scope.monthClass = "button button-light";
-    console.log(date_v);
+    console.log("day fn called");
     $scope.vOption.periodType = 0;
     var temp = {start:0, end:0};
     if (date_v == 0) {
@@ -141,7 +142,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
     
     $scope.day.start = temp.start;
     $scope.day.end = temp.end;
-    console.log($scope.day.start.format("YYYY/M/D"));
+    //  console.log($scope.day.start.format("YYYY/M/D"));
     $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), $scope.day.start.format("YYYY-MM-DD"));
     $scope.vOption.period.value = temp.start.format("M/D/YY");
   }

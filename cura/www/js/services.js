@@ -114,28 +114,10 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('Visuals', function($resource) {
-  /*var data = [];
-  for (var i = 0; i < 100; i++) {
-                data.push({x: i, y: Math.sin(i/10)});   
-             }*/
-  //console.log($resource('http://128.2.109.230:4001/sleep'));
-  //http://128.2.109.230:4001/:attr/:sd/:ed
-  console.log("called");
   //http://128.2.109.230:4001/
   //http://128.2.83.208:9000/api/v1/:attr/:sd/:ed
   //return $resource('http://128.2.83.208:8004/api/v1/:attr/:username/:sd/:ed',{callback: 'JSON_CALLBACK'},{
   return $resource('http://128.2.83.208:8001/api/v1/:attr/:username/:sd/:ed',{},{
-    'query': 
-    {
-        method:'JSON', 
-        params:{}, 
-        isArray:true
-    },
-    'bp': 
-    {
-        method:'JSONP', 
-        params:{}, 
-        isArray:true
-    }
+    'query': { isArray:true }
   })
 });
