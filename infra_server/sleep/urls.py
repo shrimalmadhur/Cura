@@ -8,8 +8,8 @@ router.register(r'sessions', SessionViewSet)
 fmt = '(\d{4}-\d{2}-\d{2})'
 
 urlgraphs = patterns('',
-  url(r'^(?P<dtype>\w+)/(?P<uid>\d+)/(?P<begin>%s)/(?P<end>%s)/$' % (fmt, fmt), RangeGraph.as_view()),
-  url(r'^(?P<dtype>\w+)/(?P<uid>\d+)/(?P<date>%s)/$' % fmt, DayGraph.as_view()),
+  url(r'^(?P<dtype>\w+)/(?P<username>\w+)/(?P<begin>%s)/(?P<end>%s)/$' % (fmt, fmt), RangeGraph.as_view()),
+  #url(r'^(?P<dtype>\w+)/(?P<uid>\d+)/(?P<date>%s)/$' % fmt, DayGraph.as_view()),
 )
 
 urlpatterns = patterns('',

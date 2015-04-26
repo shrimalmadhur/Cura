@@ -46,14 +46,19 @@ class DayGraph(APIView):
 class RangeGraph(APIView):
 
   def get(self, request, *args, **kwargs):
-    uid = kwargs['uid']
+    #uid = kwargs['uid']
+    username = kwargs['username']
     dtype = kwargs['dtype']
     begin = kwargs['begin']
     end = kwargs['end']
-    user = get_object_or_404(User, pk=uid)
+    user = get_object_or_404(User, username=username)
     dt1 = parse_date(begin)
     dt2 = parse_date(end)
-    sessions = user.sleepsession_set.filter(session_end__gte=dt1, session_end__lt=dt2)
+    if begin == end:
+      sessions = user.sleepsession_set.filter(session_end__year=dt1.year, 
+        session_end__month=dt1.month, session_end__day=dt1.day).order_by('session_end')
+    else:
+      sessions = user.sleepsession_set.filter(session_end__gte=dt1, session_end__lt=dt2)
     return prepare_response(dtype, sessions)
 
 def prepare_response(dtype, sessions):
