@@ -90,12 +90,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-REST_FRAMEWORK = {
-  'DEFAULT_RENDERER_CLASSES': (
-    'rest_framework_jsonp.renderers.JSONPRenderer',
-  ),
-}
-
 ENCRYPTED_FIELDS_KEYDIR = os.path.join(BASE_DIR, 'fieldkeys')
 try:
   from local_settings import *
