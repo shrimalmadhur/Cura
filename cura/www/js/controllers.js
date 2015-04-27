@@ -70,14 +70,14 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   
   $scope.items = [
             {id:0,urlName:"sleep/cycle", name:"Sleep Cycle", yAxisLabel:"Phases", xAxisLabel:"Time", username:"mshrimal"},
-            {id:1,urlName:"rhr", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
-            {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:"Score", xAxisLabel:"Time", username:"mshrimal"},
-            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
+            {id:1,urlName:"sleep/heart", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
+            {id:2,urlName:"sleep/score", name:"Sleep Score", yAxisLabel:"Score [0-100]", xAxisLabel:"Time", username:"mshrimal"},
+            {id:3,urlName:"bloodpressure",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
             {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"archieag"},
-            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Kgs", xAxisLabel:"Time", username:"mshrimal"},
+            {id:5, urlName:"weight",name: "Weight over time", yAxisLabel:"Kgs", xAxisLabel:"Time", username:"mshrimal"},
             {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"archieag"},
             {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Score", xAxisLabel:"Events", username:"mshrimal"},
-            {id:8, urlName:"bo",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %", xAxisLabel:"Time", username:"mshrimal"},
+            {id:8, urlName:"bloodoxygen",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %", xAxisLabel:"Time", username:"mshrimal"},
             {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
             {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"archieag"}
             ];
@@ -104,6 +104,11 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   $scope.updateWithParams = function(sd,ed){
     
     $scope.sleepDisplay = false;
+    $scope.sleep.static.exit = 0;
+    $scope.sleep.static.total = 0;
+    $scope.sleep.static.latency = 0;
+    $scope.sleep.static.res = 0;
+    $scope.sleep.static.score = 0;
     
     if ($scope.vOption.menuSelect.id == 0) {
       $scope.sleepDisplay = true;
@@ -121,7 +126,51 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
       };
-    }); 
+    });
+    $scope.sleep.exit = Visuals.static({attr:'sleep/exit',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+        for (var i = 0; i < $scope.sleep.exit[0].values.length; i++) {
+          console.log($scope.sleep.exit[0].values[i]["y"]);
+          $scope.sleep.static.exit += Math.abs($scope.sleep.exit[0].values[i]["y"]);
+        };
+    });
+    $scope.sleep.total = Visuals.static({attr:'sleep/totalsleep',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+        for (var i = 0; i < $scope.sleep.total[0].values.length; i++) {
+          console.log($scope.sleep.total[0].values[i]["y"]);
+          $scope.sleep.static.total += $scope.sleep.total[0].values[i]["y"];
+        };
+    });
+    $scope.sleep.latency = Visuals.static({attr:'sleep/latency',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+        console.log($scope.sleep.latency[0].values.length);
+        for (var i = 0; i < $scope.sleep.latency[0].values.length; i++) {
+          console.log($scope.sleep.latency[0].values[i]["y"]);
+          $scope.sleep.static.latency += $scope.sleep.latency[0].values[i]["y"];
+        };
+        if ($scope.sleep.latency[0].values.length > 0) {
+          $scope.sleep.static.latency = $scope.sleep.static.latency / $scope.sleep.latency[0].values.length;
+        };
+    });
+    $scope.sleep.resp = Visuals.static({attr:'sleep/resp',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+        console.log($scope.sleep.resp[0].values.length);
+        for (var i = 0; i < $scope.sleep.resp[0].values.length; i++) {
+          console.log($scope.sleep.resp[0].values[i]["y"]);
+          $scope.sleep.static.resp += $scope.sleep.resp[0].values[i]["y"];
+        };
+        if ($scope.sleep.resp[0].values.length > 0) {
+          $scope.sleep.static.resp = $scope.sleep.static.resp / $scope.sleep.resp[0].values.length;
+        }
+        
+    });
+    $scope.sleep.score = Visuals.static({attr:'sleep/score',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+        console.log($scope.sleep.score[0].values.length);
+        for (var i = 0; i < $scope.sleep.score[0].values.length; i++) {
+          console.log($scope.sleep.score[0].values[i]["y"]);
+          $scope.sleep.static.score += $scope.sleep.score[0].values[i]["y"];
+        };
+        if ($scope.sleep.score[0].values.length > 0) {
+          $scope.sleep.static.score = $scope.sleep.static.score / $scope.sleep.score[0].values.length;
+        }
+        
+    });
   }
 
 
@@ -250,6 +299,20 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
   $scope.week.tracker = 0;
   $scope.month = getMonthDateRange($scope.current.year(), $scope.current.month());
   $scope.month.tracker = 0;*/
+  $scope.sleep = {
+          exit : [],
+          total: [],
+          latency: [],
+          resp: [],
+          score: [],
+          static: {
+            exit: 0,
+            total: 0,
+            latency: 0,
+            resp: 0,
+            score: 0
+          }
+            };
   $scope.day = {
             start: 0,
             end: 0,
@@ -288,7 +351,13 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
                 xAxis: {
                     axisLabel: 'Time (ms)',
                     tickFormat: function(d){
-                        return d3.time.format("%I:%M %p %a %Y")(new Date(d*1000))
+                        //return d3.time.format("%I:%M %p %a %Y")(new Date(d*1000));
+                        if ($scope.vOption.periodType == 0) {
+                          return d3.time.format("%I:%M %p")(new Date(d*1000))  
+                        }else{
+                          return d3.time.format("%Y-%m-%d")(new Date(d*1000))  
+                        }
+                        
                         //return d3.format('.02f')(d);
                     }
                 },
@@ -308,23 +377,7 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
             title: {
                 enable: false,
                 text: 'Line Chart Sample 1'
-            }/*,
-            subtitle: {
-                enable: true,
-                text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-                css: {
-                    'text-align': 'center',
-                    'margin': '10px 13px 0px 7px'
-                }
-            },
-            caption: {
-                enable: true,
-                html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec<sup>',
-                css: {
-                    'text-align': 'justify',
-                    'margin': '10px 13px 0px 7px'
-                }
-            }*/
+            }
         };
         
         $scope.vOption.menuSelect = $scope.items[0];
