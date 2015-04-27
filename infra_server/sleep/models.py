@@ -17,7 +17,7 @@ class SleepSession(models.Model):
   
   sleep_time_target = models.PositiveIntegerField(null=True, blank=True)
   rest_heart_rate = models.PositiveIntegerField(null=True, blank=True)
-  avg_respiration_rate =models.FloatField(null=True, blank=True)
+  avg_respiration_rate = models.FloatField(null=True, blank=True)
   sleep_latency = models.PositiveIntegerField(null=True, blank=True)
   total_snore_duration = models.PositiveIntegerField(null=True, blank=True)
   away_count = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -45,6 +45,10 @@ class SleepSession(models.Model):
   @property
   def int_session_end(self):
     return int(mktime(self.session_end.timetuple()))
+
+  @property
+  def total_sleep_time(self):
+    return self.stage_duration_R + self.stage_duration_S
 
 class TSDTypeQS(models.QuerySet):
   def cycles(self):

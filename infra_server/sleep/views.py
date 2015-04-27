@@ -88,17 +88,29 @@ def prepare_response(dtype, sessions):
       ret['values'] = ret['values'] + values
     return Response([ret])
   elif dtype == 'score':
-    scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
-    return Response({'values': scores})
+    values = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
+    ret['values'] = values
+    return Response([ret])
   elif dtype == 'rest':
     values = [ {'x': s.int_session_end, 'y': s.rest_heart_rate} for s in sessions]
-    return Response({'values': values})
+    ret['values'] = values
+    return Response([ret])
   elif dtype == 'exit':
     values = [ {'x': s.int_session_end, 'y': s.score_bed_exits} for s in sessions]
-    return Response({'values': values})
+    ret['values'] = values
+    return Response([ret])
   elif dtype == 'latency':
     values = [ {'x': s.int_session_end, 'y': s.sleep_latency} for s in sessions]
-    return Response({'values': values})
+    ret['values'] = values
+    return Response([ret])
+  elif dtype == 'totalsleep':
+    values = [ {'x': s.int_session_end, 'y': s.total_sleep_time} for s in sessions]
+    ret['values'] = values
+    return Response([ret])
+  elif dtype == 'resp':
+    values = [ {'x': s.int_session_end, 'y': s.avg_respiration_rate} for s in sessions]
+    ret['values'] = values
+    return Response([ret])
   else:
     raise Http404()
 
