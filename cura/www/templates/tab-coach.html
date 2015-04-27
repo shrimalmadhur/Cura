@@ -20,10 +20,10 @@
 
 
       <ion-item class="item-avatar" ng-repeat="resource in filteredResults track by resource._id" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
+        <img> <i class="ion-ios-bell"> </i></img>
+        <h2> Alarm Number {{resource.data.code}}</h2>
 
-      <h2><b> {{ resource.data.title }}</b></h2>
-
-        <h2><b> {{ resource.type }} {{resource.data.code}} </b> </h2> 
+        <h2><b> {{ resource.data.title }} </b> </h2> 
         <p>{{resource.description}}</p>
 
 
