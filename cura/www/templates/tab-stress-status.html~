@@ -1,4 +1,4 @@
-<ion-view view-title="Stress Management ">
+<ion-view view-title="PIP Results">
   <ion-content class="has-header">
   <br/>
   <br/>
@@ -23,8 +23,8 @@
   
   <form>
 <center>
-<a class="button button-block" href="#/tab/stress/Questions/GO/discovery/wait/status/destress"> <font size="5">De-stress</font></a>
-<input class="button button-assertive" type="button" value="De-stress" onclick="window.location.href='#/tab/stress/Questions/GO/discovery/wait/status/destress'" />
+<a class="button button-block" href="#/tab/stress/Questions/GO/discovery/wait/status/destress	"> <font size="5">De-stress</font></a>
+
 </center>
 </form>
   
