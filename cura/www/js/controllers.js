@@ -47,7 +47,21 @@ $scope.initTabs= function(){
 
 
 .controller('StressCtrl3', function($scope) {
-		
+
+	$scope.instructions=[{
+   number: "1.",
+   text: "Connect PIP to your android device"
+  }, {
+     number: "2.",
+   text: "Hold the PIP between your thumb and index finger"
+  }, {
+      number: "3.",
+   text: "Wait for 10 seconds until connection is established"
+  }, {
+      number: "4.",
+   text: "After successful connection,proceed to next page"
+  }];
+	
 	})
 
 
@@ -57,10 +71,10 @@ $scope.initTabs= function(){
 				url: "http://128.2.83.208:8001/api/v1/stress/recent/user_testing/?format=json",
 				dataType: "json",
 				success: function(response){
-					$("#StressEvents").html("<h3>Stress Events:   "+response[0]["number_stress_events"]+"</h3>");
-					$("#RelaxedEvents").html("<h3>Relaxed Events:   "+response[0]["number_relax_events"]+"</h3>");
-					$("#SteadyEvents").html("<h3>Steady Events:   "+response[0]["number_steady_events"]+"</h3>");
-					$("#FinalScore").html("<h3>Final Score:   "+response[0]["stress_score"]+"</h3>");
+					$("#StressEvents").html("<h3><b>Stress Events:     </b>"+response[0]["number_stress_events"]+"</h3>");
+					$("#RelaxedEvents").html("<h3><b>Relaxed Events:   </b>"+response[0]["number_relax_events"]+"</h3>");
+					$("#SteadyEvents").html("<h3><b>Steady Events:   </b>"+response[0]["number_steady_events"]+"</h3>");
+					$("#FinalScore").html("<h3><b>Final Score:   </b>"+response[0]["stress_score"]+"</h3>");
 				},
 				error:function(){
 					alert("Hi.");

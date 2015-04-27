@@ -17,7 +17,8 @@
 <br/>
 <form>
 <center>
-<input class="button button-assertive" type="button" value="Take me to survey" onclick="window.location.href='#/tab/stress/Questions'" />
+<a class="button button-block" href="#/tab/stress/Questions"> <font size="5">Take me to survey </font></a>
+
 
 <br/>
 <br/>
@@ -27,7 +28,8 @@
 </form>
 <form>
 <center>
-<input class="button button-assertive" type="button" value="Use PIP Directly" onclick="window.location.href='#/tab/stress/Questions/GO/discovery'" />
+<a class="button button-block" href="#/tab/stress/Questions/GO/discovery">Use PIP directly</a>
+
 </center>
 </form>
 </br>

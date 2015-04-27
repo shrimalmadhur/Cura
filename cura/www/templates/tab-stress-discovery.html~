@@ -2,27 +2,29 @@
   <ion-content class="has-header">
   <br/>
   <br/>
-  <center>
-  <h3>Instructions</h3>
-	<ul type="square">
-		<li>1. Connect PIP to your android device</li>
-		<li>2. Hold the PIP between your thumb and index finger</li>
-		<li>3. Wait for 10 seconds until connection is established</li>
-		<li>4. After successful connection,proceed to next page</li>
-	</ul>
-   </center>
-<br/>
-<br/>
-  	 	<form>
-<center>
-<input class="button button-assertive" type="button" value="Proceed to next page" onclick="window.location.href='#/tab/stress/Questions/GO/discovery/wait'" />
-</center>
-</form>
-  	<br/>
-  	<br/>
-  	
-  	
-  	<form>
+  
+  <div class-"item item-divider">
+  <center>   <h3> Instructions</h3></center>
+  </div>
+
+	
+  <ion-list>
+      <ion-item class="item" ng-repeat="instr in instructions" type="item-text-wrap" >
+        
+        <h2> <b> {{instr.number}} </b> {{instr.text}}</h2>
+       
+      </ion-item>
+    </ion-list>
+  
+
+  <a class="button button-block" href="#/tab/stress/Questions/GO/discovery/wait"><font size="4"> Proceed to next page</font></a>
+
+
+
+  
+  
+
+
   	  </ion-content>
 </ion-view>
 
