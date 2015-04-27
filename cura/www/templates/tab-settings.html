@@ -1,51 +1,28 @@
-    
-    <ion-side-menus>
-    
-      <ion-side-menu-content>
-        <ion-header-bar class="bar-positive">
-          <button class="button button-icon ion-navicon" ng-click="toggleLeft()" ng-hide="$exposeAside.active"></button>
-          <h1 class="title">Content</h1>
-        </ion-header-bar>
-        <ion-content class="padding">
-         <div class="list card">
+<ion-content has-header="true">
+  <div id="profile-bg"></div>
+  <div id="content">
+    <div id="profile-info">
+      <img id="profile-image" src="http://placehold.it/100x100">
+      <h3 id="profile-name">{{user.info.first}} {{user.info.last}}</h3>
+      <span id="profile-description">
+        {{getDateString(user.info.dob)}}
+      </span>
+    </div>
+    <ion-list>
 
-        <div class="item item-avatar">
-            <img src="http://www.faa.edu.vn/wp-content/uploads/2014/09/user-avatar-default.png">
-            <h1 align="right">John Doe</h1>
-            <h2 align="right"> 65 years old</h2>
-            <h2 align="right"> Known conditions</h2>
-         </div>
+      <div class="item item-divider">
+        Role
+      </div>
+      <ion-item >
+        {{user.info.role.charAt(0).toUpperCase() + user.info.role.slice(1)}}
+      </ion-item>
 
-</div>
-        </ion-content>
-      </ion-side-menu-content>
-    
-      <ion-side-menu expose-aside-when="large">
-        <ion-header-bar class="bar-royal">
-          <h1 class="title">Left Menu</h1>
-        </ion-header-bar>
-        <ion-content>
-          <div class="list">
-            <div class="item">
-              Profile Settings
-            </div>
-            <div class="item">
-             Help settings
-            </div>
-            <div class="item">
-              Vital settings
-            </div>
-            <div class="item">
-              Medication settings
-            </div>
-            <div class="item">
-              Home Automation settings
-            </div>
-            <div class="item">
-              Alarm settings
-            </div>
-          </div>
-        </ion-content>
-      </ion-side-menu>
-      
-    </ion-side-menus>
+      <div class="item item-divider">
+        Known Conditons
+      </div>
+      <ion-item ng-repeat="(k, v) in user.info.conditions">
+        {{k.charAt(0).toUpperCase() + k.slice(1)}}
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

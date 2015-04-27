@@ -59,7 +59,6 @@ angular.module('starter.controllers')
   $scope.setPreDialysisForm();
 
   $scope.submitPreDialysis = function(){
-    console.log("SUBMIT THIS", $scope.preDialysisForm);
     var newForm = new Forms({
       user: $scope.user._id,
       filledBy: $scope.user._id,

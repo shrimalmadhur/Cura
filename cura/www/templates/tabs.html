@@ -7,13 +7,6 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon-top tabs-background-positive tabs-color-light">
 
 
-
-  <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios7-pulse-strong" icon-on="ion-ios7-pulse-strong" href="#/tab/dash">
-    <ion-nav-view name="tab-dash"></ion-nav-view>
-  </ion-tab>
-
-
   <!-- Contacts Tab -->
   <ion-tab title="Contacts" icon-off="ion-ios7-people" icon-on="ion-ios7-people" href="#/tab/contacts">
     <ion-nav-view name="tab-contacts"></ion-nav-view>
@@ -35,21 +28,27 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="tab-coach"></ion-nav-view>
   </ion-tab>
 
+  <!-- Dashboard Tab -->
+  <ion-tab title="Dashboard" icon-off="ion-ios-speedometer" icon-on="ion-ios-speedometer" href="#/tab/dash">
+    <ion-nav-view name="tab-dash"></ion-nav-view>
+  </ion-tab>
 
-  <!-- Account Tab -->
+  <!-- Visulation Tab -->
+  <ion-tab title="Health" icon-off="ion-ios7-pulse-strong" icon-on="ion-ios7-pulse-strong" href="#/tab/visual">
+    <ion-nav-view name="tab-visualization"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Home Automation -->
   <ion-tab title="Home" icon-off="ion-ios7-home" icon-on="ion-ios7-home" href="#/tab/home">
     <ion-nav-view name="tab-home"></ion-nav-view>
   </ion-tab>
 
-  <!--Settings Tab-->
-  <ion-tab title="Settings" icon-off="ion-ios7-settings" icon-on="ion-ios7-settings" href="#/tab/settings">
+  <!-- Account Tab-->
+  <ion-tab title="Account" icon-off="ion-person" icon-on="ion-person" href="#/tab/settings">
     <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 
-  <!-- Visulation Tab -->
-  <ion-tab title="Health Monitor" icon-off="ion-ios7-gear-outline" icon-on="ion-ios7-gear" href="#/tab/visual">
-    <ion-nav-view name="tab-visualization"></ion-nav-view>
-  </ion-tab>
+
 
 
 
