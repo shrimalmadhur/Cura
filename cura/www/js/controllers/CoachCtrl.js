@@ -61,6 +61,13 @@ angular.module('starter.controllers')
 })
 
 .controller('CoachDetailCtrl', function ($scope, $stateParams, $ionicSlideBoxDelegate, Resources) {
-  $scope.resource = Resources.get( {id: $stateParams.resourceId} );
+  $scope.setAlarmCode = function (){
+    var ele = document.getElementById("hdDiagram").getSVGDocument().getElementById("alarmCode");
+    ele.innerHTML = $scope.resource.data.code;
+  }
+  $scope.resource = Resources.get( {id: $stateParams.resourceId}, function (res){
+    setTimeout($scope.setAlarmCode, 100);
+  });
+
 })
 
