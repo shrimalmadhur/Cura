@@ -50,8 +50,7 @@ def parse_date(date):
 		
 def convert_time_since_epoch(datestring):
     yourdate = dateutil.parser.parse(datestring)
-    milliseconds_since_epoch = time.mktime(yourdate.timetuple())
-    return milliseconds_since_epoch
+    return int(time.mktime(yourdate.timetuple()))
 
 ### Events ###
 class EventsPostGet(generics.ListCreateAPIView):
@@ -980,7 +979,8 @@ class SkinTemperature(viewsets.ViewSet):
         # print vals[2]
         for temp in vals:
                 x_axis = temp['time_recorded']
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["estimated_core_temperature"])) })
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]), 
+                                "y": float(temp["estimated_core_temperature"]) }))
         
         output1 = {}
         output1['values'] = output
