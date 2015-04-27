@@ -19,7 +19,7 @@
       </div>
 
 
-      <ion-item class="item-avatar" ng-repeat="resource in filteredResults" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
+      <ion-item class="item-avatar" ng-repeat="resource in filteredResults track by resource._id" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
 
       <h2><b> {{ resource.data.title }}</b></h2>
 

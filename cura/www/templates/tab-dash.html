@@ -11,40 +11,57 @@
     </ion-refresher>
 
     <div class="row">
-      <img class="col col-20" src="http://placehold.it/80x80"> </img>
-      <h2 class="col col-80"> Hi, {{user.info.first}} </h2>
+      <div class-"col col-20">
+        <img height="50" width="50" src="http://placehold.it/50x50"> </img>
+      </div>
+      
+      <h4 class="col col-80"> Hi, {{user.info.first}} </h4>
     </div>
 
     <ion-list can-swipe="true">
 
-      <ion-item  class="list card" ng-repeat="event in timeLine track by $index" ng-if="event.eventType==='dialysis'">
 
-
-        <div>
-          <div class="item item-avatar">
-            <img src="http://placehold.it/100x100">
-            <h2> You have a dialysis treatment scheduled for today</h2>
-            <h3>{getDateString(event.time)}</h3>
-            <h3>{{event.notes}}</h3>
+      <div class="list card" ng-repeat="event in timeLine track by $index" >
+        
+        <div ng-if="event.eventType==='dialysis'">
+          <div class="item item-avatar"  >
+            <img src="img/dialysisIcon.svg">
+            <h2>Dialysis Session</h2>
+            <p ng-if="dialysisStep(event)==='preForm'"><b> Today</b> at {{getDateString(event)}}</p>
+            <p ng-if="dialysisStep(event)==='sessionForm'"><b>In Progress</b> </p> 
 
           </div>
 
-          <ion-option-button class="button-positive"> Dismiss </ion-option-button>
-          <ion-option-button class="button-info"> Edit </ion-option-button>
-          <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
-          </ion-delete-button>
-          <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)">
-          </ion-reorder-button>
+          <div ng-if="event.notes!==undefined"class="item item-body">
+            <p>
+              {{event.notes}}
+            </p>
+          </div>
+
+          <div class="button-bar">
+            <a ng-if="dialysisStep(event)==='preForm'" class="button button-clear button-positive" ng-click="openPreDialysisModal()"> Start Now</a>
+
+            <a ng-if="dialysisStep(event)==='sessionForm'" class="button button-clear button-positive" ng-click="openSessionDialysisModal()"> Fill Session Form
+            </a>
+
+          </div>
+        </div>
+
+        <div ng-if="event.eventType==='form'">
+          <div class="item item-avatar"  >
+            <img src="img/formIcon.svg">
+            <h2>You filled out your {{event.data.type}} form</h2>
+            <p><b> Today</b> at {{getDateString(event)}}</p>
+          </div>
         </div>
 
 
-      </ion-item>
+      </div>
+
+
 
 
     </ion-list>
-
-
-
 
 
   </ion-content>

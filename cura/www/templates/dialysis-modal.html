@@ -1,0 +1,85 @@
+<div class="modal">
+    <ion-header-bar>
+        <button ng-click="closeModal()" class="button button-clear button positive"> Cancel </button>
+        <h1 class="title">Pre Dialysis Form</h1>
+    </ion-header-bar>
+    <ion-content class="has-header has-footer">
+ 
+      <form>
+
+            <!-- Basic information  -->
+            <div class="list">
+              <div class="item item-divider">
+                Form Information
+              </div>
+
+              <div class="item item-text-wrap">
+                This is the pre dialysis form for the NXStage One Home Heamodialysis machine. Please fill out the following information carefully <b> immediately</b> prior to  begining your home dialysis treatment. If you have any questions regarding this form, contact your caregiver or center.
+              </div>
+
+              <div class="item item-divider">
+                Treatment Information
+              </div>
+
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="preDialysisForm.chloramineTestPassed">
+                 </label>
+                 Passed Chloramine Test
+              </li>
+
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="preDialysisForm.fluidTestPassed">
+                 </label>
+                 Passed Fluid Detection Test
+              </li>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Cartridge Lot Number </span>
+                <input type="text" ng-model="preDialysisForm.cartridgeLotNumber">
+              </label>
+
+
+              <div class="item item-divider">
+                Patient Information
+              </div>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Heart Rate</span>
+                <input type="tel" ng-model="preDialysisForm.heartRate" placeholder="beats per minute">
+              </label>
+
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Blood Pressure systolic </span>
+                <input type="tel" ng-model="preDialysisForm.bp.systolic" placeholder="mmHG">
+              </label>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Blood Pressure diastolic </span>
+                <input type="tel" ng-model="preDialysisForm.bp.diastolic" placeholder="mmHG" >
+              </label>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Weight Before Dialysis </span>
+                <input type="tel" ng-model="preDialysisForm.weight" placeholder="kg" value="83">
+              </label>
+
+              <label class="item item-input item-stacked-label">
+                <span class="input-label">Initial Heparin Dose </span>
+                <input type="tel" ng-model="preDialysisForm.heparin" placeholder="units">
+              </label>
+            </div>
+      </form>
+
+
+
+
+    </ion-content>
+
+    <button class="bar bar-footer bar-positive" ng-click="submitPreDialysis()">
+      <div class="title">Done</div>
+    </button>
+
+</div>

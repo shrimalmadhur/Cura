@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Your_Icon" x="0px" y="0px" width="100px" height="100px" viewBox="5.0 -10.0 100.0 135.0" enable-background="new 0 0 100 100" xml:space="preserve">
+<g>
+	<path d="M72,92H56.505h-1.009H9V8h63v38.458l7-12.543V8.158C79,4.195,76.23,1,72.267,1H8.708C4.746,1,2,4.195,2,8.158v84.121   C2,96.241,4.746,99,8.708,99h63.559C76.23,99,79,96.241,79,92.279V69.233l-7,12.543V92z"/>
+	<rect x="15" y="19" width="39" height="5"/>
+	<rect x="15" y="42" width="39" height="5"/>
+	<rect x="15" y="31" width="51" height="5"/>
+	<rect x="15" y="54" width="51" height="5"/>
+	<rect x="15" y="65" width="39" height="5"/>
+	<polygon points="89.696,26.201 87.8,29.502 86.982,30.927 94.01,34.963 94.828,33.539 96.724,30.237  "/>
+	<polygon points="60,76.589 60,85 67.224,80.626 92.103,37.575 85.075,33.539  "/>
+	<circle cx="19.604" cy="81.623" r="4.856"/>
+	<circle cx="35.01" cy="81.683" r="4.856"/>
+</g>
+</svg>

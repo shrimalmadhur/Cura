@@ -22,8 +22,9 @@ angular.module('starter.services', ['ngResource'])
   }
 })
 
-.factory('Forms', function ($resource) {
-  return $resource('/api/v1/Forms/:id'); 
+.factory('Forms', function ($resource, Config) {
+  var url = Config.apiUrl + "Forms/:id";
+  return $resource(url, {id: "@_id"});
 })
 
 .factory('Events', function ($resource, Config) {

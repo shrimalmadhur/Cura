@@ -27,6 +27,10 @@ angular.module('starter.controllers')
     $scope.closeModal();
   }
 
+  $scope.takeMed = function(){
+    console.log("TAKE A PILL");
+  }
+
   $scope.resetForm();
   $scope.updateMedications();
 

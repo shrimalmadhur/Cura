@@ -32,9 +32,87 @@ angular.module('starter.controllers')
   $scope.timeLine = [];
   $scope.events = [];
 
+  $scope.randomOffset = function(base, offset ){
+    var p = Math.random();
+    if (p > 0.5){
+      return (base + Math.round((Math.random() * offset)));
+    } else {
+      return (base - Math.round((Math.random() * offset)));
+    }
+  }
+
+
+  $scope.duringDialysisForm = {};
+  $scope.postDialysisForm = {};
+  
+  $scope.setPreDialysisForm = function (dialysisEventId){
+    $scope.preDialysisForm = {
+      bp: {systolic: $scope.randomOffset(118, 5), diastolic: $scope.randomOffset(80, 4)},
+      weight: 80,
+      heartRate: $scope.randomOffset(70, 5),
+      dialysisEvent: dialysisEventId
+    };
+  }
+
+
+
+  $scope.setPreDialysisForm();
+
+  $scope.submitPreDialysis = function(){
+    console.log("SUBMIT THIS", $scope.preDialysisForm);
+    var newForm = new Forms({
+      user: $scope.user._id,
+      filledBy: $scope.user._id,
+      type: "Pre Dialysis",
+      data: $scope.preDialysisForm
+    });
+
+    var f = newForm.toJSON();
+
+    var d = new Date()
+    var formFilledEvent = new Events({
+      eventType: "form",
+      time: d,
+      createdBy: $scope.user._id,
+      createdFor: $scope.user._id,
+      reminder: false,
+      data: f
+    })
+
+    newForm.$save(function (res){
+      console.log("SAVED THE FORM", res);
+      formFilledEvent.$save(function (form){
+        console.log("Form event saved", form)
+        $scope.setTimeline();
+        $scope.closeModal();
+      })
+    });
+
+    Events.query({id: $scope.preDialysisForm.dialysisEventId}, function (res){
+      var e = res[0];
+      console.log("Got event!", e);
+      e.data = { preFormComplete: true };
+      e.$save(function(){
+        $scope.setTimeline();
+      })
+    })
+
+  }
 
   $scope.updateEvents = function(){
     $scope.events = Events.query({ createdFor: $scope.user._id});
+  }
+
+  $scope.dialysisStep = function(event){
+    if (!event.data || !event.data.preFormComplete){
+      return 'preForm';
+    } else if (event.data && event.data.preFormComplete && !event.data.sessionFormComplete){
+      return 'sessionForm';
+    } else if (event.data && event.data.preFormComplete && event.data.sessionFormComplete && !event.data.postFormComplete){
+      return 'postForm';
+    } else {
+      return 'complete';
+    }
   }
 
   $scope.resetNewEvent = function(){
@@ -51,10 +129,9 @@ angular.module('starter.controllers')
   $scope.resetNewEvent();
 
   $scope.setTimeline = function(){
-    $scope.updateEvents();
-    console.log("Events updated");
-    $scope.timeLine = $scope.events;
-    console.log($scope.timeLine)
+    $scope.events = Events.query({ createdFor: $scope.user._id}, function (res){
+      $scope.timeLine = res.reverse();
+    });
   }
 
   $scope.setTimeline();
@@ -67,17 +144,23 @@ angular.module('starter.controllers')
 
   $scope.doRefresh = function() {
     setTimeout(function(){
+      $scope.setTimeline();
       $scope.$broadcast('scroll.refreshComplete');
-    },2000);
+    },1000);
   };
 
-  $scope.getDateString = function(str){
-    var d = new Date(str);
-    var t = new date();
 
-    // An event happening today
-    // TODO: make his 
-    return d.toTimeString();
+
+  $scope.getDateString = function(event){
+
+    var date = new Date(event.time);
+    return date.toLocaleTimeString({hour: '2-digit', minute:'2-digit'});
+  }
+
+  $scope.openPreDialysisModal = function(dialysisEventId){
+    $scope.modal = $scope.dialysisModal;
+    $scope.setPreDialysisForm(dialysisEventId);    
+    $scope.openModal();
   }
 
   $scope.showWelcome = function(){
