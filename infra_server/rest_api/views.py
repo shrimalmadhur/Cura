@@ -876,7 +876,7 @@ class HeartRate(viewsets.ViewSet):
 
         vals = serialized.data
         for temp in vals:
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["heart_rate"]) }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": int(temp["heart_rate"]) }))
         
         output1 = {}
         output1['values'] = output
@@ -910,7 +910,7 @@ class BreathingRate(viewsets.ViewSet):
             #return Response( serialized.data )
         vals = serialized.data
         for temp in vals:
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["breathing_rate"]) }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": int(temp["breathing_rate"]) }))
         
         output1 = {}
         output1['values'] = output
@@ -980,7 +980,7 @@ class SkinTemperature(viewsets.ViewSet):
         # print vals[2]
         for temp in vals:
                 x_axis = temp['time_recorded']
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["estimated_core_temperature"]) }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": int(temp["estimated_core_temperature"]) }))
         
         output1 = {}
         output1['values'] = output
