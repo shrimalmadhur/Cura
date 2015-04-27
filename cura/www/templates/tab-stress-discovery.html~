@@ -1,10 +1,10 @@
-<ion-view view-title="PIP Instructions ">
+<ion-view view-title="PIP">
   <ion-content class="has-header">
   <br/>
   <br/>
   
-  <div class-"item item-divider">
-  <center>   <h3> Instructions</h3></center>
+  <div class="item item-divider">
+  <center>   <font size="5"> Instructions</h></font>
   </div>
 
 	

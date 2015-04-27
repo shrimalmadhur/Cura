@@ -1,4 +1,4 @@
-<ion-view view-title="Stress Management ">
+<ion-view view-title="Stress Q/A Result ">
   <ion-content class="has-header">
   <br/>
   <br/>
@@ -14,7 +14,7 @@
   	<br/>
   	<form>
 <center>
-<a class="button button-block" href="#/tab/stress/Questions/GO/discovery"> <font size="5">Take me to survey </font></a>
+<a class="button button-block" href="#/tab/stress/Questions/GO/discovery"> <font size="5">Use PIP </font></a>
 
 </center>
 </form>

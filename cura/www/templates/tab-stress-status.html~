@@ -1,25 +1,31 @@
 <ion-view view-title="PIP Results">
   <ion-content class="has-header">
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
   
-  	<p style="text-align:center;"><font color="black" size = "6">RESULTS</font></p>
-  	<br/>
-  	<br/>
-  	<center>
-  	<div id="StressEvents"></div>
-  	<div id="RelaxedEvents"></div>
-  	<div id="SteadyEvents"></div>
-  	<div id="FinalScore"></div>
-  </center>
-  <br/>
-  <br/>
+   <ion-list>
+  
+  <div class="item item-divider">
+    <font size="4"> RESULTS </font>
+  </div>
+  
+      <ion-item class="item"  type="item-text-wrap" >
+       <div id="StressEvents"></div> 
+      </ion-item>
+      
+      
+      <ion-item class="item"  type="item-text-wrap" >
+        <div id="RelaxedEvents"></div> 
+      </ion-item>
+      
+      <ion-item class="item"  type="item-text-wrap" >
+        <div id="SteadyEvents"></div> 
+      </ion-item>
+      
+       <ion-item class="item"  type="item-text-wrap" >
+        <div id="FinalScore"></div> 
+      </ion-item>
+    </ion-list>
+  
+ 
   
   <form>
 <center>
