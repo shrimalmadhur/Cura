@@ -26,15 +26,16 @@ angular.module('starter.services', ['ngResource'])
   return $resource('/api/v1/Forms/:id'); 
 })
 
-.factory('Events', function ($resource) {
-  return $resource('/api/v1/Events/:id'); 
+.factory('Events', function ($resource, Config) {
+  var url = Config.apiUrl + "Events/:id";
+  return $resource(url, {id: "@_id"}); 
 })
 
 .factory('Biometrics', function ($resource) {
   return $resource('/api/v1/Biometrics/:id'); 
 })
 
-.factory('Resources', function ($resource) {
+.factory('Resources', function ($resource, Config) {
   return $resource('/api/v1/Resources/:id', { id: '@_id'});
 })
 
@@ -75,25 +76,5 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('Visuals', function($resource) {
-  /*var data = [];
-  for (var i = 0; i < 100; i++) {
-                data.push({x: i, y: Math.sin(i/10)});   
-             }*/
-  //console.log($resource('http://128.2.109.230:4001/sleep'));
-  //http://128.2.109.230:4001/:attr/:sd/:ed
-  console.log("called");
-  return $resource('http://128.2.83.208:9000/api/v1/:attr/:sd/:ed',{callback: 'JSON_CALLBACK'},{
-    'query': 
-    {
-        method:'JSONP', 
-        params:{}, 
-        isArray:true
-    },
-    'bp': 
-    {
-        method:'JSONP', 
-        params:{}, 
-        isArray:true
-    }
-  })
+  return $resource('http://128.2.83.208:8001/api/v1/:attr/mshrimal/:sd/:ed')
 });

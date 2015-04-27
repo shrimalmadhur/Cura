@@ -30,11 +30,34 @@ angular.module('starter.controllers')
 
 
   $scope.timeLine = [];
-  $scope.newEvent = {};
+  $scope.events = [];
+
+
+  $scope.updateEvents = function(){
+    $scope.events = Events.query({ createdFor: $scope.user._id});
+  }
+
+  $scope.resetNewEvent = function(){
+    var c1 = new Date();
+    var c2 = new Date();
+    $scope.newEvent = {
+      createdFor: $scope.user._id,
+      createdBy: $scope.user._id,
+      date: c1,
+      time: c2
+    };    
+  }
+
+  $scope.resetNewEvent();
 
   $scope.setTimeline = function(){
-
+    $scope.updateEvents();
+    console.log("Events updated");
+    $scope.timeLine = $scope.events;
+    console.log($scope.timeLine)
   }
+
+  $scope.setTimeline();
 
 
   $scope.openEventModal = function(){
@@ -47,6 +70,15 @@ angular.module('starter.controllers')
       $scope.$broadcast('scroll.refreshComplete');
     },2000);
   };
+
+  $scope.getDateString = function(str){
+    var d = new Date(str);
+    var t = new date();
+
+    // An event happening today
+    // TODO: make his 
+    return d.toTimeString();
+  }
 
   $scope.showWelcome = function(){
     if ($rootScope.user.info === undefined){
@@ -100,9 +132,31 @@ angular.module('starter.controllers')
 
     myPopup.then(function (res) {
       console.log('Tapped!', res);
+      $scope.newEvent.invited = res;
     });
-
   };
+
+  $scope.createEvent = function(){
+    console.log("Creating a new event", $scope.newEvent);
+    var d = $scope.newEvent.date;
+    var t = $scope.newEvent.time;
+    var newDate = new Date(d.getFullYear(), d.getMonth(), d.getDate(), t.getHours(), t.getMinutes());
+
+    $scope.newEvent.time = newDate;
+    delete $scope.newEvent["date"];
+    console.log($scope.newEvent);
+
+    var newEvent = new Events($scope.newEvent);
+    newEvent.$save(function (res){
+      console.log("event saved", res);
+      $scope.resetNewEvent();
+      $scope.setTimeline();
+      $scope.closeModal();
+    })
+    // $scope.newEvent.date.setHours($scope.newEvent.date.getHours())
+    // $scope.newEvent.date.setMinutes($scope.newEvent.time.getMinutes())
+    // console.log("DATE", (typeof $scope.date));
+  }
 
 
   

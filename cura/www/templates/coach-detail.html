@@ -4,7 +4,7 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="{{ resource.title }}">
+<ion-view view-title="{{resource.data.title}}">
 
   <ion-content>
     <video  ng-if="resource.data.videos.length!==0" controls width="100%">
@@ -26,13 +26,22 @@
     <div class="item item-divider">
       Checklist
     </div>
-    <li class="item item-checkbox" ng-repeat="step in resource.data.steps">
-       <label class="checkbox">
-         <input type="checkbox">
-       </label>
-       {{ step.title}} 
-    </li>
 
+    <div class="list card" ng-repeat="step in resource.data.steps track by $index" >
+      <li class="item item-checkbox" >
+         <label class="checkbox">
+           <input type="checkbox">
+         </label>
+         Step {{$index+1}}: {{ step.title}} 
+         <p> 
+      </li>
+
+      <div class="item item-body">
+        <p>
+          {{step.description}}
+        </p>
+      </div>
+    </div>
 
   </ul>
 </div>

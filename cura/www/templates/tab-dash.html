@@ -17,19 +17,27 @@
 
     <ion-list can-swipe="true">
 
-      <ion-item  class="list card ">
-        <div class="item item-avatar">
-          <img src="http://placehold.it/100x100">
-          <h2> Appointment with Dr. Pete</h2>
-          <h3>4.00 PM on Tuesday, November 05</h3>
+      <ion-item  class="list card" ng-repeat="event in timeLine track by $index" ng-if="event.eventType==='dialysis'">
+
+
+        <div>
+          <div class="item item-avatar">
+            <img src="http://placehold.it/100x100">
+            <h2> You have a dialysis treatment scheduled for today</h2>
+            <h3>{getDateString(event.time)}</h3>
+            <h3>{{event.notes}}</h3>
+
+          </div>
+
+          <ion-option-button class="button-positive"> Dismiss </ion-option-button>
+          <ion-option-button class="button-info"> Edit </ion-option-button>
+          <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
+          </ion-delete-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+          </ion-reorder-button>
         </div>
 
-        <ion-option-button class="button-positive"> Dismiss </ion-option-button>
-        <ion-option-button class="button-info"> Edit </ion-option-button>
-        <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
-        </ion-delete-button>
-        <ion-reorder-button class="ion-navicon" on-reorder="reorderItem(item, $fromIndex, $toIndex)">
-        </ion-reorder-button>
+
       </ion-item>
 
 

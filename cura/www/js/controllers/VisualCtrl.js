@@ -5,9 +5,9 @@ angular.module('starter.controllers')
             {id:0,urlName:"sleep/graph/2/cycle", name:"Sleep Cycle", yAxisLabel:"Phases"},
             {id:1,urlName:"rr", name:"Resting Heart Rate", yAxisLabel:"beats/min"},
             {id:2,urlName:"sleep/graph/2/", name:"Sleep Score", yAxisLabel:""},
-            {id:3,urlName:"bp",name:"Blood Pressure", yAxisLabel:"bp level"},
-            {id:4, urlName:"rr",name: "Respiration Rate", yAxisLabel:"rr level"},
-            {id:5, urlName:"wgt",name: "Weight over time", yAxisLabel:"Lbs"},
+            {id:3,urlName:"bp", name:"Blood Pressure", yAxisLabel:"bp level"},
+            {id:4, urlName:"rr", name: "Respiration Rate", yAxisLabel:"rr level"},
+            {id:5, urlName:"weight", name: "Weight over time", yAxisLabel:"Lbs"},
             {id:6, urlName:"multi",name: "Heart Rate", yAxisLabel:"beats/mins"},
             {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Units"},
             {id:8, urlName:"skin",name: "Skin Temperature", yAxisLabel:"Degree"}
@@ -32,7 +32,7 @@ angular.module('starter.controllers')
     });*/ 
   }
   
-  $scope.updateWithParams = function(sd,ed){
+  $scope.updateWithParams = function(sd, ed){
     
     $scope.sleepDisplay = false;
     
