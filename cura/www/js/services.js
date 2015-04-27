@@ -57,7 +57,6 @@ angular.module('starter.services', ['ngResource'])
       return friends;
     },
     get: function(friendId) {
-      // Simple index lookup
       return friends[friendId];
     }
   }
@@ -70,12 +69,14 @@ angular.module('starter.services', ['ngResource'])
       return friends;
     },
     get: function(friendId) {
-      // Simple index lookup
       return friends[friendId];
     }
   }
 })
 
 .factory('Visuals', function($resource) {
-  return $resource('http://128.2.83.208:8001/api/v1/:attr/mshrimal/:sd/:ed')
+  return $resource('http://128.2.83.208:8001/api/v1/:attr/:username/:sd/:ed',{},{
+    'query': { isArray:true },
+    'static': { isArray:true }
+  })
 });

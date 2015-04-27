@@ -46,27 +46,23 @@
 		<a class="item item-icon-left item-divider" href="#">
 		    <i class="icon ion-podium"></i>
 		    Sleep Score
-		    <span class="badge badge-royal">68</span>
+		    <span class="badge badge-royal">{{sleep.static.score}}</span>
 		</a>
 		<a class="item">
-			<h2>Sleep Time</h2>
-			<p>7h 36min</p>
+			<h2>Total Sleep Time</h2>
+			<p>{{sleep.static.total}} seconds</p>
 		</a>
 		<a class="item">
-			<h2>Time taken to fall asleep</h2>
-			<p>36 Minutes</p>
+			<h2>Average Time taken to fall asleep</h2>
+			<p>{{sleep.static.latency}} seconds</p>
 		</a>
 		<a class="item">
-			<h2>Bathroom exits</h2>
-			<p>Count: 1</p>
+			<h2>Total Bed exits</h2>
+			<p>Count: {{sleep.static.exit}}</p>
 		</a>
 		<a class="item">
-			<h2>Bed exits</h2>
-			<p>Count: 2</p>
-		</a>
-		<a class="item">
-			<h2>Respiration Rate</h2>
-			<p>15 breaths/min</p>
+			<h2>Average Respiration Rate</h2>
+			<p>{{sleep.static.resp | number: 1}} breaths/min</p>
 		</a>
 	</div>
 
