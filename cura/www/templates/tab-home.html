@@ -3,29 +3,9 @@
     <ion-list>
 
       <div class="item item-divider">Switches</div>
-      <ion-item class="item-toggle"> TV
+      <ion-item class="item-toggle" ng-repeat="switch in switches"> {{switch.name}}
         <label class="toggle">
-          <input type="checkbox" ng-model="settings.tvSwitch">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-
-
-      <ion-item class="item-toggle"> XBox
-        <label class="toggle">
-          <input type="checkbox">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-
-
-      <ion-item class="item-toggle"> N64
-        <label class="toggle">
-          <input type="checkbox">
+          <input type="checkbox" ng-model="switch.isOn" ng-change="switchToggle(switch)">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -112,20 +92,20 @@
       </label>
 
       <div class="item item-divider">Temperature</div>
-      <ion-item class="item-toggle"> Mode: {{settings.mode()}}
+      <ion-item class="item-toggle"> Mode: {{tempMode()}}
         <label class="toggle">
-          <input type="checkbox" ng-model="settings.isHeating">
+          <input type="checkbox" ng-model="thermostat.isHeating" ng-change="thermoModeChange()">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </ion-item>
       <ion-item>
-        Temprature: <span class="badge">{{settings.temprature}} &deg;F</span>
+        Temprature: <span class="badge">{{thermostat.temp}} &deg;F</span>
       </ion-item>
       <div class="item range range-positive">
         <i class="icon ion-ios7-rainy-outline"></i>
-        <input type="range" name="volume" min="60" max="90" ng-model="settings.temprature">
+        <input type="range" name="volume" min="60" max="90" ng-model="thermostat.temp" ng-change="thermoTempChange()">
         <i class="icon ion-ios7-sunny"></i>
       </div>
     </ion-list>

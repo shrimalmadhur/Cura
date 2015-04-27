@@ -1,59 +1,78 @@
 angular.module('starter.controllers')
 .controller('HomeCtrl', function ($scope, $http, $timeout) {
+    var url = "http://128.2.83.208:8001/api/v1/homeautomation/ha_user/";
+    $scope.switches = [];
+    $scope.thermostat;
 
-  var url = "http://128.2.83.208:8006/api/v1/homeautomation/ha_user/";
-  // init
-  $http.get(url).success(function(data){
-    //update settings with data
-  });
+    $http.get(url).success(function(devices){
+        for (id in devices){
+            var device = devices[id];
+            if (device.signal_type === "switch"){
+                $scope.switches.push({ name: device.tag_id, isOn: device.required_value === "1" ? true : false});
+            } else if (device.signal_type === "thermo"){
+                var temp = parseInt(device.required_value, 16)/2;
+                $scope.thermostat = {name: device.tag_id, temp: temp, isHeating: device.mode === "hot" ? true : false};
+            }
+        }
+    });
 
-  $scope.settings = {
-    tvSwitch: true,
-    isHeating: true,
-    temprature: 70,
-    mode: function(){
-      return $scope.settings.isHeating ? "Heating" : "Cooling";
+    // Temp String Format
+    $scope.tempMode = function(){
+        if($scope.thermostat){
+            return $scope.thermostat.isHeating?"Heating":"Cooling";
+        }
+        return "";
     }
-  };
+    $scope.switchToggle = function(switchData){
+/*        console.log(JSON.stringify({
+            user_name: "ha_user",
+            tag_id: switchData.name,
+            signal_type: "switch",
+            required_value: "1",
+            current_value: "0",
+            mode:null
+        }));*/
+        $http.put(url, {
+            user_name:"ha_user",
+            tag_id:switchData.name,
+            signal_type:"switch",
+            current_value:"0",
+            required_value: switchData.isOn ? "1": "0",
+            mode:"null"
+        });
+    }
 
+    $scope.thermoModeChange = function(){
+        var temp  = $scope.thermostat.temp*2;
 
-  // TV Swtich, 1155B6
-  $scope.$watch('settings.tvSwitch', function() {
-    console.log('TV changed:' + $scope.settings.tvSwitch);
-    $http.put(url, JSON.stringify({
-      user_name: "ha_user",
-      tag_id: "1155B6",
-      signal_type: "swtich",
-      current_value: 0,
-      required_value: $scope.settings.tvSwitch ? 0 : 1
-    }))
-  });
+        $http.put(url, {
+            user_name:"ha_user",
+            tag_id:$scope.thermostat.name,
+            signal_type:"thermo",
+            current_value:"0",
+            required_value: temp.toString(16),
+            mode: $scope.thermostat.isHeating ? "hot": "cold",
+        });
+    }
 
-  //temprature
-  var timeoutId = null;
-  $scope.$watch('settings.temprature', function() {
-    //console.log('Has changed');
+    var timeoutId = null;
+    $scope.thermoTempChange = function(){
         if(timeoutId !== null) {
-            //console.log('Ignoring this movement');
             return;
         }
-        //console.log('Not going to ignore this one');
         timeoutId = $timeout( function() {
-            console.log('It changed recently!');
             $timeout.cancel(timeoutId);
             timeoutId = null;
-            // Now load data from server, check url and params
-            url = "/api/v1/home_automation";
-            data = {
-              user_name: 'ha_user',
-              tag_id: '111',
-              current_value: 0,
-              required_value: 1
-          }
-            //$http.put(url, JSON.stringify(data));
-        }, 1000); 
-  });
+            var temp  = $scope.thermostat.temp*2;
+            $http.put(url, {
+                user_name:"ha_user",
+                tag_id:$scope.thermostat.name,
+                signal_type:"thermo",
+                current_value:"0",
+                required_value: temp.toString(16),
+                mode: $scope.thermostat.isHeating ? "hot": "cold",
+            });
+        }, 2000); 
 
-})
-
-
+    }
+});
