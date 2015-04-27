@@ -7,7 +7,7 @@
       <div class="item item-input-inset">
         <label class="item-input-wrapper">
           <form novalidate class="simple-form">
-            <input type="text" placeholder="Search"  value="{{speech.currentText}}">
+            <input type="text" placeholder="Search" value="{{speech.currentText}}">
           </form>
         </label>
 
@@ -19,8 +19,7 @@
       </div>
 
 
-
-      <ion-item class="item-avatar" ng-repeat="resource in resources" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
+      <ion-item class="item-avatar" ng-repeat="resource in filteredResults" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
 
       <h2><b> {{ resource.data.title }}</b></h2>
 
