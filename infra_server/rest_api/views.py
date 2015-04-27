@@ -760,7 +760,7 @@ class BloodOxygenGetTime(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response( [ json_data ] )
+        return Response( json_data )
 
 # Blood Oxygen Time #
 
@@ -836,7 +836,7 @@ class BloodPressureGetTime(viewsets.ViewSet):
         json_data = json.dumps(final_output)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response( [ json_data ] )
+        return Response( json_data )
 
 class BloodPressureView(generics.ListCreateAPIView):
     serializer_class = BloodPressureSerializer
