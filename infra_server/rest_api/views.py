@@ -461,7 +461,7 @@ class BiometricsGetTime(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded')
             serialized = BiometricsSerializer( result, many = True)
             return Response( [ serialized.data ] )
         else:
@@ -668,14 +668,14 @@ class StressGetTime(viewsets.ModelViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = StressSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Stress.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded')  
             serialized = StressSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -710,14 +710,14 @@ class WeightGetTime(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded')  
             serialized = WeightSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Weight.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded')  
             serialized = WeightSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -749,14 +749,14 @@ class BloodOxygenGetTime(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BloodOxygenSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = BloodOxygen.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BloodOxygenSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -818,14 +818,14 @@ class BloodPressureGetTime(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BloodPressureSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = BloodPressure.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BloodPressureSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -875,14 +875,14 @@ class HeartRate(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded')
             serialized = BiometricsSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BiometricsSerializer( result, many = True)
 
         vals = serialized.data
@@ -909,14 +909,14 @@ class BreathingRate(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BiometricsSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BiometricsSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -943,14 +943,14 @@ class Posture(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BiometricsSerializer( result, many = True)
             #return Response( serialized.data )
         else:
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             serialized = BiometricsSerializer( result, many = True)
             #return Response( serialized.data )
         vals = serialized.data
@@ -976,7 +976,7 @@ class SkinTemperature(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
             # print result
             serialized = BiometricsSerializer( result, many = True)
             # print serialized.data
@@ -985,7 +985,8 @@ class SkinTemperature(viewsets.ViewSet):
             start = datetime.strptime(start, '%Y-%m-%d')
             end = datetime.strptime(end, '%Y-%m-%d')
             end = end.replace(hour = 23, minute = 59)
-            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end)  
+            result = Biometrics.objects.filter(user_name = user_name, time_recorded__gte = start, time_recorded__lte = end).order_by('-time_recorded') 
+            # print result
             serialized = BiometricsSerializer( result, many = True)
         vals = serialized.data
         # print vals[2]
