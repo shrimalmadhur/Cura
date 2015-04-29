@@ -50,8 +50,7 @@ def parse_date(date):
 		
 def convert_time_since_epoch(datestring):
     yourdate = dateutil.parser.parse(datestring)
-    milliseconds_since_epoch = time.mktime(yourdate.timetuple())
-    return milliseconds_since_epoch
+    return int(time.mktime(yourdate.timetuple()))
 
 ### Events ###
 class EventsPostGet(generics.ListCreateAPIView):
@@ -760,7 +759,7 @@ class BloodOxygenGetTime(viewsets.ViewSet):
         json_data = json.dumps(output1)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response( [ json_data ] )
+        return Response( json_data )
 
 # Blood Oxygen Time #
 
@@ -836,7 +835,7 @@ class BloodPressureGetTime(viewsets.ViewSet):
         json_data = json.dumps(final_output)
         python_dict = ast.literal_eval(json_data)
         json_data = ( python_dict )
-        return Response( [ json_data ] )
+        return Response( json_data )
 
 class BloodPressureView(generics.ListCreateAPIView):
     serializer_class = BloodPressureSerializer
@@ -876,7 +875,7 @@ class HeartRate(viewsets.ViewSet):
 
         vals = serialized.data
         for temp in vals:
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["heart_rate"]) }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": int(float(temp["heart_rate"])) }))
         
         output1 = {}
         output1['values'] = output
@@ -980,7 +979,8 @@ class SkinTemperature(viewsets.ViewSet):
         # print vals[2]
         for temp in vals:
                 x_axis = temp['time_recorded']
-                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]) ,"y": float(temp["estimated_core_temperature"]) }))
+                output.append(({"x": convert_time_since_epoch(temp["time_recorded"]), 
+                                "y": float(temp["estimated_core_temperature"]) }))
         
         output1 = {}
         output1['values'] = output

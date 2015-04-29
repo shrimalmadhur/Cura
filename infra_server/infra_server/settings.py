@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'rest_framework',
     'rest_framework_swagger',
-    'rest_api',
     'rest_auth',
     #'allauth',
     #'allauth.account',
@@ -45,6 +44,9 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # custom apps
+    'rest_api',
+    'sleep'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,3 +94,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ENCRYPTED_FIELDS_KEYDIR = os.path.join(BASE_DIR, 'fieldkeys')
+try:
+  from local_settings import *
+except ImportError:
+  pass

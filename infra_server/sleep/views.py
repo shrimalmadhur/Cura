@@ -46,54 +46,58 @@ class DayGraph(APIView):
 class RangeGraph(APIView):
 
   def get(self, request, *args, **kwargs):
-    uid = kwargs['uid']
+    #uid = kwargs['uid']
+    username = kwargs['username']
     dtype = kwargs['dtype']
     begin = kwargs['begin']
     end = kwargs['end']
-    user = get_object_or_404(User, pk=uid)
+    user = get_object_or_404(User, username=username)
     dt1 = parse_date(begin)
     dt2 = parse_date(end)
-    sessions = user.sleepsession_set.filter(session_end__gte=dt1, session_end__lt=dt2)
+    if begin == end:
+      sessions = user.sleepsession_set.filter(session_end__year=dt1.year, 
+        session_end__month=dt1.month, session_end__day=dt1.day).order_by('session_end')
+    else:
+      sessions = user.sleepsession_set.filter(session_end__gte=dt1, session_end__lt=dt2)
     return prepare_response(dtype, sessions)
 
 def prepare_response(dtype, sessions):
   ret = {'values': [], 'key': dtype}
+  values = []
   if dtype == 'cycle':
     for s in sessions:
       cycles = s.time_series_data(manager='type_mgr').get_cycles()
       values = [ {'x': c.int_timestamp, 'y': c.value} for c in cycles ]
-      ret['values'] = ret['values'] + values
-    return Response([ret])
+      values += values
   elif dtype == 'heart':
     for s in sessions:
       hrs = s.time_series_data(manager='type_mgr').get_hearts()
       values = [ {'x': h.int_timestamp, 'y': h.value} for h in hrs ]
-      ret['values'] = ret['values'] + values
-    return Response([ret])
+      values += values
   elif dtype == 'stage':
     for s in sessions:
       stages = s.time_series_data(manager='type_mgr').get_stages()
       values = [ {'x': st.int_timestamp, 'y': st.value} for st in stages ]
-      ret['values'] = ret['values'] + values
-    return Response([ret])
+      values += values
   elif dtype == 'snore':
     for s in sessions:
       snores = s.time_series_data(manager='type_mgr').get_snores()
       values = [ {'x': sn.int_timestamp, 'y': sn.value} for sn in snores ]
-      ret['values'] = ret['values'] + values
-    return Response([ret])
+      values += values
   elif dtype == 'score':
-    scores = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
-    return Response({'values': scores})
+    values = [ {'x': s.int_session_end, 'y': s.total_score} for s in sessions ]
   elif dtype == 'rest':
     values = [ {'x': s.int_session_end, 'y': s.rest_heart_rate} for s in sessions]
-    return Response({'values': values})
   elif dtype == 'exit':
     values = [ {'x': s.int_session_end, 'y': s.score_bed_exits} for s in sessions]
-    return Response({'values': values})
   elif dtype == 'latency':
     values = [ {'x': s.int_session_end, 'y': s.sleep_latency} for s in sessions]
-    return Response({'values': values})
+  elif dtype == 'totalsleep':
+    values = [ {'x': s.int_session_end, 'y': s.total_sleep_time} for s in sessions]
+  elif dtype == 'resp':
+    values = [ {'x': s.int_session_end, 'y': s.avg_respiration_rate} for s in sessions]
   else:
     raise Http404()
+  ret['values'] = values
+  return Response([ret])
 
