@@ -1,5 +1,5 @@
 <ion-view view-title="Dashboard">
-    
+
 
 
 
@@ -14,7 +14,7 @@
       <div class-"col col-20">
       <h1> <i class="ion-person"> </i> </h1>
       </div>
-      
+
       <h4 class="col col-80"> Hi, {{user.info.first}} </h4>
     </div>
 
@@ -22,13 +22,13 @@
 
 
       <div class="list card" ng-repeat="event in timeLine track by $index" >
-        
+
         <div ng-if="event.eventType==='dialysis'">
           <div class="item item-avatar"  >
             <img src="img/dialysisIcon.svg">
             <h2>Dialysis Session</h2>
             <p ng-if="dialysisStep(event)==='preForm'"><b> Today</b> at {{getDateString(event)}}</p>
-            <p ng-if="dialysisStep(event)==='sessionForm'"><b>In Progress</b> </p> 
+            <p ng-if="dialysisStep(event)==='sessionForm'"><b>In Progress</b> </p>
 
           </div>
 
@@ -55,6 +55,23 @@
           </div>
         </div>
 
+        <div ng-if="event.eventType==='appointment'">
+          <div class="item item-avatar"  >
+            <img src="img/formIcon.svg">
+            <h2>You have an appointment with {{ event.invited[0].name.formatted }}</h2>
+            <p><b> Today</b> at {{getDateString(event)}}</p>
+          </div>
+        </div>
+
+        <div ng-if="event.eventType==='reminder'">
+          <div class="item item-avatar"  >
+            <img src="img/formIcon.svg">
+            <h2>{{event.notes}}</h2>
+            <p><b> Today</b> at {{getDateString(event)}}</p>
+          </div>
+        </div>
+
+
 
       </div>
 
@@ -69,7 +86,5 @@
     <ion-footer-bar align-title="right" >
       <button id="circleButton" ng-click="openEventModal()" class="button button-assertive icon-left ion-plus pull-right button-circle"></button>
     </ion-footer-bar>
-  
+
 </ion-view>
-
-

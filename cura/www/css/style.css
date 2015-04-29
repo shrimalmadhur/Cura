@@ -1,4 +1,9 @@
 /* Empty. Add your own CSS if you like */
+
+body {
+	font-family: 'Oxygen', sans-serif;
+}
+
 #circleButton {
 	top:-35px;
 	height:70px;
@@ -15,7 +20,7 @@
 	transition: 1s linear all;
 	opacity: 0;
 }
- 
+
 .animate-enter.animate-enter-active {
 	opacity: 1;
 }
