@@ -1,17 +1,18 @@
 import os
 import datetime
-from rest_api.models import ( Biometrics, BiometricsPrecise )
+import random
+from rest_api.models import ( Biometrics, BiometricsPrecise, BloodPressure )
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "infra_server.settings")
 
 
-def populate_bloodpressure(user_name,
-                           time_recorded,
-                           sample_points,
-
-
-                           
-):
+def populate_bloodpressure():
+  for i in xrange(0, 2):
+    new_bloodpressure = BloodPressure(user_name = 'mshrimal',
+                                      systolic = 120 + random.randint(-10,10)
+                                      dystolic = 83 + random.randint(-5,5)
+                                      time_recorded = datetime.datetime(2015, 4, 28, 0, i % 15))
+    new_bloodpressure.save()
 
 def populate_biometrics(user_name, 
                         time_recorded, 
@@ -31,7 +32,5 @@ def populate_biometrics(user_name,
                                posture = posture)
     new_biometric.save()
 
-f __name__ == '__main__':
-  populate_biometrics(user_name = 'moko', 
-                      time_recorded = datetime.date(2015, 4, 12), 
-                      sample_points = 2)
+if __name__ == '__main__':
+  populate_bloodpressure()
