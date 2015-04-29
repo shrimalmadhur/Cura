@@ -66,6 +66,8 @@ def tv_tracks_to_db(tv_tracks, session, tz):
   }
 
   for k in tv_tracks.keys():
+    if k not in dtypes.keys():
+      continue
     data_type = dtypes[k]
     for d in tv_tracks[k]['items']:
       try:
