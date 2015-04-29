@@ -243,7 +243,9 @@ class WashroomGetDestroy(generics.ListAPIView):
 
 class WashroomCount(viewsets.ViewSet):
     def list(self, request, user_name, start, end):
-        response = [] 
+        response = {} 
+        response['key'] = 'Washroom Count'
+        values = []
         start_date = datetime.strptime(start, '%Y-%m-%d')
         end_date = datetime.strptime(end, '%Y-%m-%d')
         count = end_date - start_date
@@ -254,8 +256,9 @@ class WashroomCount(viewsets.ViewSet):
             end_date  = end_date.replace(hour = 23, minute = 59)
             time_stamp = convert_time_since_epoch(end)
             result = len( Washroom.objects.filter(user_name = user_name, time_recorded__gte = start_date, time_recorded__lte = end_date) )
-            response.append( {'x': time_stamp, 'y': result } ) 
-            return Response( response )
+            values.append( {'x': time_stamp, 'y': result } ) 
+            response['values'] = values
+            return Response( [ response ])
 
         else:
             date_counter = start_date 
@@ -264,9 +267,10 @@ class WashroomCount(viewsets.ViewSet):
                 date_counter_end = date_counter.replace(hour = 23, minute = 59)
                 time_stamp = convert_time_since_epoch(str( date_counter ))
                 result = len( Washroom.objects.filter(user_name = user_name, time_recorded__gte = date_counter_start, time_recorded__lte = date_counter_end) )
-                response.append( {'x': time_stamp, 'y': result } )
+                values.append( {'x': time_stamp, 'y': result } )
                 date_counter += timedelta( days = 1 )
-            return Response( response )
+            response['values'] = values
+            return Response( [ response ] )
 
 # class SkinTemperature(viewsets.ViewSet):
 
