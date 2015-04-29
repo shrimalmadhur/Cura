@@ -31,10 +31,7 @@ def populate_biometrics(user_name,
                                posture = posture)
     new_biometric.save()
 
-def populate_sleep(user_name,
-                  )
-
-if __name__ == '__main__':
+f __name__ == '__main__':
   populate_biometrics(user_name = 'moko', 
                       time_recorded = datetime.date(2015, 4, 12), 
                       sample_points = 2)
