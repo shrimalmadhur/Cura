@@ -73,13 +73,13 @@ angular.module('starter.controllers', ['ngCordova','nvd3'])
             {id:1,urlName:"sleep/heart", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
             {id:2,urlName:"sleep/score", name:"Sleep Score", yAxisLabel:"Score [0-100]", xAxisLabel:"Time", username:"mshrimal"},
             {id:3,urlName:"bloodpressure",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
-            {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"archieag"},
+            {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"mshrimal"},
             {id:5, urlName:"weight",name: "Weight over time", yAxisLabel:"Kgs", xAxisLabel:"Time", username:"mshrimal"},
-            {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"archieag"},
+            {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"mshrimal"},
             {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Score", xAxisLabel:"Events", username:"mshrimal"},
             {id:8, urlName:"bloodoxygen",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %", xAxisLabel:"Time", username:"mshrimal"},
-            {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
-            {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"archieag"}
+            {id:9, urlName:"washroom",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
+            {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"mshrimal"}
             ];
   
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
