@@ -3,7 +3,7 @@
 
     <ion-list>
 
-    
+
       <div class="item item-input-inset">
         <label class="item-input-wrapper">
           <form novalidate class="simple-form">
@@ -19,11 +19,10 @@
       </div>
 
 
-      <ion-item class="item-avatar" ng-repeat="resource in filteredResults track by resource._id" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
-        <img> <i class="ion-ios-bell"> </i></img>
+      <ion-item class="item" ng-repeat="resource in filteredResults track by resource._id" type="item-text-wrap" href="#/tab/coach/{{resource._id}}">
         <h2> Alarm Number {{resource.data.code}}</h2>
 
-        <h2><b> {{ resource.data.title }} </b> </h2> 
+        <h2><b> {{ resource.data.title }} </b> </h2>
         <p>{{resource.description}}</p>
 
 
@@ -31,5 +30,3 @@
     </ion-list>
   </ion-content>
 </ion-view>
-
-

@@ -1,22 +1,22 @@
 angular.module('starter.controllers')
 .controller('VisualCtrl', function($scope, $stateParams, Visuals) {
-  
+
   $scope.items = [
             {id:0,urlName:"sleep/cycle", name:"Sleep Cycle", yAxisLabel:"Phases", xAxisLabel:"Time", username:"mshrimal"},
             {id:1,urlName:"sleep/heart", name:"Resting Heart Rate", yAxisLabel:"beats/min", xAxisLabel:"Time", username:"mshrimal"},
             {id:2,urlName:"sleep/score", name:"Sleep Score", yAxisLabel:"Score [0-100]", xAxisLabel:"Time", username:"mshrimal"},
             {id:3,urlName:"bloodpressure",name:"Blood Pressure", yAxisLabel:"millimeters of mercury", xAxisLabel:"Time", username:"mshrimal"},
-            {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"archieag"},
+            {id:4, urlName:"iexpress/breathingrate",name: "Respiration Rate", yAxisLabel:"breaths/min", xAxisLabel:"Time", username:"mshrimal"},
             {id:5, urlName:"weight",name: "Weight over time", yAxisLabel:"Kgs", xAxisLabel:"Time", username:"mshrimal"},
-            {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"archieag"},
+            {id:6, urlName:"iexpress/heartrate",name: "Heart Rate", yAxisLabel:"beats/mins", xAxisLabel:"Time", username:"mshrimal"},
             {id:7, urlName:"stress",name: "Stress", yAxisLabel:"Stress Score", xAxisLabel:"Events", username:"mshrimal"},
             {id:8, urlName:"bloodoxygen",name: "Blood Oxygen", yAxisLabel:"Blood Oxygen %", xAxisLabel:"Time", username:"mshrimal"},
-            {id:9, urlName:"wv",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
-            {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"archieag"}
+            {id:9, urlName:"washroom",name: "Washroom visits", yAxisLabel:"# Night time washroom visits", xAxisLabel:"Time", username:"mshrimal"},
+            {id:10, urlName:"iexpress/skintemperature",name: "Skin Temperature", yAxisLabel:"Degree", xAxisLabel:"Time", username:"mshrimal"}
             ];
-  
+
   //$scope.entries = Visuals.query({attr:"sleep",sd:"akshay", ed:"pushparaja"});
-  
+
   $scope.update = function(){
     $scope.vOption.period.value = moment().format("M/D/YY");
     $scope.dayfn(0);
@@ -27,22 +27,22 @@ angular.module('starter.controllers')
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
 
-    $scope.visuals = Visuals.bp({attr:$scope.vOption.menuSelect.urlName,sd:"2013-01-29T00:00:00.000000Z", ed:"2013-01-30T00:00:00.000000Z"}, function(){  
+    $scope.visuals = Visuals.bp({attr:$scope.vOption.menuSelect.urlName,sd:"2013-01-29T00:00:00.000000Z", ed:"2013-01-30T00:00:00.000000Z"}, function(){
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
       };
-    });*/ 
+    });*/
   }
-  
+
   $scope.updateWithParams = function(sd,ed){
-    
+
     $scope.sleepDisplay = false;
     $scope.sleep.static.exit = 0;
     $scope.sleep.static.total = 0;
     $scope.sleep.static.latency = 0;
     $scope.sleep.static.res = 0;
     $scope.sleep.static.score = 0;
-    
+
     if ($scope.vOption.menuSelect.id == 0) {
       $scope.sleepDisplay = true;
     }
@@ -53,26 +53,26 @@ angular.module('starter.controllers')
     var colorOptions = ["#1f77b4","#ff7f0e","#2ca02c","#d62728","#9467bd","#8c564b","#e377c2","#7f7f7f","#bcbd22","#17becf"];
     $scope.visuals = [];
     console.log("Before making the query call");
-    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed, username:$scope.vOption.menuSelect.username}, function(){  
+    $scope.visuals = Visuals.query({attr:$scope.vOption.menuSelect.urlName,sd:sd, ed:ed, username:$scope.vOption.menuSelect.username}, function(){
       console.log("Inside the query call");
       console.log($scope.visuals);
       for (var i = 0; i < $scope.visuals.length; i++) {
         $scope.visuals[i]["color"] = colorOptions[i];
       };
     });
-    $scope.sleep.exit = Visuals.static({attr:'sleep/exit',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+    $scope.sleep.exit = Visuals.static({attr:'sleep/exit',sd:sd, ed:ed, username:'mshrimal'}, function(){
         for (var i = 0; i < $scope.sleep.exit[0].values.length; i++) {
           console.log($scope.sleep.exit[0].values[i]["y"]);
           $scope.sleep.static.exit += Math.abs($scope.sleep.exit[0].values[i]["y"]);
         };
     });
-    $scope.sleep.total = Visuals.static({attr:'sleep/totalsleep',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+    $scope.sleep.total = Visuals.static({attr:'sleep/totalsleep',sd:sd, ed:ed, username:'mshrimal'}, function(){
         for (var i = 0; i < $scope.sleep.total[0].values.length; i++) {
           console.log($scope.sleep.total[0].values[i]["y"]);
           $scope.sleep.static.total += $scope.sleep.total[0].values[i]["y"];
         };
     });
-    $scope.sleep.latency = Visuals.static({attr:'sleep/latency',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+    $scope.sleep.latency = Visuals.static({attr:'sleep/latency',sd:sd, ed:ed, username:'mshrimal'}, function(){
         console.log($scope.sleep.latency[0].values.length);
         for (var i = 0; i < $scope.sleep.latency[0].values.length; i++) {
           console.log($scope.sleep.latency[0].values[i]["y"]);
@@ -82,7 +82,7 @@ angular.module('starter.controllers')
           $scope.sleep.static.latency = $scope.sleep.static.latency / $scope.sleep.latency[0].values.length;
         };
     });
-    $scope.sleep.resp = Visuals.static({attr:'sleep/resp',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+    $scope.sleep.resp = Visuals.static({attr:'sleep/resp',sd:sd, ed:ed, username:'mshrimal'}, function(){
         console.log($scope.sleep.resp[0].values.length);
         for (var i = 0; i < $scope.sleep.resp[0].values.length; i++) {
           console.log($scope.sleep.resp[0].values[i]["y"]);
@@ -91,9 +91,9 @@ angular.module('starter.controllers')
         if ($scope.sleep.resp[0].values.length > 0) {
           $scope.sleep.static.resp = $scope.sleep.static.resp / $scope.sleep.resp[0].values.length;
         }
-        
+
     });
-    $scope.sleep.score = Visuals.static({attr:'sleep/score',sd:sd, ed:ed, username:'mshrimal'}, function(){  
+    $scope.sleep.score = Visuals.static({attr:'sleep/score',sd:sd, ed:ed, username:'mshrimal'}, function(){
         console.log($scope.sleep.score[0].values.length);
         for (var i = 0; i < $scope.sleep.score[0].values.length; i++) {
           console.log($scope.sleep.score[0].values[i]["y"]);
@@ -102,7 +102,7 @@ angular.module('starter.controllers')
         if ($scope.sleep.score[0].values.length > 0) {
           $scope.sleep.static.score = $scope.sleep.static.score / $scope.sleep.score[0].values.length;
         }
-        
+
     });
   }
 
@@ -121,14 +121,14 @@ angular.module('starter.controllers')
     }else{
       temp = getDateRange(date_v, "day");
     }
-    
+
     $scope.day.start = temp.start;
     $scope.day.end = temp.end;
     //  console.log($scope.day.start.format("YYYY/M/D"));
     $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), $scope.day.start.format("YYYY-MM-DD"));
     $scope.vOption.period.value = temp.start.format("M/D/YY");
   }
-  
+
   $scope.weekfn = function(date_v){
     $scope.dayClass = "button button-light";
     $scope.weekClass = "button button-calm";
@@ -141,16 +141,16 @@ angular.module('starter.controllers')
     }else{
       temp = getDateRange(date_v, "week");
     }
-    
+
     $scope.day.start = temp.start;
     $scope.day.end = temp.end;
     console.log($scope.day.start.format("YYYY/M/D")+" AP "+$scope.day.end.format("YYYY/M/D"));
     $scope.updateWithParams($scope.day.start.format("YYYY-MM-DD"), $scope.day.end.format("YYYY-MM-DD"));
-    $scope.vOption.period.value = temp.start.format("M/D/YY")+" to "+temp.end.format("M/D/YY"); 
+    $scope.vOption.period.value = temp.start.format("M/D/YY")+" to "+temp.end.format("M/D/YY");
     //var now = moment().day(7);
     //var newStart = getFormatted(-7,0, );
-    //console.log($scope.today.month()); 
-    //console.log($scope.today.year()); 
+    //console.log($scope.today.month());
+    //console.log($scope.today.year());
     //console.log(getMonthDateRange($scope.today.year(), $scope.today.month()));
   }
 
@@ -179,7 +179,7 @@ angular.module('starter.controllers')
     }else{
 
     }
-    
+
   }
 
   $scope.prevfn = function(){
@@ -197,9 +197,9 @@ angular.module('starter.controllers')
       console.log(temp);
       $scope.weekfn(temp);
     }else{
-      
+
     }
-        
+
   }
 
   function getMonthDateRange(year, month) {
@@ -224,7 +224,7 @@ angular.module('starter.controllers')
     var endDate = moment(startDate).endOf(attr)
     return { start: startDate, end: endDate };
   }
-  
+
   //$scope.curr = moment();
   /*$scope.day = getDateRange($scope.current, "day");
   $scope.day.tracker = 0;
@@ -286,11 +286,11 @@ angular.module('starter.controllers')
                     tickFormat: function(d){
                         //return d3.time.format("%I:%M %p %a %Y")(new Date(d*1000));
                         if ($scope.vOption.periodType == 0) {
-                          return d3.time.format("%I:%M %p")(new Date(d*1000))  
+                          return d3.time.format("%I:%M %p")(new Date(d*1000))
                         }else{
-                          return d3.time.format("%Y-%m-%d")(new Date(d*1000))  
+                          return d3.time.format("%Y-%m-%d")(new Date(d*1000))
                         }
-                        
+
                         //return d3.format('.02f')(d);
                     }
                 },
@@ -302,7 +302,7 @@ angular.module('starter.controllers')
                     axisLabelDistance: 30
                 },
                 callback: function(chart){
-                    console.log("!!! lineChart callback !!!");              
+                    console.log("!!! lineChart callback !!!");
                 }
             },
             period:{ value: new Date()},
@@ -312,7 +312,7 @@ angular.module('starter.controllers')
                 text: 'Line Chart Sample 1'
             }
         };
-        
+
         $scope.vOption.menuSelect = $scope.items[0];
         $scope.update();
         $scope.dayClass = "button button-calm";

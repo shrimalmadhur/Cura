@@ -1,15 +1,81 @@
-<ion-view view-title="Health Monitor">
+
+
+<ion-view view-title="Stress Q/A">
   <ion-content>
-	  <div class="list">
+    <ion-list>
 
-		  <label class="item item-radio">
-		    <input type="radio" name="group">
-		    <div class="item-content">
-		      Go
-		    </div>
-		    <i class="radio-icon ion-checkmark"></i>
-		  </label>
-		</div>
 
-    </ion-content>
+
+
+
+  <div class-"item item-divider">
+      During the past week or so, I have...
+  </div>
+
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress1.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress2.question}}
+  </li>
+
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress3.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress4.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress5.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress6.question}}
+  </li>
+
+  <li class="item item-checkbox">
+     <label class="checkbox">
+       <input name="q1" value="{{stress.value}}" type="checkbox">
+     </label>
+     {{stress7.question}}
+  </li>
+
+
+  <a class="button button-block" href="#/tab/stress/Questions/GO"> Next </a>
+
+</ul>
+
+
+    </ion-list>
+  </ion-content>
 </ion-view>

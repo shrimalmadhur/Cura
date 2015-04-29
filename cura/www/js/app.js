@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     if ($rootScope.user === undefined){
         $state.go("account");
     }
-    
+
   });
 })
 
@@ -40,14 +40,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/login.html',
     controller: 'AppCtrl'
   })
-  
+
 
   .state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'AppCtrl'
   })
-  
+
 
   .state('retrive', {
     url: '/retrive-account',
@@ -127,6 +127,79 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('tab.stress_index', {
+      url: '/stress',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress_index.html',
+          controller: 'StressCtrl2'
+        }
+      }
+    })
+
+  .state('tab.stress', {
+      url: '/stress/:Questions',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress.html',
+          controller: 'StressCtrl'
+        }
+      }
+    })
+
+
+
+  .state('tab.stress-page', {
+      url: '/stress/:Questions/:GO',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress-page.html',
+          controller: 'StressCtrl1'
+        }
+      }
+    })
+
+
+    .state('tab.stress-status', {
+      url: '/stress/:Questions/:GO/:discovery/:wait/:status',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress-status.html',
+          controller: 'StressCtrl4'
+        }
+      }
+    })
+
+    .state('tab.destress', {
+      url: '/stress/:Questions/:GO/:discovery/:wait/:status/:destress',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-destress.html',
+          controller: 'StressCtrl6'
+        }
+      }
+    })
+
+  .state('tab.stress-discovery', {
+      url: '/stress/:Questions/:GO/:discovery',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress-discovery.html',
+          controller: 'StressCtrl3'
+        }
+      }
+    })
+
+    .state('tab.stress-wait', {
+      url: '/stress/:Questions/:GO/:discovery/:wait',
+      views: {
+        'tab-stress': {
+          templateUrl: 'templates/tab-stress-wait.html',
+          controller: 'StressCtrl5'
+        }
+      }
+    })
+
   // .state('tab.stress', {
   //   url: '/stress',
   //   views: {
@@ -182,4 +255,3 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $urlRouterProvider.otherwise('/login');
 
 })
-

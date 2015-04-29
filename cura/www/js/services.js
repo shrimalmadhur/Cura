@@ -7,7 +7,7 @@ angular.module('starter.services', ['ngResource'])
 })
 
 .factory('Config', function (){
-  
+
   var host = "";
   //var host = "http://rpcs.herokuapp.com";
   var apiUrl = host + "/api/v1/";
@@ -29,11 +29,11 @@ angular.module('starter.services', ['ngResource'])
 
 .factory('Events', function ($resource, Config) {
   var url = Config.apiUrl + "Events/:id";
-  return $resource(url, {id: "@_id"}); 
+  return $resource(url, {id: "@_id"});
 })
 
 .factory('Biometrics', function ($resource) {
-  return $resource('/api/v1/Biometrics/:id'); 
+  return $resource('/api/v1/Biometrics/:id');
 })
 
 .factory('Resources', function ($resource, Config) {
@@ -44,6 +44,7 @@ angular.module('starter.services', ['ngResource'])
   var url = Config.apiUrl + "Users/:id"
   return $resource(url, { id: "@_id"});
 })
+
 
 .factory("Medications", function ($resource, Config){
   var url = Config.apiUrl + "Medications/:id"
